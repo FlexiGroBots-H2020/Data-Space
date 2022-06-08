@@ -1,0 +1,46 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: connectora
+spec:
+  ingressClassName: nginx
+  # tls:
+  #   - hosts:
+  #       - connectora.localhost
+  #     secretName: tls-certificate
+  rules:
+  - host: connectora.localhost
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: connectora
+            port:
+              number: 8080
+
+
+
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: connectorb
+# spec:
+#   tls:
+#      - hosts:
+#          - connectorb.localhost
+#        secretName: tls-secret
+#   rules:
+#   - host: connectorb.localhost
+#     http:
+#       paths:
+#       - path: /
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: connectorb
+#             port:
+#               number: 8081
+#   ingressClassName: nginx
