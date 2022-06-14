@@ -9,6 +9,7 @@ metadata:
     io.kompose.service: omejdn
   name: omejdn
 spec:
+  type: ClusterIP
   ports:
     - name: "80"
       port: 80

@@ -4,7 +4,7 @@ metadata:
   annotations:
     kompose.cmd: kompose convert -f docker-compose.yml --volumes hostPath -o export
     kompose.version: 1.26.0 (40646f47)
-  creationTimestamp: null
+
   labels:
     io.kompose.service: omejdn
   name: omejdn
@@ -20,31 +20,31 @@ spec:
       annotations:
         kompose.cmd: kompose convert -f docker-compose.yml --volumes hostPath -o export
         kompose.version: 1.26.0 (40646f47)
-      creationTimestamp: null
+
       labels:
         io.kompose.network/local: "true"
         io.kompose.service: omejdn
     spec:
       containers:
         - env:
-            - name: OMEJDN_DOMAIN
-              value: omejdn
-            - name: OMEJDN_PATH
-              value: /auth
-            - name: UI_PATH
-              value: /
+          - name: OMEJDN_DOMAIN
+            value: omejdn
+          - name: OMEJDN_PATH
+            value: /auth
+          - name: UI_PATH
+            value: ""
           image: nginx:1.21.6
           name: omejdn
           ports:
-            - containerPort: 80
+          - containerPort: 80
           resources: {}
           volumeMounts:
-            - mountPath: /etc/nginx/templates/default.conf.template
-              name: omejdn-hostpath0
+          - mountPath: /etc/nginx/templates/
+            name: omejdn-hostpath0
       restartPolicy: Always
       volumes:
-        - name: omejdn-hostpath0 
-          configMap:
-            name: ids-files-nginxconfig
-      
+      - name: omejdn-hostpath0 
+        configMap:
+          name: ids-files-nginxconfig
+    
 status: {}

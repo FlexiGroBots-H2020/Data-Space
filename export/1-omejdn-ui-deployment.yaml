@@ -25,17 +25,17 @@ spec:
         io.kompose.service: omejdn-ui
     spec:
       containers:
-        - env:
-            - name: API_URL
-              value: http://omejdn/auth/api/v1
-            - name: CLIENT_ID
-              value: adminUI
-            - name: OIDC_ISSUER
-              value: http://omejdn/auth
-          image: ghcr.io/fraunhofer-aisec/omejdn-ui:dev
-          name: omejdn-ui
-          ports:
-            - containerPort: 8088
-          resources: {}
+      - env:
+          - name: API_URL
+            value: http://omejdn/auth/api/v1
+          - name: CLIENT_ID
+            value: adminUI
+          - name: OIDC_ISSUER
+            value: http://omejdn/auth
+        image: ghcr.io/fraunhofer-aisec/omejdn-ui:dev
+        name: omejdn-ui
+        ports:
+          - containerPort: 8088
+        resources: {}
       restartPolicy: Always
 status: {}

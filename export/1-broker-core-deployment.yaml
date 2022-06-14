@@ -4,7 +4,7 @@ metadata:
   annotations:
     kompose.cmd: kompose convert -f docker-compose-resolved.yaml --volumes hostPath -o export
     kompose.version: 1.26.0 (40646f47)
-  creationTimestamp: null
+  
   labels:
     io.kompose.service: broker-core
   name: broker-core
@@ -19,31 +19,31 @@ spec:
       annotations:
         kompose.cmd: kompose convert -f docker-compose-resolved.yaml --volumes hostPath -o export
         kompose.version: 1.26.0 (40646f47)
-      creationTimestamp: null
+      
       labels:
         io.kompose.network/local: "true"
         io.kompose.service: broker-core
     spec:
       containers:
-        - env:
-            - name: COMPONENT_CATALOGURI
-              value: https://localhost/connectors/
-            - name: COMPONENT_URI
-              value: https://localhost/
-            - name: DAPS_URL
-              value: http://omejdn/auth/token
-            - name: DAPS_VALIDATE_INCOMING
-              value: "true"
-            - name: ELASTICSEARCH_HOSTNAME
-              value: broker-elasticsearch
-            - name: SHACL_VALIDATION
-              value: "true"
-            - name: SPARQL_ENDPOINT
-              value: http://broker-fuseki:3030/connectorData
-          image: broker-core-testbed:4.2.8
-          name: broker-core
-          ports:
-            - containerPort: 8080
-          resources: {}
+      - env:
+        - name: COMPONENT_CATALOGURI
+          value: https://localhost/connectors/
+        - name: COMPONENT_URI
+          value: https://localhost/
+        - name: DAPS_URL
+          value: http://omejdn/auth/token
+        - name: DAPS_VALIDATE_INCOMING
+          value: "true"
+        - name: ELASTICSEARCH_HOSTNAME
+          value: broker-elasticsearch
+        - name: SHACL_VALIDATION
+          value: "true"
+        - name: SPARQL_ENDPOINT
+          value: http://broker-fuseki:3030/connectorData
+        image: broker-core-testbed:4.2.8
+        name: broker-core
+        ports:
+          - containerPort: 8080
+        resources: {}
       restartPolicy: Always
 status: {}

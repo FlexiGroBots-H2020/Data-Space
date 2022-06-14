@@ -1485,11 +1485,11 @@
 	"variable": [
 		{
 			"key": "CONNECTORA_URL",
-			"value": "http://connectora.localhost"
+			"value": "https://connectora.localhost"
 		},
 		{
 			"key": "CONNECTORB_URL",
-			"value": "http://connectorb.localhost"
+			"value": "https://connectorb.localhost"
 		},
 		{
 			"key": "offers",

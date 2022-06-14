@@ -6,7 +6,7 @@
   "@type" : "ids:ConfigurationModel",
   "@id" : "https://w3id.org/idsa/autogen/configurationModel/7672b568-7878-4f62-8032-5c73de969414",
   "ids:configurationModelLogLevel" : {
-    "@id" : "idsc:MINIMAL_LOGGING"
+    "@id" : "idsc:DEBUG_LEVEL_LOGGING"
   },
   "ids:connectorDeployMode" : {
     "@id" : "idsc:PRODUCTIVE_DEPLOYMENT"

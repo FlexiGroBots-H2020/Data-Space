@@ -49,6 +49,8 @@ services:
 
   connectora:
     image: ghcr.io/international-data-spaces-association/dataspace-connector:7.1.0
+    
+    #: /mnt/c/Users/a868775/DataspaceConnector/
     container_name: connectora
     ports:
       - 8080:8080

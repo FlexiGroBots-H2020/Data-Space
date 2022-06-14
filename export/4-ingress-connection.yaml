@@ -2,15 +2,17 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: connectora
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-passthrought : "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect : "false"
+    nginx.ingress.kubernetes.io/backend-protocol: https
+    kubernetes.io/ingress.class: "nginx"
 spec:
-  ingressClassName: nginx
-  # tls:
-  #   - hosts:
-  #       - connectora.localhost
-  #     secretName: tls-certificate
+  tls:
+  - secretName: tls-secret
   rules:
-  - host: connectora.localhost
-    http:
+  #- host: connectora.localhost
+  - http:
       paths:
       - path: /
         pathType: Prefix
@@ -18,29 +20,30 @@ spec:
           service:
             name: connectora
             port:
-              number: 8080
+              number: 80
 
 
 
-# ---
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: connectorb
-# spec:
-#   tls:
-#      - hosts:
-#          - connectorb.localhost
-#        secretName: tls-secret
-#   rules:
-#   - host: connectorb.localhost
-#     http:
-#       paths:
-#       - path: /
-#         pathType: Prefix
-#         backend:
-#           service:
-#             name: connectorb
-#             port:
-#               number: 8081
-#   ingressClassName: nginx
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: connectorb
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect : "true"
+    nginx.ingress.kubernetes.io/backend-protocol: https
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  tls:
+  - secretName: tls-secret
+  rules:
+  #- host: connectora.localhost
+  - http:
+      paths:
+      - path: /connectorb
+        pathType: Prefix
+        backend:
+          service:
+            name: connectorb
+            port:
+              number: 80

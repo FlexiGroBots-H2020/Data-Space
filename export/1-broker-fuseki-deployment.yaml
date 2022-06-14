@@ -4,7 +4,7 @@ metadata:
   annotations:
     kompose.cmd: kompose convert -f docker-compose-resolved.yaml --volumes hostPath -o export
     kompose.version: 1.26.0 (40646f47)
-  creationTimestamp: null
+  
   labels:
     io.kompose.service: broker-fuseki
   name: broker-fuseki
@@ -20,23 +20,23 @@ spec:
       annotations:
         kompose.cmd: kompose convert -f docker-compose-resolved.yaml --volumes hostPath -o export
         kompose.version: 1.26.0 (40646f47)
-      creationTimestamp: null
+      
       labels:
         io.kompose.network/local: "true"
         io.kompose.service: broker-fuseki
     spec:
       containers:
-        - image: registry.gitlab.cc-asp.fraunhofer.de/eis-ids/broker-open/fuseki
+      - image: registry.gitlab.cc-asp.fraunhofer.de/eis-ids/broker-open/fuseki
+        name: broker-fuseki
+        ports:
+        - containerPort: 3030
+        resources: {}
+        volumeMounts:
+        - mountPath: /fuseki
           name: broker-fuseki
-          ports:
-            - containerPort: 3030
-          resources: {}
-          volumeMounts:
-            - mountPath: /fuseki
-              name: broker-fuseki
       restartPolicy: Always
       volumes:
-        - hostPath:
-            path: broker-fuseki
-          name: broker-fuseki
+      - hostPath:
+          path: broker-fuseki
+        name: broker-fuseki
 status: {}

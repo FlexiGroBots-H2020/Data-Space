@@ -9,6 +9,7 @@ metadata:
     io.kompose.service: broker-fuseki
   name: broker-fuseki
 spec:
+  type: ClusterIP
   ports:
     - name: "3030"
       port: 3030

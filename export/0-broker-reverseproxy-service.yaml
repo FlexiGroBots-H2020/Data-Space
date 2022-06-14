@@ -9,13 +9,14 @@ metadata:
     io.kompose.service: broker-reverseproxy
   name: broker-reverseproxy
 spec:
+  type: ClusterIP
   ports:
     - name: "443"
       port: 443
       targetPort: 443
     - name: "81"
-      port: 81
-      targetPort: 80
+      port: 80
+      targetPort: 81
   selector:
     io.kompose.service: broker-reverseproxy
 status:

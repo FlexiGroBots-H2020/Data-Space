@@ -29,16 +29,16 @@ spec:
       - image: registry.gitlab.cc-asp.fraunhofer.de/eis-ids/broker-open/reverseproxy
         name: broker-reverseproxy
         ports:
-          - containerPort: 443
-          - containerPort: 80
+        - containerPort: 443
+        - containerPort: 81
         volumeMounts:
         - mountPath: /etc/cert
           name: mydir
-
+        resources: {}
       volumes:
-        - name: mydir 
-          configMap:
-            name: ids-files-server-cert 
+      - name: mydir 
+        configMap:
+          name: ids-files-server-cert 
         
 
 

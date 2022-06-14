@@ -27,34 +27,34 @@ spec:
     spec:
       containers:
         - env:
-            - name: CONFIGURATION_PATH
-              value: /config/config.json
-            - name: DAPS_INCOMING_DAT_DEFAULT_WELLKNOWN
-              value: /jwks.json
-            - name: DAPS_KEY_URL
-              value: http://omejdn/auth/jwks.json
-            - name: DAPS_TOKEN_URL
-              value: http://omejdn/auth/token
-            - name: DAPS_URL
-              value: http://omejdn
-            - name: SERVER_PORT
-              value: "8081"
-            - name: SERVER_SSL_KEY-STORE
-              value: file:///config/connectorB.p12
+          - name: CONFIGURATION_PATH
+            value: /config/config.json
+          - name: DAPS_INCOMING_DAT_DEFAULT_WELLKNOWN
+            value: /jwks.json
+          - name: DAPS_KEY_URL
+            value: http://omejdn/auth/jwks.json
+          - name: DAPS_TOKEN_URL
+            value: http://omejdn/auth/token
+          - name: DAPS_URL
+            value: http://omejdn
+          - name: SERVER_PORT
+            value: "8081"
+          - name: SERVER_SSL_KEY-STORE
+            value: file:///config/connectorB.p12
           image: ghcr.io/international-data-spaces-association/dataspace-connector:7.1.0
           name: connectorb
           ports:
-            - containerPort: 8081
+          - containerPort: 8081
           resources: {}
           volumeMounts:
-            - mountPath: /config
-              name: mydir
-            - mountPath: /conf
-              name: mydir
+          - mountPath: /config
+            name: mydir
+          - mountPath: /conf
+            name: mydir
       restartPolicy: Always
 
       volumes:
-        - name: mydir 
-          configMap:
-            name: ids-files-conectorb 
+      - name: mydir 
+        configMap:
+          name: ids-files-conectorb 
 status: {}

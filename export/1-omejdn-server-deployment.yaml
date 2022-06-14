@@ -4,7 +4,7 @@ metadata:
   annotations:
     kompose.cmd: kompose convert -f docker-compose-resolved.yaml --volumes hostPath -o export
     kompose.version: 1.26.0 (40646f47)
-  creationTimestamp: null
+
   labels:
     io.kompose.service: omejdn-server
   name: omejdn-server
@@ -20,49 +20,49 @@ spec:
       annotations:
         kompose.cmd: kompose convert -f docker-compose-resolved.yaml --volumes hostPath -o export
         kompose.version: 1.26.0 (40646f47)
-      creationTimestamp: null
+
       labels:
         io.kompose.network/local: "true"
         io.kompose.service: omejdn-server
     spec:
       containers:
         - env:
-            - name: OMEJDN_ACCEPT_AUDIENCE
-              value: idsc:IDS_CONNECTORS_ALL
-            - name: OMEJDN_ADMIN
-              value: admin:password
-            - name: OMEJDN_DEFAULT_AUDIENCE
-              value: idsc:IDS_CONNECTORS_ALL
-            - name: OMEJDN_ENVIRONMENT
-              value: development
-            - name: OMEJDN_FRONT_URL
-              value: http://omejdn/auth
-            - name: OMEJDN_ISSUER
-              value: http://omejdn/auth
-            - name: OMEJDN_OPENID
-              value: "true"
+          - name: OMEJDN_ACCEPT_AUDIENCE
+            value: idsc:IDS_CONNECTORS_ALL
+          - name: OMEJDN_ADMIN
+            value: admin:password
+          - name: OMEJDN_DEFAULT_AUDIENCE
+            value: idsc:IDS_CONNECTORS_ALL
+          - name: OMEJDN_ENVIRONMENT
+            value: development
+          - name: OMEJDN_FRONT_URL
+            value: http://omejdn/auth
+          - name: OMEJDN_ISSUER
+            value: http://omejdn/auth
+          - name: OMEJDN_OPENID
+            value: "true"
           image: ghcr.io/fraunhofer-aisec/omejdn-server:1.6.0
           name: omejdn-server
           #command: ["/bin/sh"]
           #args: ["-c", "while true; do echo hello; sleep 10;done"]
           ports:
-            - containerPort: 8089
+          - containerPort: 8089
           resources: {}
           volumeMounts:
-            - mountPath: /opt/config
-              name: data
-            - mountPath: /home
-              name: config
+          - mountPath: /opt/config
+            name: data
+          - mountPath: /home
+            name: config
 
-            - mountPath: /opt/keys
-              name: key
-              readOnly: true
-            - mountPath: /opt/keys/client
-              name: key-client
-              readOnly: true
-            - mountPath: /opt/keys/omejdn
-              name: key-omejdn    
-              readOnly: true          
+          - mountPath: /opt/keys
+            name: key
+            readOnly: true
+          - mountPath: /opt/keys/client
+            name: key-client
+
+          - mountPath: /opt/keys/omejdn
+            name: key-omejdn    
+     
       
       initContainers:
       - name: copy
@@ -76,23 +76,23 @@ spec:
       
       restartPolicy: Always
       volumes:
-        - name: data
-          emptyDir: {}
+      - name: data
+        emptyDir: {}
 
-        - name: config
-          configMap:
-            name: ids-files-daps-config-v2
+      - name: config
+        configMap:
+          name: ids-files-daps-config-v2
 
-        - name: key 
-          configMap:
-            name: ids-files-daps-key
+      - name: key 
+        configMap:
+          name: ids-files-daps-key
 
-        - name: key-client
-          configMap: 
-            name: ids-files-daps-config-key-client
+      - name: key-client
+        configMap: 
+          name: ids-files-daps-config-key-client
 
-        - name: key-omejdn
-          configMap:
-            name: ids-files-daps-key-omejdn                        
+      - name: key-omejdn
+        configMap:
+          name: ids-files-daps-key-omejdn                        
 
 status: {}

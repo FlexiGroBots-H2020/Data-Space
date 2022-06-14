@@ -7,7 +7,7 @@ metadata:
   resourceVersion: "177242"
   uid: b16d894a-75c2-458b-996c-1fefd48fb588
 data:
-  omejdn.yml: |
+  default.conf.template: |
     server {
       listen              80 default_server;
       listen              [::]:80 default_server ;
