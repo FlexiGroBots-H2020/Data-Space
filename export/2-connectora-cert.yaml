@@ -72,7 +72,7 @@ kind: ConfigMap
 metadata:
   creationTimestamp: "2022-06-08T08:38:00Z"
   name: ids-files-config-conectora
-  namespace: ids
+  namespace: ids-2
   resourceVersion: "111621"
   uid: 497241f6-a7cf-4c99-bc92-4d8559c97536
 

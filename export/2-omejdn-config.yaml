@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   creationTimestamp: "2022-06-02T10:29:08Z"
   name: ids-files-nginxconfig
-  namespace: ids
+  namespace: ids-2
   resourceVersion: "177242"
   uid: b16d894a-75c2-458b-996c-1fefd48fb588
 data:
