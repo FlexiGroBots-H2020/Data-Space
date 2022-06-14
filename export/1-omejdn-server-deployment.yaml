@@ -46,24 +46,20 @@ spec:
           #command: ["/bin/sh"]
           #args: ["-c", "while true; do echo hello; sleep 10;done"]
           ports:
-          - containerPort: 8089
+          - containerPort: 4567
           resources: {}
           volumeMounts:
           - mountPath: /opt/config
             name: data
           - mountPath: /home
             name: config
-
           - mountPath: /opt/keys
             name: key
             readOnly: true
-          - mountPath: /opt/keys/client
-            name: key-client
-
+          - mountPath: /opt/keys/clients
+            name: keys-final-volume
           - mountPath: /opt/keys/omejdn
             name: key-omejdn    
-     
-      
       initContainers:
       - name: copy
         image: ghcr.io/fraunhofer-aisec/omejdn-server:1.6.0
@@ -73,10 +69,21 @@ spec:
           name: config
         - mountPath: /opt/config
           name: data 
-      
+      - name: copy-rename-keys
+        image: ghcr.io/fraunhofer-aisec/omejdn-server:1.6.0
+        command: ["bash", "-c", "cd /keys/; for filename in *.cert; do cp \"$filename\" /opt/keys/clients/\"${filename%.*}=.cert\"; done;"]
+        volumeMounts:
+        - mountPath: /keys
+          name: key-client-temp
+        - mountPath: /opt/keys/clients/
+          name: keys-final-volume
+
       restartPolicy: Always
       volumes:
       - name: data
+        emptyDir: {}
+      
+      - name: keys-final-volume
         emptyDir: {}
 
       - name: config
@@ -87,7 +94,7 @@ spec:
         configMap:
           name: ids-files-daps-key
 
-      - name: key-client
+      - name: key-client-temp
         configMap: 
           name: ids-files-daps-config-key-client
 
