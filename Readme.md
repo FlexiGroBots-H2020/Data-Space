@@ -1,6 +1,6 @@
 # IDS deployment on Kubernetes
 
-In this repository is everything to deploy an IDS system with Kubernetes. A brief description of these systems according to the official site  [oficial](https://internationaldataspaces.org/) *A secure, sovereign system of data sharing in which all participants can realize the full value of their data"*. 
+In this repository is everything to deploy an IDS system with Kubernetes. A brief description of these systems according to the [official site](https://internationaldataspaces.org/) *"A secure, sovereign system of data sharing in which all participants can realize the full value of their data"*. 
 
 ## Requirements
 
@@ -38,9 +38,9 @@ The main parts of the system are:
 - 
 -  [IDS connectors](https://international-data-spaces-association.github.io/DataspaceConnector/) have been used to develop the A and B connectors. This connector sends data to a device or database in a certified and trusted environment. Thus, the data providers always have control over their data. 
   
-- Un Dynamic Attribute Provisioning Service" [DAP](https://github.com/International-Data-Spaces-Association/IDS-G/blob/main/Components/IdentityProvider/DAPS/README.md)  DAPS aims to verify and secure a set of attributes of organizations and connectors. In this way, third parties need only rely on the DAPS assertions. This DAPS system uses Omejdn instances to perform the confirmations and store the certificates. 
+- "Dynamic Attribute Provisioning Service" [DAPS](https://github.com/International-Data-Spaces-Association/IDS-G/blob/main/Components/IdentityProvider/DAPS/README.md) aims to verify and secure a set of attributes of organizations and connectors. In this way, third parties need only rely on the DAPS assertions. This DAPS system uses Omejdn instances to perform the confirmations and store the certificates. 
   
-- Un [broker](https://github.com/International-Data-Spaces-Association/metadata-broker-open-core)The IDS Metadata Broker is one of the modules still under development and intends to help IDSA members implement custom broker solutions.
+- The IDS Metadata [Broker](https://github.com/International-Data-Spaces-Association/metadata-broker-open-core) is one of the modules still under development and intends to help IDSA members implement custom broker solutions.
 
 ## Starting the architecture
 
@@ -59,7 +59,8 @@ The main parts of the system are:
 
 - The last point would be to check that the deployment has been performed successfully. Using tools such as [K9s](https://k9scli.io/), the result should be as below.
     
+    
 ![figura](./pictures/pods_running.png)
 
 
-Finally, with a tool such as [Postman](https://www.postman.com/), a test could be performed to verify that the communication and connectivity of the infrastructure are correct. For this purpose, the [ids-certification-testing](TestbedPreconfiguration.postman_collection.json) file is used, in which a set of tests verifies the tool's proper operation in Kubernetes.
+Finally, with a tool such as [Postman](https://www.postman.com/), a test could be performed to verify that the communication and connectivity of the infrastructure are correct. For this purpose, the [ids-certification-testing](TestbedPreconfiguration.postman_collection.json) file is used, in which a set of tests verifies the tool's proper operation on Kubernetes.
