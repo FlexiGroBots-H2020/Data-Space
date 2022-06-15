@@ -39,6 +39,8 @@ spec:
           value: file:///config/connectorA.p12
         - name: DAPS_URL
           value: http://omejdn
+        - name: SERVER_PORT
+          value: "8080"
 
         image: ghcr.io/international-data-spaces-association/dataspace-connector:7.1.0
         #image: connectora:latest
