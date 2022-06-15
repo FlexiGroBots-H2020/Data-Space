@@ -1,6 +1,6 @@
-# IDS deployment on Kubernetes
+# IDS deployment on Kubernetes for FlexyGroBots 🚁🌽🌽🌽🚁
 
-In this repository is everything to deploy an IDS system with Kubernetes. A brief description of these systems according to the [official site](https://internationaldataspaces.org/) *"A secure, sovereign system of data sharing in which all participants can realize the full value of their data"*. 
+In this repository are found the instructions to deploy an IDS system with Kubernetes. A brief description of these systems according to the [official site](https://internationaldataspaces.org/) is: *"A secure, sovereign system of data sharing in which all participants can realize the full value of their data"*. 
 
 ## Requirements
 
@@ -9,14 +9,14 @@ This section summarizes the hardware and software features used for the deployme
 ### Software-requirements
 
 - [Kubectl](https://kubernetes.io/es/docs/tasks/tools/) version:
-  - Client Version: v1.24.0
-  - Kustomize Version: v4.5.4
-  - Server Version: v1.24.0
+  - Client Version: `v1.24.0`
+  - Kustomize Version: `v4.5.4`
+  - Server Version: `v1.24.0`
 - [Kompose](https://kompose.io/)
-  - 1.26.0
+  - `1.26.0`
 
 - Cluster runs in [Docker-Desktop](https://docs.docker.com/desktop/windows/install/)
-  - v20.10.14
+  - `v20.10.14`
 
 -  [IDS-Release 1.0](https://github.com/International-Data-Spaces-Association/IDS-testbed)
 -   OS Windows 10 Enterprise
@@ -36,9 +36,9 @@ The following figure shows the proposed architecture.
 
 The main parts of the system are:
 - 
--  [IDS connectors](https://international-data-spaces-association.github.io/DataspaceConnector/) have been used to develop the A and B connectors. This connector sends data to a device or database in a certified and trusted environment. Thus, the data providers always have control over their data. 
+-  [IDS connectors](https://international-data-spaces-association.github.io/DataspaceConnector/) have been used to develop the A and B connectors. IDS-connector sends data to a device or database in a certified and trusted data-space. Thus, the data-providers always have control over their data. 
   
-- "Dynamic Attribute Provisioning Service" [DAPS](https://github.com/International-Data-Spaces-Association/IDS-G/blob/main/Components/IdentityProvider/DAPS/README.md) aims to verify and secure a set of attributes of organizations and connectors. In this way, third parties need only rely on the DAPS assertions. This DAPS system uses Omejdn instances to perform the confirmations and store the certificates. 
+- "Dynamic Attribute Provisioning Service" [DAPS](https://github.com/International-Data-Spaces-Association/IDS-G/blob/main/Components/IdentityProvider/DAPS/README.md) aims to verify and secure a set of attributes of organizations and connectors. In this way, third-parties need only need to rely on the DAPS assertions. This DAPS system uses Omejdn instances to perform the confirmations and store the certificates. 
   
 - The IDS Metadata [Broker](https://github.com/International-Data-Spaces-Association/metadata-broker-open-core) is one of the modules still under development and intends to help IDSA members implement custom broker solutions.
 
@@ -49,7 +49,7 @@ The main parts of the system are:
   `kubectle create namespace ids-2`
   
 
-- It is necessary to install an Nginx driver to be able to make the calls to the cluster from the outside. If the Ingress-Nginx repo is not updated, in this [link](https://kubernetes.github.io/ingress-nginx/deploy/) is the official documentation
+- It is necessary to install Nginx driver to be able to make the calls to the cluster from the outside. If the Ingress-Nginx repo is not updated, in this [link](https://kubernetes.github.io/ingress-nginx/deploy/) the official documentation can be found.
 
     `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml`
 
@@ -57,10 +57,10 @@ The main parts of the system are:
 
     `kubectl apply -f export -n ids-2`
 
-- The last point would be to check that the deployment has been performed successfully. Using tools such as [K9s](https://k9scli.io/), the result should be as below.
+- The last point would be to check that the deployment has been performed successfully. Using tools such as [K9s](https://k9scli.io/). The results might be as below. 
     
-    
-![figura](./pictures/pods_running.png)
+
+![figura](./pictures/pods_running_k9s.png)
 
 
 Finally, with a tool such as [Postman](https://www.postman.com/), a test could be performed to verify that the communication and connectivity of the infrastructure are correct. For this purpose, the [ids-certification-testing](TestbedPreconfiguration.postman_collection.json) file is used, in which a set of tests verifies the tool's proper operation on Kubernetes.
