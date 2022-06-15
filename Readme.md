@@ -1,8 +1,9 @@
-# Despliegue de IDS en kubernetes
+# IDS deployment on Kubernetes
 
 In this repository is everything to deploy an IDS system with Kubernetes. A brief description of these systems according to the official site  [oficial](https://internationaldataspaces.org/) *A secure, sovereign system of data sharing in which all participants can realize the full value of their data"*. 
 
-## Requisites
+## Requirements
+
 This section summarizes the hardware and software features used for the deployment. Note that the IDS is sensitive to traffic load and may require a more powerful hardware system if traffic increases.
 
 ### Software-requirements
@@ -59,7 +60,6 @@ The main parts of the system are:
 - The last point would be to check that the deployment has been performed successfully. Using tools such as [K9s](https://k9scli.io/), the result should be as below.
     
 ![figura](./pictures/pods_running.png)
-
 
 
 Finally, with a tool such as [Postman](https://www.postman.com/), a test could be performed to verify that the communication and connectivity of the infrastructure are correct. For this purpose, the [ids-certification-testing](TestbedPreconfiguration.postman_collection.json) file is used, in which a set of tests verifies the tool's proper operation in Kubernetes.
