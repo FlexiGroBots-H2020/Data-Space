@@ -21,6 +21,8 @@ This section summarizes the hardware and software features used for the deployme
 -  [IDS-Release 1.0](https://github.com/International-Data-Spaces-Association/IDS-testbed)
 -   OS Windows 10 Enterprise
     -   WSL2: Ubuntu 20.04 LTS
+  
+- OpenSSL `1.1.1f`
 
 ### Hardware-requirements
 - 16 GB RAM memory
@@ -49,10 +51,17 @@ The main parts of the system are:
   `kubectle create namespace ids-2`
   
 
+
 - It is necessary to install Nginx driver to be able to make the calls to the cluster from the outside. If the Ingress-Nginx repo is not updated, in this [link](https://kubernetes.github.io/ingress-nginx/deploy/) the official documentation can be found.
 
     `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml`
 
+- For the ingress manifest is neccesary to create a secret. With the next command it is generate a cert and key file and a secret in the namespace.
+  
+    `openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls-key.key -out tls-cert.crt`
+
+    `kubectl create secret tls tls-secret --key tls.key --cert tls.crt -n ids-2`
+    
 - The next step would be to launch the application manifests.
 
     `kubectl apply -f export -n ids-2`
