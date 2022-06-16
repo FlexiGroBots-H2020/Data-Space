@@ -1,4 +1,4 @@
-# IDS deployment on Kubernetes for FlexyGroBots 🚁🌽🌽🌽🚁
+# IDS deployment on Kubernetes for FlexiGroBots 🚁🌽🌽🌽🚁
 
 In this repository are found the instructions to deploy an IDS system with Kubernetes. A brief description of these systems according to the [official site](https://internationaldataspaces.org/) is: *"A secure, sovereign system of data sharing in which all participants can realize the full value of their data"*. 
 
@@ -32,7 +32,7 @@ This section summarizes the hardware and software features used for the deployme
 
 ## Architecture
 
-The following figure shows the proposed architecture. 
+The following figure shows the proposed architecture. The image and the architecture is based on the next [repo](https://github.com/International-Data-Spaces-Association/IDS-testbed).
 
 ![figura](./pictures/Testbed_1.0.png)
 
@@ -61,7 +61,7 @@ The main parts of the system are:
     `openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls-key.key -out tls-cert.crt`
 
     `kubectl create secret tls tls-secret --key tls.key --cert tls.crt -n ids-2`
-    
+
 - The next step would be to launch the application manifests.
 
     `kubectl apply -f export -n ids-2`
