@@ -3,6 +3,13 @@
 # reopened with the relevant failures.
 #
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2022-06-08T08:45:07Z"
+  name: ids-files-config-conectorb
+  namespace: ids-2
+  resourceVersion: "112231"
+  uid: 767b30b1-42bf-41ac-be0b-799596d4783d
 
 data:
   config.json: |
@@ -68,10 +75,3 @@ data:
         "@id" : "file:///conf/testbed2.p12"
       }
     }
-kind: ConfigMap
-metadata:
-  creationTimestamp: "2022-06-08T08:45:07Z"
-  name: ids-files-config-conectorb
-  namespace: ids-2
-  resourceVersion: "112231"
-  uid: 767b30b1-42bf-41ac-be0b-799596d4783d

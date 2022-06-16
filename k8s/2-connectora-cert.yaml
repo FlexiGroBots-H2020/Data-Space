@@ -2,6 +2,14 @@
 # and an empty file will abort the edit. If an error occurs while saving this file will be
 # reopened with the relevant failures.
 #
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2022-06-08T08:38:00Z"
+  name: ids-files-config-conectora
+  namespace: ids-2
+  resourceVersion: "111621"
+  uid: 497241f6-a7cf-4c99-bc92-4d8559c97536
+
 apiVersion: v1
 
 data:
@@ -68,12 +76,4 @@ data:
         "@id" : "file:///conf/testbed1.p12"
       }
     }
-kind: ConfigMap
-metadata:
-  creationTimestamp: "2022-06-08T08:38:00Z"
-  name: ids-files-config-conectora
-  namespace: ids-2
-  resourceVersion: "111621"
-  uid: 497241f6-a7cf-4c99-bc92-4d8559c97536
-
 

@@ -1,4 +1,4 @@
-# IDS deployment on Kubernetes for FlexiGroBots 🚁🌽🌽🌽🚁
+# IDS deployment on Kubernetes for FlexiGroBots-H2020 🚁🌽🌽🌽🚁
 
 In this repository are found the instructions to deploy an IDS system with Kubernetes. A brief description of these systems according to the [official site](https://internationaldataspaces.org/) is: *"A secure, sovereign system of data sharing in which all participants can realize the full value of their data"*. 
 
@@ -55,6 +55,12 @@ The main parts of the system are:
 - It is necessary to install Nginx driver to be able to make the calls to the cluster from the outside. If the Ingress-Nginx repo is not updated, in this [link](https://kubernetes.github.io/ingress-nginx/deploy/) the official documentation can be found.
 
     `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml`
+
+- To comunicate with the nginx-controller is neccesary to add the next lines in `/etc/hosts`.
+  
+    `127.0.0.1       connectora.localhost`
+    
+    `127.0.0.1       connectorb.localhost`
 
 - For the ingress manifest is neccesary to create a secret. With the next command it is generate a cert and key file and a secret in the namespace.
   
