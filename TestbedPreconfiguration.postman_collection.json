@@ -865,7 +865,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{CONNECTORB_URL}}/api/agreements/{{Consumer agreement ID}}/artifacts",
+									"raw": "{{Consumer agreement ID}}/artifacts",
 									"host": [
 										"{{CONNECTORB_URL}}"
 									],
@@ -1315,7 +1315,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{CONNECTORB_URL}}/api/agreements/{{Consumer agreement ID}}/artifacts",
+											"raw": "{{Consumer agreement ID}}/artifacts",
 											"host": [
 												"{{CONNECTORB_URL}}"
 											],
@@ -1533,11 +1533,12 @@
 		},
 		{
 			"key": "Recipient_url",
-			"value": "https://connectora.localhost:8080/api/ids/data"
+			"value": "https://connectora:8080/api/ids/data"
 		},
 		{
 			"key": "Consumer agreement ID",
 			"value": ""
+		
 		},
 		{
 			"key": "dataLink",
