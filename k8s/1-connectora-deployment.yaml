@@ -25,6 +25,10 @@ spec:
         io.kompose.network/local: "true"
         io.kompose.service: connectora
     spec:
+      # securityContext:
+      #   runAsUser: 1000
+      #   runAsGroup: 1000
+      #  #readOnlyRootFilesystem: true    
       containers:
       - env:
         - name: CONFIGURATION_PATH
@@ -43,13 +47,21 @@ spec:
           value: "8080"
 
         image: ghcr.io/international-data-spaces-association/dataspace-connector:7.1.0
-        #image: connectora:latest
-        #imagePullPolicy: Never
+
+
         name: connectora
 
         ports:
           - containerPort: 8080
-        resources: {}
+      
+        resources:
+          requests:
+            memory: "1024Mi"
+            cpu: "500m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        
         volumeMounts:
         - mountPath: /config/config.json
           name: mydir-config

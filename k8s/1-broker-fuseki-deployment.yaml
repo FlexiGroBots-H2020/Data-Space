@@ -20,7 +20,6 @@ spec:
       annotations:
         kompose.cmd: kompose convert -f docker-compose-resolved.yaml --volumes hostPath -o export
         kompose.version: 1.26.0 (40646f47)
-      
       labels:
         io.kompose.network/local: "true"
         io.kompose.service: broker-fuseki
@@ -30,7 +29,14 @@ spec:
         name: broker-fuseki
         ports:
         - containerPort: 3030
-        resources: {}
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "100m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+
         volumeMounts:
         - mountPath: /fuseki
           name: broker-fuseki

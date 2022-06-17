@@ -25,7 +25,14 @@ spec:
         io.kompose.network/local: "true"
         io.kompose.service: omejdn-server
     spec:
+      # securityContext:
+      #   runAsUser: 1000
+      #   runAsGroup: 1000
+      #   #readOnlyRootFilesystem: true
       containers:
+
+
+
         - env:
           - name: OMEJDN_ACCEPT_AUDIENCE
             value: idsc:IDS_CONNECTORS_ALL
@@ -47,7 +54,7 @@ spec:
           #args: ["-c", "while true; do echo hello; sleep 10;done"]
           ports:
           - containerPort: 4567
-          resources: {}
+
           volumeMounts:
           - mountPath: /opt/config
             name: data
@@ -60,6 +67,15 @@ spec:
             name: keys-final-volume
           - mountPath: /opt/keys/omejdn
             name: key-omejdn    
+
+          resources:
+            requests:
+              memory: "1024Mi"
+              cpu: "500m"
+            limits:
+              memory: "4Gi"
+              cpu: "2000m"
+
       initContainers:
       - name: copy
         image: ghcr.io/fraunhofer-aisec/omejdn-server:1.6.0
@@ -69,14 +85,33 @@ spec:
           name: config
         - mountPath: /opt/config
           name: data 
+        resources:
+          requests:
+            memory: "1024Mi"
+            cpu: "500m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m" 
+
+
+
       - name: copy-rename-keys
         image: ghcr.io/fraunhofer-aisec/omejdn-server:1.6.0
+
+
         command: ["bash", "-c", "cd /keys/; for filename in *.cert; do cp \"$filename\" /opt/keys/clients/\"${filename%.*}=.cert\"; done;"]
         volumeMounts:
         - mountPath: /keys
           name: key-client-temp
         - mountPath: /opt/keys/clients/
           name: keys-final-volume
+        resources:
+          requests:
+            memory: "1024Mi"
+            cpu: "500m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"          
 
       restartPolicy: Always
       volumes:

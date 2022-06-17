@@ -25,8 +25,10 @@ spec:
         io.kompose.network/local: "true"
         io.kompose.service: broker-reverseproxy
     spec: 
+
       containers:
       - image: registry.gitlab.cc-asp.fraunhofer.de/eis-ids/broker-open/reverseproxy
+
         name: broker-reverseproxy
         ports:
         - containerPort: 443
@@ -34,7 +36,17 @@ spec:
         volumeMounts:
         - mountPath: /etc/cert
           name: mydir
-        resources: {}
+
+
+      
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "100m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"     
+
       volumes:
       - name: mydir 
         configMap:

@@ -24,6 +24,10 @@ spec:
         io.kompose.network/local: "true"
         io.kompose.service: omejdn-ui
     spec:
+      # securityContext:
+      #   runAsUser: 1000
+      #   runAsGroup: 1000
+      #   #readOnlyRootFilesystem: true    
       containers:
       - env:
           - name: API_URL
@@ -33,9 +37,19 @@ spec:
           - name: OIDC_ISSUER
             value: http://omejdn/auth
         image: ghcr.io/fraunhofer-aisec/omejdn-ui:dev
+
         name: omejdn-ui
         ports:
           - containerPort: 8088
-        resources: {}
+
+      
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "100m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+
       restartPolicy: Always
 status: {}

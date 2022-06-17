@@ -25,6 +25,7 @@ spec:
         io.kompose.network/local: "true"
         io.kompose.service: omejdn
     spec:
+
       containers:
         - env:
           - name: OMEJDN_DOMAIN
@@ -34,10 +35,19 @@ spec:
           - name: UI_PATH
             value: ""
           image: nginx:1.21.6
+
           name: omejdn
           ports:
           - containerPort: 80
-          resources: {}
+          
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "100m"
+            limits:
+              memory: "4Gi"
+              cpu: "2000m"
+          
           volumeMounts:
           - mountPath: /etc/nginx/templates/
             name: omejdn-hostpath0
