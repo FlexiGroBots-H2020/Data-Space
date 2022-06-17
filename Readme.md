@@ -79,3 +79,10 @@ The main parts of the system are:
 
 
 Finally, with a tool such as [Postman](https://www.postman.com/), a test could be performed to verify that the communication and connectivity of the infrastructure are correct. For this purpose, the [ids-certification-testing](TestbedPreconfiguration.postman_collection.json) file is used, in which a set of tests verifies the tool's proper operation on Kubernetes.
+
+
+[KubeLinter](https://docs.kubelinter.io/#/) have been tested and modified to obtain standarized YAML manifests. Using the next command it is possible to test the manifests.
+
+`kube-linter lint k8s/Services-Deployments --config k8s/Config-test/kube-linter-test.yaml`
+
+These tests can be customized by changing the [file](k8s\Config-tests\kube-linter-test.yaml).
