@@ -86,3 +86,4 @@ Finally, with a tool such as [Postman](https://www.postman.com/), a test could b
 `kube-linter lint k8s/Services-Deployments --config k8s/Config-test/kube-linter-test.yaml`
 
 These tests can be customized by changing the [file](k8s\Config-tests\kube-linter-test.yaml).
+
