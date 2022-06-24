@@ -1,6 +1,6 @@
 # IDS deployment on Kubernetes for FlexiGroBots-H2020 🚁🌽🌽🌽🚁
 
-In this repository are found the instructions to deploy an IDS system with Kubernetes. A brief description of these systems according to the [official site](https://internationaldataspaces.org/) is: *"A secure, sovereign system of data sharing in which all participants can realize the full value of their data"*. 
+This repository are found the instructions to deploy an IDS system with Kubernetes. A brief description of these systems according to the [official site](https://internationaldataspaces.org/) is: *"A secure, sovereign system of data sharing in which all participants can realize the full value of their data"*. 
 
 ## Requirements
 
