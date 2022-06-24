@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Config
+clusters:
+- name: "flexigrobots-data-space"
+  cluster:
+    server: "https://rancher.ari-aidata.eu/k8s/clusters/c-nxp24"
+- name: "flexigrobots-data-space-flexigrobots-worker"
+  cluster:
+    server: "https://213.227.145.187:6443"
+    certificate-authority-data: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUM0VENDQ\
+      WNtZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREFTTVJBd0RnWURWUVFERXdkcmRXSmwKT\
+      FdOaE1CNFhEVEl5TURNeE5URXhNemt6TkZvWERUTXlNRE14TWpFeE16a3pORm93RWpFUU1BNEdBM\
+      VVFQXhNSAphM1ZpWlMxallUQ0NBU0l3RFFZSktvWklodmNOQVFFQkJRQURnZ0VQQURDQ0FRb0NnZ\
+      0VCQUxmaXMwK2p0TXY2CjFnMWluNHBaeW5WRUFOTzdqSzNiQ3c4M1p6clVFZWx0bUZQcmFkekVse\
+      HBnU3ovWGVQZGV0YStrcHdYaUc3OVYKQkNtQTJIT0E5NWo1UHgxekc4YTFIOE9udGZEditjditUT\
+      WZ3Q3hZKzRUMmZHSnFBOW9VVDdsV3FPOEV1TEZlUQpQZHlQVVRWOHZCd1diamZucjU2ck5Vd0NHa\
+      lBEWXBIdThoaDFJQmJmM2ZuQU42ZGNWKzFWQUN1dGpaZVhiUHRmCndwVVJqOGxPVlNqZ0xHOStiW\
+      WNzSEt6ZHRwN05Hd0h6WUlJbFdXZmpma0RuaDRYY21LSUwxL3BiVGlOTUdpdHMKeWxqOERUZlNGK\
+      zJKazh1NDdJZ3hzS0duRVpsTWk2UUlsU05OMk5PQTk5NnVFMldGVkJQOEYzdWdIcUFoK0o4RwpOZ\
+      nc1VFlmWW5lRUNBd0VBQWFOQ01FQXdEZ1lEVlIwUEFRSC9CQVFEQWdLa01BOEdBMVVkRXdFQi93U\
+      UZNQU1CCkFmOHdIUVlEVlIwT0JCWUVGRFhUYTZIV09Ud3FkSVk1U3d2OEh6UlhHSUVPTUEwR0NTc\
+      UdTSWIzRFFFQkN3VUEKQTRJQkFRQnQxWG15TWx0d3l2T0t2RUZWa3Y1QVlzMXhYd0gxRHNKbmQ4c\
+      Fo2NGtOVGNNOGVLMVJYTWVmbzRkUgpqdldxcXlVNWdDNnl1Smp2M0tXTVcrZFgvemdENFpPdWRIO\
+      EVrUzZBU2tsMy9XOGlBMi9tcjdVRzg0TFlGbG9yCnVGRHl2UGpjVUY3OWt4enpJNUtuN2wxc1NHQ\
+      zhPazYvZTZyL0R6TlJ2VGV6RE53clZKU3VvK0MvS0V0SFNPMUYKU0tvUkpQYmJPMDFvVk8vcWZMR\
+      EJXc0FPd3NibHdpZGwrTTlGamNteCtSaGRkTkp0b0t6RGw2R3NjL2RpUVlIdApIdjBvNlZBYmN3Y\
+      2RadXVSYm40Yno4U0pPUUtnSDVOZkMrSmhHby9SWjRBN1dSZm51RGd6ZDZhTmwwckNqUENrClhqN\
+      Vc0WDBoTC9CN1lmQTR3UkdkSkJMTWpaSzEKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo="
+
+users:
+- name: "flexigrobots-data-space"
+  user:
+    token: "kubeconfig-u-lk9cfgbp27:8fbmjrctwlxm495z7jgd9cf85ss2fq6mr8qxknj5mmk55287n9sbkh"
+
+
+contexts:
+- name: "flexigrobots-data-space"
+  context:
+    user: "flexigrobots-data-space"
+    cluster: "flexigrobots-data-space"
+- name: "flexigrobots-data-space-flexigrobots-worker"
+  context:
+    user: "flexigrobots-data-space"
+    cluster: "flexigrobots-data-space-flexigrobots-worker"
+
+current-context: "flexigrobots-data-space"

@@ -1,0 +1,6 @@
+0- Service
+1- Deployment
+2- Configmap
+3- Secret
+4- Ingress
+5- NetworkPolicy

@@ -1,0 +1,131 @@
+networks:
+  local:
+    driver: bridge
+services:
+  broker-core:
+    build:
+      context: /mnt/c/Users/a868775/IDS_testeos/git_ids_kubernetes/IDS-testbed/MetadataBroker/build
+    container_name: broker-core
+    environment:
+      COMPONENT_CATALOGURI: https://localhost/connectors/
+      COMPONENT_URI: https://localhost/
+      DAPS_URL: http://omejdn/auth/token
+      DAPS_VALIDATE_INCOMING: "true"
+      ELASTICSEARCH_HOSTNAME: broker-elasticsearch
+      SHACL_VALIDATION: "true"
+      SPARQL_ENDPOINT: http://broker-fuseki:3030/connectorData
+    expose:
+    - '8080'
+    image: broker-core-testbed:4.2.8
+    networks:
+      local: null
+  broker-fuseki:
+    container_name: broker-fuseki
+    expose:
+    - '3030'
+    image: registry.gitlab.cc-asp.fraunhofer.de/eis-ids/broker-open/fuseki
+    networks:
+      local: null
+    volumes:
+    - broker-fuseki:/fuseki:rw
+  broker-reverseproxy:
+    container_name: broker-reverseproxy
+    image: registry.gitlab.cc-asp.fraunhofer.de/eis-ids/broker-open/reverseproxy
+    networks:
+      local: null
+    ports:
+    - published: 443
+      target: 443
+    - published: 81
+      target: 80
+    volumes:
+    - /mnt/c/Users/a868775/IDS_testeos/git_ids_kubernetes/IDS-testbed/MetadataBroker/server.crt:/etc/cert/server.crt:rwx
+    - /mnt/c/Users/a868775/IDS_testeos/git_ids_kubernetes/IDS-testbed/MetadataBroker/server.key:/etc/cert/server.key:rwx
+  connectora:
+    container_name: connectora
+    environment:
+      CONFIGURATION_PATH: /config/config.json
+      DAPS_INCOMING_DAT_DEFAULT_WELLKNOWN: /jwks.json
+      DAPS_KEY_URL: http://omejdn/auth/jwks.json
+      DAPS_TOKEN_URL: http://omejdn/auth/token
+      DAPS_URL: http://omejdn
+      SERVER_SSL_KEY-STORE: file:///config/connectorA.p12
+    image: ghcr.io/international-data-spaces-association/dataspace-connector:7.1.0
+    networks:
+      local: null
+    ports:
+    - published: 8080
+      target: 8080
+    volumes:
+    - /mnt/c/Users/a868775/IDS_testeos/git_ids_kubernetes/IDS-testbed/DataspaceConnectorA/conf/config.json:/config/config.json:rwx
+    - /mnt/c/Users/a868775/IDS_testeos/git_ids_kubernetes/IDS-testbed/DataspaceConnectorA/conf/testbed1.p12:/conf/testbed1.p12:rwx
+    - /mnt/c/Users/a868775/IDS_testeos/git_ids_kubernetes/IDS-testbed/DataspaceConnectorA/conf/connectorA.p12:/config/connectorA.p12:rwx
+    - /mnt/c/Users/a868775/IDS_testeos/git_ids_kubernetes/IDS-testbed/DataspaceConnectorA/conf/truststore.p12:/config/truststore.p12:rwx
+  connectorb:
+    container_name: connectorb
+    environment:
+      CONFIGURATION_PATH: /config/config.json
+      DAPS_INCOMING_DAT_DEFAULT_WELLKNOWN: /jwks.json
+      DAPS_KEY_URL: http://omejdn/auth/jwks.json
+      DAPS_TOKEN_URL: http://omejdn/auth/token
+      DAPS_URL: http://omejdn
+      SERVER_PORT: '8081'
+      SERVER_SSL_KEY-STORE: file:///config/connectorB.p12
+    image: ghcr.io/international-data-spaces-association/dataspace-connector:7.1.0
+    networks:
+      local: null
+    ports:
+    - published: 8081
+      target: 8081
+    volumes:
+    - /mnt/c/Users/a868775/IDS_testeos/git_ids_kubernetes/IDS-testbed/DataspaceConnectorB/conf/config.json:/config/config.json:rwx
+    - /mnt/c/Users/a868775/IDS_testeos/git_ids_kubernetes/IDS-testbed/DataspaceConnectorB/conf/testbed2.p12:/conf/testbed2.p12:rwx
+    - /mnt/c/Users/a868775/IDS_testeos/git_ids_kubernetes/IDS-testbed/DataspaceConnectorB/conf/connectorB.p12:/config/connectorB.p12:rwx
+    - /mnt/c/Users/a868775/IDS_testeos/git_ids_kubernetes/IDS-testbed/DataspaceConnectorB/conf/truststore.p12:/config/truststore.p12:rwx
+  omejdn:
+    container_name: omejdn
+    environment:
+      OMEJDN_DOMAIN: omejdn
+      OMEJDN_PATH: /auth
+      UI_PATH: ''
+    image: nginx:1.21.6
+    networks:
+      local: null
+    ports:
+    - published: 80
+      target: 80
+    volumes:
+    - /mnt/c/Users/a868775/IDS_testeos/git_ids_kubernetes/IDS-testbed/DAPS/nginx.conf:/etc/nginx/templates/default.conf.template:rwx
+  omejdn-server:
+    container_name: omejdn-server
+    environment:
+      OMEJDN_ACCEPT_AUDIENCE: idsc:IDS_CONNECTORS_ALL
+      OMEJDN_ADMIN: admin:password
+      OMEJDN_DEFAULT_AUDIENCE: idsc:IDS_CONNECTORS_ALL
+      OMEJDN_ENVIRONMENT: development
+      OMEJDN_FRONT_URL: http://omejdn/auth
+      OMEJDN_ISSUER: http://omejdn/auth
+      OMEJDN_OPENID: "true"
+    expose:
+    - '8089'
+    image: ghcr.io/fraunhofer-aisec/omejdn-server:1.6.0
+    networks:
+      local: null
+    volumes:
+    - /mnt/c/Users/a868775/IDS_testeos/git_ids_kubernetes/IDS-testbed/DAPS/config:/opt/config:rwx
+    - /mnt/c/Users/a868775/IDS_testeos/git_ids_kubernetes/IDS-testbed/DAPS/keys:/opt/keys:rwx
+  omejdn-ui:
+    container_name: omejdn-ui
+    environment:
+      API_URL: http://omejdn/auth/api/v1
+      CLIENT_ID: adminUI
+      OIDC_ISSUER: http://omejdn/auth
+    expose:
+    - '8088'
+    image: ghcr.io/fraunhofer-aisec/omejdn-ui:dev
+    networks:
+      local: null
+version: '3.5'
+volumes:
+  broker-fuseki: {}
+
