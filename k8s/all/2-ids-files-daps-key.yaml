@@ -7,7 +7,7 @@ kind: ConfigMap
 metadata:
   creationTimestamp: "2022-06-08T09:21:11Z"
   name: ids-files-daps-key
-  namespace: ids-2
+  #namespace: ids-2
   resourceVersion: "116441"
   uid: 99731c65-22b6-4f77-973c-49908ae99e0b
   
