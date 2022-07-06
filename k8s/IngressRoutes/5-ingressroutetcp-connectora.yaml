@@ -1,0 +1,16 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: connectora
+  namespace: ids-2
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: HostSNI(`connectora`)
+    services:
+    - name: connectora
+      port: 8080
+  tls:
+    passthrough: true 
