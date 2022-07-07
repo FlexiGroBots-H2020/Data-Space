@@ -1,0 +1,105 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-dashboard-tls
+  namespace: kube-system
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`connectora.localhost`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+    kind: Rule
+    services:
+    - name: api@internal
+      kind: TraefikService
+  tls:
+    certResolver: default
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: whoami-ingressroute
+  namespace: ids-2
+
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`example.com`) && PathPrefix(`/foo`)
+    kind: Rule
+    services:
+    - name: whoami
+      namespace: ids-2
+      port: 80
+
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: myingressroute-connectora
+  namespace: ids-2
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`connectora-traefik`) && PathPrefix(`/api`)
+    kind: Rule
+    services:
+    - name: connectora
+      namespace: ids-2
+      port: 8080
+    middlewares:
+      - name: stripprefix
+  tls:
+    secretName: tls-secret  
+    #certResolver: default
+
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: stripprefix
+  namespace: ids-2
+spec:
+  addPrefix:
+    prefix: /api/offers
+
+# ---
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: traefik-connectora
+#   namespace: kube-system
+# spec:
+#   entryPoints:
+#     - web
+#   routes:
+#   # - match: Host(`connectora.localhost`) && PathPrefix(`/foo`)
+#   #   middlewares:
+#   #   - name: strip-foo-path  
+#   #   kind: Rule
+#   #   services:
+#   #   - kind: Service
+#   #     name: connectora
+#   #     namespace: ids-2
+#   #     port: 8080
+  
+#   - match: Host(`connectora.localhost`)
+#     # middlewares:
+#     # - name: strip-foo-path  
+#     kind: Rule
+#     services:
+#     - kind: Service
+#       name: connectora
+#       namespace: kube-system
+#       port: 8084
+
+
+#   # tls:
+#   #   secretName: tls-secret
+#   # tls:
+#   #   certResolver: default
