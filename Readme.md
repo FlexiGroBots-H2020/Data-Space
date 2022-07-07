@@ -46,7 +46,7 @@ The main parts of the system are:
 
   If broker image is not in the local machine it is neccesary to build the dockerfile. 
 
-  ` docker build MetadataBroker/build/Dockerfile/ .`
+  ` docker build MetadataBroker/build .`
 
 ## Starting the architecture
 
@@ -114,6 +114,6 @@ Traefik can be deployed with the next manifests.
   
   `kubectl apply -f k8s/traefik 055-ingressroute.yaml`
 
-To remove traefik.
+To remove traefik menifests.
 
   `kubectl delete -f k8s/traefik .`
