@@ -8,7 +8,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-  - match: HostSNI(`connectora.platform.flexigrobots-h2020.eu`)
+  - match: HostSNI(`connectora.localhost`)
     services:
     - name: connectora
       port: 8080
@@ -25,7 +25,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-  - match: HostSNI(`connectorb.platform.flexigrobots-h2020.eu`)
+  - match: HostSNI(`connectora.localhost`)
     services:
     - name: connectorb
       port: 8081
