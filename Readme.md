@@ -78,7 +78,7 @@ The main parts of the system are:
 
 - Also it is neccesary to deploy an ingress manifest. For that, we have implemented two ways with two proxys (nginx and traefik). Nginx is more oriented to run in local machines whereas traefik can deploy the system in local and remote cluster. 
 
-  To run with nginx, it is necessary to install Nginx driver to be able to make the calls to the cluster from the outside. If the Ingress-Nginx repo is not updated, in this [link](https://kubernetes.github.io/ingress-nginx/deploy/) the official documentation can be found.
+  To run with nginx [<img src="pictures/img-buildkite/nginx.png" width="20" height="20" alt="traefik"/>](https://www.nginx.com/), it is necessary to install Nginx driver to be able to make the calls to the cluster from the outside. If the Ingress-Nginx repo is not updated, in this [link](https://kubernetes.github.io/ingress-nginx/deploy/) the official documentation can be found.
 
     `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml`
 
@@ -86,7 +86,8 @@ The main parts of the system are:
       
   `kubectl apply -f /k8s/Ingress/4-ingress-connection-nginx.yaml -n ids-2`
 
-  On another hand, the official web defines traefik as     <img src="pictures/img-buildkite/traefik2.png" width="50" height="50" alt="jetpack"/>:
+  On another hand, the official web defines traefik as  [<img src="pictures/img-buildkite/traefik.png" width="30" height="30" alt="traefik"/>](https://doc.traefik.io/traefik/):
+
 
   *"Traefik is an open-source Edge Router that makes publishing your services a fun and easy experience. It receives requests on behalf of your system and finds out which components are responsible for handling them."*
   
@@ -116,7 +117,7 @@ The main parts of the system are:
   To remove traefik menifests.
 
     `kubectl delete -f k8s/traefik/ .`
-    
+
     `kubectl delete -f k8s/IngressRoutes/ .`
 
 
