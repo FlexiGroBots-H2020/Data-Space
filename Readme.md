@@ -91,8 +91,6 @@ The main parts of the system are:
   *"Traefik is an open-source Edge Router that makes publishing your services a fun and easy experience. It receives requests on behalf of your system and finds out which components are responsible for handling them."*
   
 
-
-
   Traefik can be deployed with the next manifests.
 
     `kubectl apply -f k8s/traefik/010-crd.yaml`
@@ -106,12 +104,21 @@ The main parts of the system are:
     `kubectl apply -f k8s/traefik/030-deployment.yaml`
     
     `kubectl apply -f k8s/traefik/040-service.yaml`
-    
-    `kubectl apply -f k8s/traefik/055-ingressroute.yaml`
 
+  To deploy in a local cluster run the next manifest,
+
+    `kubectl apply -f k8s/IngressRoutes/4-ingressroutetcp-local.yaml`
+  
+  And, to deploy in a remote cluster (i.e Rancher) run the below manifest.
+
+    `kubectl apply -f k8s/IngressRoutes/4-ingressroutetcp-rancher.yaml`
+    
   To remove traefik menifests.
 
-    `kubectl delete -f k8s/traefik .`
+    `kubectl delete -f k8s/traefik/ .`
+    
+    `kubectl delete -f k8s/IngressRoutes/ .`
+
 
 
 Finally, with a tool such as [Postman](https://www.postman.com/), a test could be performed to verify that the communication and connectivity of the infrastructure are correct. For this purpose, the [ids-certification-testing](TestbedPreconfiguration.postman_collection.json) file is used, in which a set of tests verifies the tool's proper operation on Kubernetes.
