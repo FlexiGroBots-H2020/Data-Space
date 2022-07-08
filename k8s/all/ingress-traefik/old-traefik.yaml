@@ -1,0 +1,139 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: traefik-ingress-controller
+  namespace: ids-2
+
+---
+
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: traefik-ingress-controller
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - services
+      - endpoints
+      - secrets
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - extensions
+    resources:
+      - ingresses
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+    - extensions
+    resources:
+    - ingresses/status
+    verbs:
+    - update
+
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: traefik-ingress-controller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: traefik-ingress-controller
+subjects:
+  - kind: ServiceAccount
+    name: traefik-ingress-controller
+    namespace: ids-2
+
+---
+
+kind: DaemonSet
+apiVersion: apps/v1
+metadata:
+  name: traefik-ingress-controller
+  namespace: ids-2
+  labels:
+    k8s-app: traefik-ingress-lb
+spec:
+  selector:
+    matchLabels:
+      k8s-app: traefik-ingress-lb
+      name: traefik-ingress-lb
+  template:
+    metadata:
+      labels:
+        k8s-app: traefik-ingress-lb
+        name: traefik-ingress-lb
+    spec:
+      serviceAccountName: traefik-ingress-controller
+      terminationGracePeriodSeconds: 60
+      containers:
+      - image: traefik:latest
+        name: traefik-ingress-lb
+        ports:
+        - name: http
+          containerPort: 80
+          hostPort: 80
+        - name: admin
+          containerPort: 8080
+          hostPort: 8080
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+            add:
+            - NET_BIND_SERVICE
+        args:
+        - --api
+        - --logLevel=INFO
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: traefik-ingress-service
+  namespace: ids-2
+spec:
+  type: LoadBalancer
+  selector:
+    k8s-app: traefik-ingress-lb
+  ports:
+    - protocol: TCP
+      port: 80
+      name: web
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: connectora
+  labels:
+    name: connectora
+spec:
+  rules:
+  - host: connectora.rancher
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: connectora
+            port:
+              number: 8080
+  - host: connectora.rancher
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: connectorb
+            port:
+              number: 8081

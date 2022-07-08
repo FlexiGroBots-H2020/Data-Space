@@ -100,19 +100,19 @@ The official web defines traefik as:
 
 Traefik can be deployed with the next manifests.
 
-  `kubectl apply -f k8s/traefik 010-crd.yaml`
+  `kubectl apply -f k8s/traefik/010-crd.yaml`
   
-  `kubectl apply -f k8s/traefik 011-middleware.yaml`
+  `kubectl apply -f k8s/traefik/011-middleware.yaml`
   
-  `kubectl apply -f k8s/traefik 015-rbac.yaml`
+  `kubectl apply -f k8s/traefik/015-rbac.yaml`
   
-  `kubectl apply -f k8s/traefik 020-pvc.yaml`
+  `kubectl apply -f k8s/traefik/020-pvc.yaml`
   
-  `kubectl apply -f k8s/traefik 030-deployment.yaml`
+  `kubectl apply -f k8s/traefik/030-deployment.yaml`
   
-  `kubectl apply -f k8s/traefik 040-service.yaml`
+  `kubectl apply -f k8s/traefik/040-service.yaml`
   
-  `kubectl apply -f k8s/traefik 055-ingressroute.yaml`
+  `kubectl apply -f k8s/traefik/055-ingressroute.yaml`
 
 To remove traefik menifests.
 

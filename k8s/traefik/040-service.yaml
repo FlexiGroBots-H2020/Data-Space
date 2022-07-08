@@ -10,8 +10,8 @@ spec:
   # so that the container can be run as a non-root user and they can bind to these ports.
   # Traefik is still accessed over 80 and 443 on the host, but the service routes the traffic
   # to ports 8080 and 8443 on the container.
-  #externalIPs:
-  #  - 127.0.0.1
+  externalIPs:
+    - 213.227.145.187
   ports:
     - protocol: TCP
       name: web
