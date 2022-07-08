@@ -86,7 +86,7 @@ The main parts of the system are:
       
   `kubectl apply -f /k8s/Ingress/4-ingress-connection-nginx.yaml -n ids-2`
 
-  On another hand, the official web defines traefik as  [<img src="pictures/img-buildkite/traefik.png" width="30" height="30" alt="traefik"/>](https://doc.traefik.io/traefik/):
+  On another hand, the official web defines traefik as  [<img src="pictures/img-buildkite/Traefik.png" width="30" height="30" alt="traefik"/>](https://doc.traefik.io/traefik/):
 
 
   *"Traefik is an open-source Edge Router that makes publishing your services a fun and easy experience. It receives requests on behalf of your system and finds out which components are responsible for handling them."*
