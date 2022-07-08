@@ -44,11 +44,15 @@ The main parts of the system are:
   
 - The IDS Metadata [Broker](https://github.com/International-Data-Spaces-Association/metadata-broker-open-core) is one of the modules still under development and intends to help IDSA members implement custom broker solutions.
 
+  If broker image is not in the local machine it is neccesary to build the dockerfile. 
+
+  ` docker build MetadataBroker/build .`
+
 ## Starting the architecture
 
 - The first step is to created a namespace.
   
-  `kubectle create namespace ids-2`
+  `kubectl create namespace ids-2`
   
 
 
@@ -64,13 +68,13 @@ The main parts of the system are:
 
 - For the ingress manifest is neccesary to create a secret. With the next command it is generate a cert and key file and a secret in the namespace.
   
-    `openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls-key.key -out tls-cert.crt`
+    `openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt`
 
     `kubectl create secret tls tls-secret --key tls.key --cert tls.crt -n ids-2`
 
 - The next step would be to launch the application manifests.
 
-    `kubectl apply -f export -n ids-2`
+    `kubectl apply -f k8s/all -n ids-2`
 
 - The last point would be to check that the deployment has been performed successfully. Using tools such as [K9s](https://k9scli.io/). The results might be as below. 
     
@@ -87,3 +91,29 @@ Finally, with a tool such as [Postman](https://www.postman.com/), a test could b
 
 These tests can be customized by changing the [file](k8s\Config-tests\kube-linter-test.yaml).
 
+## Using Traefik <img src="pictures/img-buildkite/traefik2.png" width="50" height="50" alt="jetpack"/>
+
+The main goal of this repository is to set up the IDS system on the remote flexigrobots rancher. The nginx proxy has been replaced by a [traefik](https://doc.traefik.io/traefik/).
+
+The official web defines traefik as:
+*"Traefik is an open-source Edge Router that makes publishing your services a fun and easy experience. It receives requests on behalf of your system and finds out which components are responsible for handling them."*
+
+Traefik can be deployed with the next manifests.
+
+  `kubectl apply -f k8s/traefik/010-crd.yaml`
+  
+  `kubectl apply -f k8s/traefik/011-middleware.yaml`
+  
+  `kubectl apply -f k8s/traefik/015-rbac.yaml`
+  
+  `kubectl apply -f k8s/traefik/020-pvc.yaml`
+  
+  `kubectl apply -f k8s/traefik/030-deployment.yaml`
+  
+  `kubectl apply -f k8s/traefik/040-service.yaml`
+  
+  `kubectl apply -f k8s/traefik/055-ingressroute.yaml`
+
+To remove traefik menifests.
+
+  `kubectl delete -f k8s/traefik .`

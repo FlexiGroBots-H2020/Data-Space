@@ -49,4 +49,8 @@ spec:
             - name: websecure
               containerPort: 8443
             - name: admin
+<<<<<<< HEAD
               containerPort: 9080
+=======
+              containerPort: 9080
+>>>>>>> main
