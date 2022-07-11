@@ -55,11 +55,6 @@ The main parts of the system are:
   `kubectl create namespace ids-2`
   
 
-
-- It is necessary to install Nginx driver to be able to make the calls to the cluster from the outside. If the Ingress-Nginx repo is not updated, in this [link](https://kubernetes.github.io/ingress-nginx/deploy/) the official documentation can be found.
-
-    `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml`
-
 - To comunicate with the nginx-controller is neccesary to add the next lines in `/etc/hosts`.
   
     `127.0.0.1       connectora.localhost`
@@ -81,6 +76,51 @@ The main parts of the system are:
 
 ![figura](./pictures/pods_running_k9s.png)
 
+- Also it is neccesary to deploy an ingress manifest. For that, we have implemented two ways with two proxys (nginx and traefik). Nginx is more oriented to run in local machines whereas traefik can deploy the system in local and remote cluster. 
+
+  To run with nginx [<img src="pictures/img-buildkite/nginx.png" width="20" height="20" alt="traefik"/>](https://www.nginx.com/), it is necessary to install Nginx driver to be able to make the calls to the cluster from the outside. If the Ingress-Nginx repo is not updated, in this [link](https://kubernetes.github.io/ingress-nginx/deploy/) the official documentation can be found.
+
+    `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml`
+
+  And finish deploying the ingress manifest with:
+      
+  `kubectl apply -f /k8s/Ingress/4-ingress-connection-nginx.yaml -n ids-2`
+
+  On another hand, the official web defines traefik as  [<img src="pictures/img-buildkite/Traefik.png" width="30" height="30" alt="traefik"/>](https://doc.traefik.io/traefik/):
+
+
+  *"Traefik is an open-source Edge Router that makes publishing your services a fun and easy experience. It receives requests on behalf of your system and finds out which components are responsible for handling them."*
+  
+
+  Traefik can be deployed with the next manifests.
+
+    `kubectl apply -f k8s/traefik/010-crd.yaml`
+    
+    `kubectl apply -f k8s/traefik/011-middleware.yaml`
+    
+    `kubectl apply -f k8s/traefik/015-rbac.yaml`
+    
+    `kubectl apply -f k8s/traefik/020-pvc.yaml`
+    
+    `kubectl apply -f k8s/traefik/030-deployment.yaml`
+    
+    `kubectl apply -f k8s/traefik/040-service.yaml`
+
+  To deploy in a local cluster run the next manifest,
+
+    `kubectl apply -f k8s/IngressRoutes/4-ingressroutetcp-local.yaml`
+  
+  And, to deploy in a remote cluster (i.e Rancher) run the below manifest.
+
+    `kubectl apply -f k8s/IngressRoutes/4-ingressroutetcp-rancher.yaml`
+    
+  To remove traefik menifests.
+
+    `kubectl delete -f k8s/traefik/ .`
+
+    `kubectl delete -f k8s/IngressRoutes/ .`
+
+
 
 Finally, with a tool such as [Postman](https://www.postman.com/), a test could be performed to verify that the communication and connectivity of the infrastructure are correct. For this purpose, the [ids-certification-testing](TestbedPreconfiguration.postman_collection.json) file is used, in which a set of tests verifies the tool's proper operation on Kubernetes.
 
@@ -91,29 +131,3 @@ Finally, with a tool such as [Postman](https://www.postman.com/), a test could b
 
 These tests can be customized by changing the [file](k8s\Config-tests\kube-linter-test.yaml).
 
-## Using Traefik <img src="pictures/img-buildkite/traefik2.png" width="50" height="50" alt="jetpack"/>
-
-The main goal of this repository is to set up the IDS system on the remote flexigrobots rancher. The nginx proxy has been replaced by a [traefik](https://doc.traefik.io/traefik/).
-
-The official web defines traefik as:
-*"Traefik is an open-source Edge Router that makes publishing your services a fun and easy experience. It receives requests on behalf of your system and finds out which components are responsible for handling them."*
-
-Traefik can be deployed with the next manifests.
-
-  `kubectl apply -f k8s/traefik 010-crd.yaml`
-  
-  `kubectl apply -f k8s/traefik 011-middleware.yaml`
-  
-  `kubectl apply -f k8s/traefik 015-rbac.yaml`
-  
-  `kubectl apply -f k8s/traefik 020-pvc.yaml`
-  
-  `kubectl apply -f k8s/traefik 030-deployment.yaml`
-  
-  `kubectl apply -f k8s/traefik 040-service.yaml`
-  
-  `kubectl apply -f k8s/traefik 055-ingressroute.yaml`
-
-To remove traefik menifests.
-
-  `kubectl delete -f k8s/traefik .`
