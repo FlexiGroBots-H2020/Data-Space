@@ -41,7 +41,7 @@ spec:
           value: "true"
         - name: SPARQL_ENDPOINT
           value: http://broker-fuseki:3030/connectorData
-        image: carloscobatos/broker-core:v1-1
+        image: ghcr.io/flexigrobots-h2020/broker-core-ds:v1
 
         name: broker-core
         ports:
