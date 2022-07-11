@@ -1,4 +1,4 @@
-# YAML nomenclature <img src="../pictures/img-buildkite/Kubernetes.png" width="30" height="30" alt="kubernetes"/>
+# YAML nomenclature <img src="../pictures/img-buildkite/kubernetes.png" width="30" height="30" alt="kubernetes"/>
 
 In order to organise the manifests we have used a name structure for the YAML files. For that, the name file has a number that defines the type of k8s elements. Below it is shown this nomenclature:
 
