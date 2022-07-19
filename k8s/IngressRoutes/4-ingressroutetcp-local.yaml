@@ -16,6 +16,7 @@ spec:
     passthrough: true 
 
 ---
+
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRouteTCP
 metadata:
@@ -25,7 +26,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-  - match: HostSNI(`connectora.localhost`)
+  - match: HostSNI(`connectorb.localhost`)
     services:
     - name: connectorb
       port: 8081

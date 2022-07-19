@@ -9,7 +9,7 @@ metadata:
     io.kompose.service: connectora
   name: connectora
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
     - name: "http"
       port: 8080
