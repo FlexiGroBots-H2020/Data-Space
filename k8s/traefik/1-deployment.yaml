@@ -57,7 +57,7 @@ spec:
             - --certificatesresolvers.default.acme.email=daniel.calvo@atos.net
             - --certificatesresolvers.default.acme.storage=/etc/traefik/certs/acme.json
             - --certificatesresolvers.default.acme.tlschallenge=true
-            - --serversTransport.insecureSkipVerify=true
+            #- --serversTransport.insecureSkipVerify=true
             # Production
             - --certificatesresolvers.default.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
             # Staging
