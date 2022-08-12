@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: connectora
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints : web, websecure, idsa
+    traefik.ingress.kubernetes.io/router.tls.: default
+    traefik.ingress.kubernetes.io/ssl-passthrought : "false"
+    traefik.ingress.kubernetes.io/force-ssl-redirect : "false"
+    traefik.ingress.kubernetes.io/backend-protocol: https
+    traefik.io/ingress.class: nginx
+
+spec:
+  tls:
+  - secretName: tls-secret
+  rules:
+  - host: connectora.platform.flexigrobots-h2020.eu
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: connectora
+            port:
+              number: 8080
+  - host: connectora.platform.flexigrobots-h2020.eu
+    http:
+      paths:
+      - path: /
+        pathType: Prefixcd 
+        backend:
+          service:
+            name: connectorb
+            port:
+              number: 8081

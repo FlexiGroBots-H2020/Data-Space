@@ -69,7 +69,7 @@ The main parts of the system are:
 
 - The next step would be to launch the application manifests.
 
-    `kubectl apply -f k8s/all -n ids-2`
+    `kubectl apply -f ./idsa-manifests -n ids-2`
 
 - The last point would be to check that the deployment has been performed successfully. Using tools such as [K9s](https://k9scli.io/). The results might be as below. 
     
@@ -84,7 +84,7 @@ The main parts of the system are:
 
   And finish deploying the ingress manifest with:
       
-  `kubectl apply -f /k8s/Ingress/4-ingress-connection-nginx.yaml -n ids-2`
+  `kubectl apply -f ./Ingress/4-ingress-connection-nginx.yaml -n ids-2`
 
   On another hand, the official web defines traefik as  [<img src="pictures/img-buildkite/Traefik.png" width="30" height="30" alt="traefik"/>](https://doc.traefik.io/traefik/):
 
@@ -94,33 +94,35 @@ The main parts of the system are:
 
   Traefik can be deployed with the next manifests.
 
-    `kubectl apply -f k8s/traefik/010-crd.yaml`
+    `kubectl apply -f ./traefik/010-crd.yaml`
     
-    `kubectl apply -f k8s/traefik/011-middleware.yaml`
+    `kubectl apply -f ./traefik/011-middleware.yaml`
     
-    `kubectl apply -f k8s/traefik/015-rbac.yaml`
+    `kubectl apply -f ./traefik/015-rbac.yaml`
     
-    `kubectl apply -f k8s/traefik/020-pvc.yaml`
+    `kubectl apply -f ./traefik/020-pvc.yaml`
     
-    `kubectl apply -f k8s/traefik/030-deployment.yaml`
+    `kubectl apply -f ./traefik/030-deployment.yaml`
     
-    `kubectl apply -f k8s/traefik/040-service.yaml`
+    `kubectl apply -f ./traefik/040-service.yaml`
 
   To deploy in a local cluster run the next manifest,
 
-    `kubectl apply -f k8s/IngressRoutes/4-ingressroutetcp-local.yaml`
+    `kubectl apply -f ./IngressRoutes/4-ingressroutetcp-local.yaml`
   
   And, to deploy in a remote cluster (i.e Rancher) run the below manifest.
 
-    `kubectl apply -f k8s/IngressRoutes/4-ingressroutetcp-rancher.yaml`
+    `kubectl apply -f ./IngressRoutes/4-ingressroutetcp-rancher.yaml`
     
   To remove traefik menifests.
 
-    `kubectl delete -f k8s/traefik/ .`
+    `kubectl delete -f ./traefik/ `
 
-    `kubectl delete -f k8s/IngressRoutes/ .`
+    `kubectl delete -f ./IngressRoutes/ `
 
+To verify the connectivity with the load-balancer it is possible to deploy the traefik's dashboard. With this web-tool is possible to check each connection with the cluster's service. Treafik's dashboar is shown below for the different service of the project. 
 
+![figura](./pictures/dashboard.png)
 
 Finally, with a tool such as [Postman](https://www.postman.com/), a test could be performed to verify that the communication and connectivity of the infrastructure are correct. For this purpose, the [ids-certification-testing](TestbedPreconfiguration.postman_collection.json) file is used, in which a set of tests verifies the tool's proper operation on Kubernetes.
 
