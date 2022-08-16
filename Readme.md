@@ -122,7 +122,7 @@ The main parts of the system are:
 
 To verify the connectivity with the load-balancer it is possible to deploy the traefik's dashboard. With this web-tool is possible to check each connection with the cluster's service. Treafik's dashboar is shown below for the different service of the project. 
 
-![figura](./pictures/dashboard.png)
+![figura](./pictures/dashboardv2.png)
 
 Finally, with a tool such as [Postman](https://www.postman.com/), a test could be performed to verify that the communication and connectivity of the infrastructure are correct. For this purpose, the [ids-certification-testing](TestbedPreconfiguration.postman_collection.json) file is used, in which a set of tests verifies the tool's proper operation on Kubernetes.
 
