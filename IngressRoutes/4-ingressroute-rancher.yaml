@@ -24,6 +24,16 @@ spec:
     certResolver: default
     domains:
     - main: connectora.platform.flexigrobots-h2020.eu
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: ServersTransport
+metadata:
+  name: connectora-transport
+  namespace: ids-2
+
+spec:
+    insecureSkipVerify: true
 
 ---
 apiVersion: traefik.containo.us/v1alpha1
@@ -52,3 +62,16 @@ spec:
     certResolver: default
     domains:
     - main: connectorb.platform.flexigrobots-h2020.eu
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: ServersTransport
+metadata:
+  name: connectorb-transport
+  namespace: ids-2
+
+spec:
+    insecureSkipVerify: true
+
+---

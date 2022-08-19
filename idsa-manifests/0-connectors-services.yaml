@@ -20,18 +20,6 @@ spec:
 status:
   loadBalancer: {}
 ---
-
-apiVersion: traefik.containo.us/v1alpha1
-kind: ServersTransport
-metadata:
-  name: connectora-transport
-  namespace: ids-2
-
-spec:
-    insecureSkipVerify: true
-
----
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -54,15 +42,3 @@ spec:
 status:
   loadBalancer: {}
 
----
-
-apiVersion: traefik.containo.us/v1alpha1
-kind: ServersTransport
-metadata:
-  name: connectorb-transport
-  namespace: ids-2
-
-spec:
-    insecureSkipVerify: true
-
----

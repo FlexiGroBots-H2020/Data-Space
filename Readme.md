@@ -110,8 +110,12 @@ The main parts of the system are:
 
     `kubectl apply -f ./IngressRoutes/4-ingressroutetcp-local.yaml`
   
-  And, to deploy in a remote cluster (i.e Rancher) run the below manifest.
+ Regarding remote deployment, we have implemented two ways depending on the certificates. You can create a TCP connection if you do not have a certificate organism such as Let's Encrypt. This way, it allows for the creation of an end-to-end connection between the traefik and connector. To upload this method, you only need to run the below command. In this case, the system will be certified for the IDS certification. 
 
+    `kubectl apply -f ./IngressRoutes/4-ingressroutetcp-rancher.yaml`
+
+You can deploy a connection using a transport layer if you have a certifying organism. Thus you can verify the connection with the certificates, this type of connection is more complex than the previous one, and it is no longer an end-to-end connection. To deploy this method, you can run the below command
+        
     `kubectl apply -f ./IngressRoutes/4-ingressroutetcp-rancher.yaml`
     
   To remove traefik menifests.
