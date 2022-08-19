@@ -110,7 +110,7 @@ The main parts of the system are:
 
     `kubectl apply -f ./IngressRoutes/4-ingressroutetcp-local.yaml`
   
- Regarding remote deployment, we have implemented two ways depending on the certificates. You can create a TCP connection if you do not have a certificate organism such as Let's Encrypt. This way, it allows for the creation of an end-to-end connection between the traefik and connector. To upload this method, you only need to run the below command. In this case, the system will be certified for the IDS certification. 
+ Regarding remote deployment, we have implemented two ways depending on the certificates. You can create a TCP connection if you do not have a certificate organism such as Let's Encrypt. This way, it allows for the creation of an end-to-end connection between the traefik and the connector. To upload this method, you only need to run the below command. In this case, the system will be certified for the IDS certification. 
 
     `kubectl apply -f ./IngressRoutes/4-ingressroutetcp-rancher.yaml`
 
