@@ -3,6 +3,8 @@ kind: Service
 metadata:
   annotations:
     traefik.ingress.kubernetes.io/service.serversscheme: https
+    traefik.ingress.kubernetes.io/service.serverstransport: connectora-transport@kubernetescrd
+    traefik.ingress.kubernetes.io/service.passhostheader: "true"
   labels:
     app: connectora
   name: connectora
@@ -17,6 +19,16 @@ spec:
     app: connectora
 status:
   loadBalancer: {}
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: ServersTransport
+metadata:
+  name: connectora-transport
+  namespace: ids-2
+
+spec:
+    insecureSkipVerify: true
 
 ---
 
@@ -25,6 +37,8 @@ kind: Service
 metadata:
   annotations:
     traefik.ingress.kubernetes.io/service.serversscheme: https
+    traefik.ingress.kubernetes.io/service.serverstransport: connectorb-transport@kubernetescrd
+    traefik.ingress.kubernetes.io/service.passhostheader: "true"
   labels:
     app: connectorb
   name: connectorb
@@ -39,3 +53,16 @@ spec:
     app: connectorb
 status:
   loadBalancer: {}
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: ServersTransport
+metadata:
+  name: connectorb-transport
+  namespace: ids-2
+
+spec:
+    insecureSkipVerify: true
+
+---

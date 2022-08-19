@@ -1,0 +1,53 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: hostnames
+  namespace: ids-2
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - kind: Rule
+    match: Host(`hostnames.platform.flexigrobots-h2020.eu`)
+    priority: 10                    # [4]
+
+    services:                       # [8]
+    - kind: Service
+      name: hostnames
+      namespace: ids-2
+      port: 443
+      passHostHeader: true
+      responseForwarding:
+        flushInterval: 1ms
+      scheme: https
+  tls:
+    certResolver: default
+    domains:
+    - main: hostnames.platform.flexigrobots-h2020.eu
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: connectora
+  namespace: ids-2
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - kind: Rule
+    match: Host(`connectora.platform.flexigrobots-h2020.eu`)
+    priority: 10                    # [4]
+
+    services:                       # [8]
+    - kind: Service
+      name: connectora
+      namespace: ids-2
+      port: 8080
+      passHostHeader: true
+      responseForwarding:
+        flushInterval: 1ms
+      scheme: https
+  tls:
+    certResolver: default
+    domains:
+    - main: connectora.platform.flexigrobots-h2020.eu

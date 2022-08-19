@@ -1,0 +1,31 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: ServersTransport
+metadata:
+  name: hostnames-transport
+  namespace: ids-2
+spec:
+  insecureSkipVerify: true
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: ids-2
+  name: hostnames
+  annotations:
+    traefik.ingress.kubernetes.io/service.serversscheme: https
+    traefik.ingress.kubernetes.io/service.serverstransport: hostnames-transport@kubernetescrd 
+    traefik.ingress.kubernetes.io/service.passhostheader: "true"
+spec:
+  type: ClusterIP
+  ports:
+  - name: hostnames
+    protocol: TCP
+    port: 443
+    targetPort: 443
+  selector:
+    app: hostnames    
+status:
+  loadBalancer: {}
+
+
