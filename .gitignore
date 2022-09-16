@@ -1,2 +1,7 @@
 CertificateAuthority/__pycache__/
 devd/
+Ingress/
+IngressRoutes/4-ingress-dashboard-https-local.yaml
+IngressRoutes/4-ingress-devd.yaml
+IngressRoutes/4-ingressroutetcp-local.yaml
+IngressRoutes/4-ingressroutetcp-rancher.yaml

@@ -19,6 +19,7 @@ data:
         "ids" : "https://w3id.org/idsa/core/",
         "idsc" : "https://w3id.org/idsa/code/"
       },
+
       "@type" : "ids:ConfigurationModel",
       "@id" : "https://w3id.org/idsa/autogen/configurationModel/7672b568-7878-4f62-8032-5c73de969414",
       "ids:configurationModelLogLevel" : {
@@ -27,6 +28,8 @@ data:
       "ids:connectorDeployMode" : {
         "@id" : "idsc:PRODUCTIVE_DEPLOYMENT"
       },
+
+
       "ids:connectorDescription" : {
         "@type" : "ids:BaseConnector",
         "@id" : "https://connector_A",
@@ -38,6 +41,8 @@ data:
           },
           "ids:keyValue" : "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuw6mFrdflXZTJgFOA5smDXC09SmpJWoGpyERZNEy31pKdsRGhTipR27j9irmmqihv7gIgzCnx6kIRNGI2u0oFQ5FgvO1xxgzcihdpF0CheOf9INgisPkq5hj8Ae/DYXkvjhQ6c6ak/ZYfj0NpqyEPcJ5MLRmYGexMaMZmTbqDJvJl5JG3+bE3Ya21hTZYOxiSicpfFgJ30kn5aUIAtd05IZy7z1sDiVLtTXlLfe/ZQC4pnjFts+tc12sX9ihImnCkd0Wvz3CTZoyBSsc1TdBkb9m0C5tvg0fQP4QgF/zH2QoZnnrI52uAZ8MomWtY2lt3D0kkpR69pfVDJ7y3vN/ewIDAQAB"
         },
+
+        
         "ids:description" : [ {
           "@value" : "IDS Connector A with static example resources",
           "@type" : "http://www.w3.org/2001/XMLSchema#string"
