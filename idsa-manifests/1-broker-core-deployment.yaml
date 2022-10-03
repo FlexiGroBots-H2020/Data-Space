@@ -24,20 +24,24 @@ spec:
         - name: COMPONENT_URI
           value: https://localhost/
         - name: DAPS_URL
-          value: http://omejdn/auth/token
+          value: http://omejdn/auth/token #no tocar
         - name: DAPS_VALIDATE_INCOMING
-          value: "true"
+          value: "false"
         - name: ELASTICSEARCH_HOSTNAME
           value: broker-elasticsearch
         - name: SHACL_VALIDATION
           value: "true"
         - name: SPARQL_ENDPOINT
           value: http://broker-fuseki:3030/connectorData
+
         image: ghcr.io/flexigrobots-h2020/broker-core:latest
 
         name: broker-core
         ports:
         - containerPort: 8080
+        volumeMounts:
+        - mountPath: /etc/cert
+          name: isstbroker
         resources:
           requests:
             memory: "1024Mi"
@@ -45,7 +49,12 @@ spec:
           limits:
             memory: "4Gi"
             cpu: "2000m"
-              
+      
+      volumes:
+      - name: isstbroker 
+        configMap:
+          name: ids-files-isstbroker-keystore     
+
       restartPolicy: Always
 status: {}
 
@@ -127,6 +136,7 @@ spec:
         ports:
         - containerPort: 443
         - containerPort: 81
+        - containerPort: 80
         volumeMounts:
         - mountPath: /etc/cert
           name: mydir

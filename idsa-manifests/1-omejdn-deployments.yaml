@@ -35,7 +35,7 @@ spec:
           - name: OMEJDN_FRONT_URL
             value: http://omejdn/auth
           - name: OMEJDN_ISSUER
-            value: http://omejdn/auth
+            value: http://omejd-idsa.platform.flexigrobots-h2020.eu/auth
           - name: OMEJDN_OPENID
             value: "true"
           image: ghcr.io/fraunhofer-aisec/omejdn-server:1.6.0
@@ -52,10 +52,18 @@ spec:
           - mountPath: /opt/keys
             name: key
             readOnly: true
+          - mountPath: /opt/keys/TLS
+            name: tls
           - mountPath: /opt/keys/clients
             name: keys-final-volume
           - mountPath: /opt/keys/omejdn
-            name: key-omejdn    
+            name: key-omejdn   
+          - mountPath: /opt/keys/TLS/daps.cert
+            name: omejdn-hostpath0
+            subPath: daps.cert
+          - mountPath: /opt/keys/TLS/daps.key
+            name: omejdn-hostpath0
+            subPath: daps.key
 
           resources:
             requests:
@@ -89,6 +97,7 @@ spec:
         volumeMounts:
         - mountPath: /keys
           name: key-client-temp
+
         - mountPath: /opt/keys/clients/
           name: keys-final-volume
         resources:
@@ -102,6 +111,8 @@ spec:
       restartPolicy: Always
       volumes:
       - name: data
+        emptyDir: {}
+      - name: tls
         emptyDir: {}
       
       - name: keys-final-volume
@@ -121,7 +132,11 @@ spec:
 
       - name: key-omejdn
         configMap:
-          name: ids-files-daps-key-omejdn                        
+          name: ids-files-daps-key-omejdn   
+
+      - name: omejdn-hostpath0 
+        configMap:
+          name: omejdn-configmap                     
 
 status: {}
 
@@ -152,7 +167,7 @@ spec:
       containers:
         - env:
           - name: OMEJDN_DOMAIN
-            value: omejdn
+            value: http://omejd-idsa.platform.flexigrobots-h2020.eu
           - name: OMEJDN_PATH
             value: /auth
           - name: UI_PATH
@@ -172,13 +187,21 @@ spec:
               cpu: "2000m"
           
           volumeMounts:
-          - mountPath: /etc/nginx/templates/
+          - mountPath: ./etc/nginx/templates/default.conf.template
             name: omejdn-hostpath0
+            subPath: default.conf.template
+          - mountPath: /etc/nginx/daps.cert
+            name: omejdn-hostpath0
+            subPath: daps.cert
+          - mountPath: /etc/nginx/daps.key
+            name: omejdn-hostpath0
+            subPath: daps.key
+
       restartPolicy: Always
       volumes:
       - name: omejdn-hostpath0 
         configMap:
-          name: ids-files-nginxconfig
+          name: omejdn-configmap
     
 status: {}
 
@@ -212,7 +235,7 @@ spec:
           - name: CLIENT_ID
             value: adminUI
           - name: OIDC_ISSUER
-            value: http://omejdn/auth
+            value: http://omejd-idsa.platform.flexigrobots-h2020.eu/auth
         image: ghcr.io/fraunhofer-aisec/omejdn-ui:dev
 
         name: omejdn-ui

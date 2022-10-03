@@ -15,6 +15,7 @@ spec:
     - kind: Service
       name: connectora
       namespace: ids-2
+      serversTransport: connectora-transport
       port: 8080
       passHostHeader: true
       responseForwarding:
@@ -53,6 +54,7 @@ spec:
     - kind: Service
       name: connectorb
       namespace: ids-2
+      serversTransport: connectorb-transport
       port: 8081
       passHostHeader: true
       responseForwarding:
@@ -69,6 +71,85 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: ServersTransport
 metadata:
   name: connectorb-transport
+  namespace: ids-2
+
+spec:
+    insecureSkipVerify: true
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: broker-reverseproxy
+  namespace: ids-2
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - kind: Rule
+    match: Host(`broker-reverseproxy.platform.flexigrobots-h2020.eu`)
+    priority: 10                    # [4]
+
+    services:                       # [8]
+    - kind: Service
+      name: broker-reverseproxy
+      namespace: ids-2
+      serversTransport: broker-reverseproxy-transport
+      port: 443
+      passHostHeader: true
+      responseForwarding:
+        flushInterval: 1ms
+      scheme: https
+  tls:
+    certResolver: default
+    domains:
+    - main: broker-reverseproxy.platform.flexigrobots-h2020.eu
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: ServersTransport
+metadata:
+  name: broker-reverseproxy-transport
+  namespace: ids-2
+
+spec:
+    insecureSkipVerify: true
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: omejdn-access
+  namespace: ids-2
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - kind: Rule
+    match: Host(`omejd-idsa.platform.flexigrobots-h2020.eu`)
+    priority: 10                    # [4]
+
+    services:                       # [8]
+    - kind: Service
+      name: omejdn
+      namespace: ids-2
+      serversTransport: omejdn-idsa-transport
+      port: 80
+      passHostHeader: true
+      responseForwarding:
+        flushInterval: 1ms
+      scheme: http
+  tls:
+    certResolver: default
+    domains:
+    - main: omejd-idsa.platform.flexigrobots-h2020.eu
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: ServersTransport
+metadata:
+  name: omejdn-idsa-transport
   namespace: ids-2
 
 spec:

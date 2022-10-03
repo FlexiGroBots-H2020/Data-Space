@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   creationTimestamp: "2022-06-02T10:29:08Z"
-  name: ids-files-nginxconfig
+  name: omejdn-configmap
   #namespace: ids-2
   resourceVersion: "177242"
   uid: b16d894a-75c2-458b-996c-1fefd48fb588
@@ -13,6 +13,9 @@ data:
       listen              [::]:80 default_server ;
       server_name         ${OMEJDN_DOMAIN};
 
+      # ssl_certificate     /etc/nginx/daps.cert;
+      # ssl_certificate_key /etc/nginx/daps.key;
+      
       proxy_set_header   Host $host;
       proxy_set_header   X-Forwarded-Proto http;
 
@@ -42,6 +45,108 @@ data:
       }
     }
 
+    # # Redirect Legacy HTTP Traffic
+    # server {
+    #   listen 80 default_server;
+    #   listen [::]:80 default_server;
+    #   server_name _;
+    #   return 301 https://$host$request_uri;
+    # }
+
+
+  daps.cert: |
+    Bag Attributes
+      localKeyID: 5B 16 EB E6 77 43 21 EC 41 B1 15 0F 4B 09 A7 DA 31 51 52 58 
+    subject=C = ES, ST = Bizkaia, L = Leioa, O = SQS, CN = omejdn
+
+    issuer=C = ES, ST = Bizkaia, L = Leioa, O = SQS, CN = omejdn
+
+    -----BEGIN CERTIFICATE-----
+    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
+    -----END CERTIFICATE-----
+
+  daps.key: |
+    -----BEGIN PRIVATE KEY-----
+    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
+    TjSj7A/zdp37G6EY4Wx7SX3SIRdD
+    -----END PRIVATE KEY-----
 
 ---
 
@@ -71,8 +176,8 @@ data:
           editable_attributes: []
     user_backend_default: yaml
     environment: development
-    issuer: http://omejdn/auth
-    front_url: http://omejdn/auth
+    issuer: http://omejd-idsa.platform.flexigrobots-h2020.eu/auth
+    front_url: http://omejd-idsa.platform.flexigrobots-h2020.eu/auth
     bind_to: 0.0.0.0:4567
     openid: true
     default_audience: idsc:IDS_CONNECTORS_ALL
@@ -138,6 +243,25 @@ data:
         value: https://w3id.org/idsa/contexts/context.jsonld
       - key: transportCertsSha256
         value: 0d9eb3600540532c69c7345e7ab04e0f420434b693e26e415783875a93e9fc4b
+    - client_id: 51:61:ED:3B:5E:DE:11:C3:F8:12:EE:69:56:41:15:00:D9:69:FF:36:keyid:07:FC:95:17:C4:95:B9:E4:AD:09:5F:07:1E:D2:20:75:2D:89:66:85
+      client_name: testbed4
+      grant_types: client_credentials
+      token_endpoint_auth_method: private_key_jwt
+      scope: idsc:IDS_CONNECTOR_ATTRIBUTES_ALL
+      attributes:
+      - key: idsc
+        value: IDS_CONNECTOR_ATTRIBUTES_ALL
+      - key: securityProfile
+        value: idsc:BASE_SECURITY_PROFILE
+      - key: referringConnector
+        value: http://testbed4.demo
+      - key: "@type"
+        value: ids:DatPayload
+      - key: "@context"
+        value: https://w3id.org/idsa/contexts/context.jsonld
+      - key: transportCertsSha256
+        value: 8e34c75ad86f60cb9205bb9e9309ff2ae9e2472b70c868db0693f39678331307
+
 
   scope_description.yml: |
     # Human readable descriptions for each scope.
@@ -261,6 +385,25 @@ data:
     lbnkrQlfBx7SIHUtiWaFMAoGCCqGSM49BAMCA2kAMGYCMQCRPtreAxmudaKS4jvm
     C2DwxqClnNzCQEwMWMWD8/Kzjlx2g9Aw82b9+Z5ATjSIldECMQDpQZpE1WHYIeED
     rNZ0RJSSKuF5KDM/2XR37K91umkGWEWuZ54Gs02s4LtdMcTmceE=
+    -----END CERTIFICATE-----
+  NTE6NjE6RUQ6M0I6NUU6REU6MTE6QzM6Rjg6MTI6RUU6Njk6NTY6NDE6MTU6MDA6RDk6Njk6RkY6MzY6a2V5aWQ6MDc6RkM6OTU6MTc6QzQ6OTU6Qjk6RTQ6QUQ6MDk6NUY6MDc6MUU6RDI6MjA6NzU6MkQ6ODk6NjY6ODU.cert: |
+    -----BEGIN CERTIFICATE-----
+    MIIC8TCCAnegAwIBAgIBBDAKBggqhkjOPQQDAjBNMQswCQYDVQQGEwJFUzEMMAoG
+    A1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMR4wHAYDVQQDDBVSZWZlcmVuY2VU
+    ZXN0YmVkU3ViQ0EwHhcNMjExMTI0MTEwNzMwWhcNMjQxMTIzMTEwNzMwWjBAMQsw
+    CQYDVQQGEwJFUzEMMAoGA1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMREwDwYD
+    VQQDDAh0ZXN0YmVkNDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANtD
+    RU4ybqHQeMj4U2niHpTlNcwcLWwa3lqvgejtUvFxy9cGbmqCZYL2ZbFDav6DqpdT
+    Ynj0/HTDnHa0j17H2RM+mE+UADGM6XzE4wESjd7z409ITDUN6WwUB9yZfDsgN+m8
+    kuL0BdMLNX/cGvdaOHJRGb+mGE1iaBQDvLa42nyBCdnzsizbzqc2H92Od0+Hy1sa
+    Ej772iyZnmsnOXYJAJvTLZFcAbaZmkR65fDNWvBiMSNbweSnfN0AmH0Zv9rJoNTp
+    KVIBxXvgRBLdaQwQtzKsK6JWsA86Ny51CNcnjwmUzCKuEsvCvPUq89sGtK9VGx3+
+    ebE/NfPyEWMwH/a/zYsCAwEAAaOBiTCBhjAMBgNVHRMBAf8EAjAAMCAGA1UdJQEB
+    /wQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAOBgNVHQ8BAf8EBAMCA6gwIAYDVR0O
+    AQH/BBYEFFFh7Tte3hHD+BLuaVZBFQDZaf82MCIGA1UdIwEB/wQYMBaAFAf8lRfE
+    lbnkrQlfBx7SIHUtiWaFMAoGCCqGSM49BAMCA2gAMGUCMQCUOPszEhz3eFTqlwF2
+    wsUwUn5qV5iNONqM1e6CeL3/rckyH4jZve4CYtpct23m5EgCMHPzrQczHeg0nHPe
+    KHnNXBFoTHUP0HJMFTbeSoCIFeORxEeVPbXWKwrXYbEewsQq7g==
     -----END CERTIFICATE-----
 
 ---
