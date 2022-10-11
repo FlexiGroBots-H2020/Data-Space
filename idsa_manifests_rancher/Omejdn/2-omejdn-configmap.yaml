@@ -261,6 +261,24 @@ data:
         value: https://w3id.org/idsa/contexts/context.jsonld
       - key: transportCertsSha256
         value: 8e34c75ad86f60cb9205bb9e9309ff2ae9e2472b70c868db0693f39678331307
+    - client_id: FC:57:89:A2:D5:C3:E3:64:AC:2A:4F:D6:F1:2A:91:0D:87:C8:5E:23:keyid:07:FC:95:17:C4:95:B9:E4:AD:09:5F:07:1E:D2:20:75:2D:89:66:85
+      client_name: testbed5
+      grant_types: client_credentials
+      token_endpoint_auth_method: private_key_jwt
+      scope: idsc:IDS_CONNECTOR_ATTRIBUTES_ALL
+      attributes:
+      - key: idsc
+        value: IDS_CONNECTOR_ATTRIBUTES_ALL
+      - key: securityProfile
+        value: idsc:BASE_SECURITY_PROFILE
+      - key: referringConnector
+        value: http://testbed5.demo
+      - key: "@type"
+        value: ids:DatPayload
+      - key: "@context"
+        value: https://w3id.org/idsa/contexts/context.jsonld
+      - key: transportCertsSha256
+        value: b758ae4c200c08925a20def86cf49355eabe0959305df0fb327bfe15c34e3029
 
 
   scope_description.yml: |

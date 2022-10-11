@@ -1,0 +1,467 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2022-06-02T10:29:08Z"
+  name: omejdn-configmap
+  #namespace: ids-2
+  resourceVersion: "177242"
+  uid: b16d894a-75c2-458b-996c-1fefd48fb588
+data:
+  default.conf.template: |
+    server {
+      listen              80 default_server;
+      listen              [::]:80 default_server ;
+      server_name         ${OMEJDN_DOMAIN};
+
+      # ssl_certificate     /etc/nginx/daps.cert;
+      # ssl_certificate_key /etc/nginx/daps.key;
+      
+      proxy_set_header   Host $host;
+      proxy_set_header   X-Forwarded-Proto http;
+
+      # Proxy to Omejdn
+      location  ${OMEJDN_PATH} {
+        rewrite ${OMEJDN_PATH}/(.*) /$1  break;
+        proxy_pass         http://omejdn-server:4567;
+        proxy_redirect     off;
+      }
+
+      # Proxy to the Admin UI
+      location  /${UI_PATH} {
+        rewrite ${UI_PATH}/(.*) /$1  break;
+        proxy_pass         http://omejdn-ui;
+        proxy_redirect     off;
+      }
+
+      #  Well-Known URIs
+      location /.well-known {
+        # RFC 8414 style metadata document and compatibility backup
+        rewrite /\.well-known/oauth-authorization-server${OMEJDN_PATH} ${OMEJDN_PATH}/.well-known/oauth-authorization-server last;
+        rewrite /\.well-known/openid-configuration${OMEJDN_PATH}       ${OMEJDN_PATH}/.well-known/openid-configuration       last;
+        rewrite /\.well-known/jwks.json                                ${OMEJDN_PATH}/jwks.json                              last;
+
+        # Webfinger
+        rewrite /\.well-known/webfinger                                ${OMEJDN_PATH}/.well-known/webfinger                  last;
+      }
+    }
+
+    # # Redirect Legacy HTTP Traffic
+    # server {
+    #   listen 80 default_server;
+    #   listen [::]:80 default_server;
+    #   server_name _;
+    #   return 301 https://$host$request_uri;
+    # }
+
+
+  daps.cert: |
+    Bag Attributes
+      localKeyID: 5B 16 EB E6 77 43 21 EC 41 B1 15 0F 4B 09 A7 DA 31 51 52 58 
+    subject=C = ES, ST = Bizkaia, L = Leioa, O = SQS, CN = omejdn
+
+    issuer=C = ES, ST = Bizkaia, L = Leioa, O = SQS, CN = omejdn
+
+    -----BEGIN CERTIFICATE-----
+    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
+    -----END CERTIFICATE-----
+
+  daps.key: |
+    -----BEGIN PRIVATE KEY-----
+    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
+    TjSj7A/zdp37G6EY4Wx7SX3SIRdD
+    -----END PRIVATE KEY-----
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2022-06-02T10:29:08Z"
+  name: ids-files-daps-config-v2
+  #namespace: ids-2
+  resourceVersion: "177242"
+  uid: d16d894a-75c2-458b-996c-1fefd48fb588
+data:
+  omejdn.yml: |
+    plugins:
+      user_db:
+        yaml:
+          location: config/users.yml
+      claim_mapper:
+        attribute:
+          skip_access_token: false
+          skip_id_token: true
+      api:
+        admin_v1: 
+        user_selfservice_v1:
+          allow_deletion: false
+          allow_password_change: true
+          editable_attributes: []
+    user_backend_default: yaml
+    environment: development
+    issuer: http://omejdn/auth
+    front_url: http://omejdn/auth
+    bind_to: 0.0.0.0:4567
+    openid: true
+    default_audience: idsc:IDS_CONNECTORS_ALL
+    accept_audience: idsc:IDS_CONNECTORS_ALL
+    access_token:
+      expiration: 3600
+      algorithm: RS256
+    id_token:
+      expiration: 3600
+      algorithm: RS256
+  clients.yml: |
+    - client_id: 66:07:ED:E5:80:E4:29:6D:1E:DD:F7:43:CA:0E:EB:38:32:C8:3A:43:keyid:07:FC:95:17:C4:95:B9:E4:AD:09:5F:07:1E:D2:20:75:2D:89:66:85
+      client_name: testbed1
+      grant_types: client_credentials
+      token_endpoint_auth_method: private_key_jwt
+      scope: idsc:IDS_CONNECTOR_ATTRIBUTES_ALL
+      attributes:
+      - key: idsc
+        value: IDS_CONNECTOR_ATTRIBUTES_ALL
+      - key: securityProfile
+        value: idsc:BASE_SECURITY_PROFILE
+      - key: referringConnector
+        value: http://testbed1.demo
+      - key: "@type"
+        value: ids:DatPayload
+      - key: "@context"
+        value: https://w3id.org/idsa/contexts/context.jsonld
+      - key: transportCertsSha256
+        value: a1da7cfeac22ddffa4ebbe67b323d9af1c05e9d92a9d3dfbc098f6c45609caa9
+    - client_id: 4B:4A:0E:81:99:6A:19:B9:3A:04:37:B6:7C:86:83:17:19:5A:6E:68:keyid:07:FC:95:17:C4:95:B9:E4:AD:09:5F:07:1E:D2:20:75:2D:89:66:85
+      client_name: testbed2
+      grant_types: client_credentials
+      token_endpoint_auth_method: private_key_jwt
+      scope: idsc:IDS_CONNECTOR_ATTRIBUTES_ALL
+      attributes:
+      - key: idsc
+        value: IDS_CONNECTOR_ATTRIBUTES_ALL
+      - key: securityProfile
+        value: idsc:BASE_SECURITY_PROFILE
+      - key: referringConnector
+        value: http://testbed2.demo
+      - key: "@type"
+        value: ids:DatPayload
+      - key: "@context"
+        value: https://w3id.org/idsa/contexts/context.jsonld
+      - key: transportCertsSha256
+        value: cf0dd49a552008eacd0b82cbf7850cbaacbf9c2a8942e542801db9bf4c2f0f5a
+    - client_id: B7:6D:DD:B3:FD:6E:41:52:A8:89:95:B0:0D:8E:4C:BA:0A:1F:72:FD:keyid:07:FC:95:17:C4:95:B9:E4:AD:09:5F:07:1E:D2:20:75:2D:89:66:85
+      client_name: testbed3
+      grant_types: client_credentials
+      token_endpoint_auth_method: private_key_jwt
+      scope: idsc:IDS_CONNECTOR_ATTRIBUTES_ALL
+      attributes:
+      - key: idsc
+        value: IDS_CONNECTOR_ATTRIBUTES_ALL
+      - key: securityProfile
+        value: idsc:BASE_SECURITY_PROFILE
+      - key: referringConnector
+        value: http://testbed3.demo
+      - key: "@type"
+        value: ids:DatPayload
+      - key: "@context"
+        value: https://w3id.org/idsa/contexts/context.jsonld
+      - key: transportCertsSha256
+        value: 0d9eb3600540532c69c7345e7ab04e0f420434b693e26e415783875a93e9fc4b
+    - client_id: 51:61:ED:3B:5E:DE:11:C3:F8:12:EE:69:56:41:15:00:D9:69:FF:36:keyid:07:FC:95:17:C4:95:B9:E4:AD:09:5F:07:1E:D2:20:75:2D:89:66:85
+      client_name: testbed4
+      grant_types: client_credentials
+      token_endpoint_auth_method: private_key_jwt
+      scope: idsc:IDS_CONNECTOR_ATTRIBUTES_ALL
+      attributes:
+      - key: idsc
+        value: IDS_CONNECTOR_ATTRIBUTES_ALL
+      - key: securityProfile
+        value: idsc:BASE_SECURITY_PROFILE
+      - key: referringConnector
+        value: http://testbed4.demo
+      - key: "@type"
+        value: ids:DatPayload
+      - key: "@context"
+        value: https://w3id.org/idsa/contexts/context.jsonld
+      - key: transportCertsSha256
+        value: 8e34c75ad86f60cb9205bb9e9309ff2ae9e2472b70c868db0693f39678331307
+    - client_id: FC:57:89:A2:D5:C3:E3:64:AC:2A:4F:D6:F1:2A:91:0D:87:C8:5E:23:keyid:07:FC:95:17:C4:95:B9:E4:AD:09:5F:07:1E:D2:20:75:2D:89:66:85
+      client_name: testbed5
+      grant_types: client_credentials
+      token_endpoint_auth_method: private_key_jwt
+      scope: idsc:IDS_CONNECTOR_ATTRIBUTES_ALL
+      attributes:
+      - key: idsc
+        value: IDS_CONNECTOR_ATTRIBUTES_ALL
+      - key: securityProfile
+        value: idsc:BASE_SECURITY_PROFILE
+      - key: referringConnector
+        value: http://testbed5.demo
+      - key: "@type"
+        value: ids:DatPayload
+      - key: "@context"
+        value: https://w3id.org/idsa/contexts/context.jsonld
+      - key: transportCertsSha256
+        value: b758ae4c200c08925a20def86cf49355eabe0959305df0fb327bfe15c34e3029
+
+
+  scope_description.yml: |
+    # Human readable descriptions for each scope.
+    # These are shown to a user before authorizing a client
+    profile: "Standard profile claims (e.g.: Name, picture, website, gender, birthdate, location)"
+    email: "Email-Address"
+    address: "Address"
+    phone: "Phone-number"
+    omejdn:read: "Read access to the Omejdn server API"
+    omejdn:write: "Write access to the Omejdn server API"
+    omejdn:admin: "Access to the Omejdn server admin API"
+  scope_mapping.yml: |
+    # Necessary IDS Claims to issue a DAT
+    idsc:IDS_CONNECTOR_ATTRIBUTES_ALL:
+      - securityProfile
+      - referringConnector
+      - "@type"
+      - "@context"
+      - transportCertsSha256
+
+
+
+  users.yml: |
+    - username: admin
+      attributes:
+      - key: omejdn
+        value: admin
+      password: "$2a$12$AFOdHeju8dD4J0hPQ1Rjd.9bYAvSkxEB504J8eKPX4VrQKQb8upOy"
+
+
+  webfinger.yml: |
+    # Define a webfinger here
+    #localhost.com:
+    #  name: test
+    #  website: http://localhost:4567
+
+
+
+  oauth_providers.yml: |
+    ## You may configure additional OAuth Providers as follows
+    #- name: 'Some OAuth Provider'
+    #  redirect_uri: 'http://localhost:4567/oauth_cb?provider=BFH'
+    #  client_id: 'our_client_id'
+    #  client_secret: 'our_secret'
+    #  scopes:
+    #    - 'email'
+    #    - 'profile'
+    #    - 'openid'
+    #  external_userid: 'nickname'
+    #  authorization_endpoint: 'https://authorize'
+    #  token_endpoint: 'https://token'
+    #  userinfo_endpoint: 'https://userinfo'
+    # response_type: 'code'
+
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2022-06-02T10:29:08Z"
+  name: ids-files-daps-config-key-client
+  #namespace: ids-2
+  resourceVersion: "177242"
+  uid: a16d894a-75c2-458b-996c-1fefd48fb588
+data:
+  NEI6NEE6MEU6ODE6OTk6NkE6MTk6Qjk6M0E6MDQ6Mzc6QjY6N0M6ODY6ODM6MTc6MTk6NUE6NkU6Njg6a2V5aWQ6MDc6RkM6OTU6MTc6QzQ6OTU6Qjk6RTQ6QUQ6MDk6NUY6MDc6MUU6RDI6MjA6NzU6MkQ6ODk6NjY6ODU.cert: |
+    -----BEGIN CERTIFICATE-----
+    MIIC8jCCAnegAwIBAgIBAjAKBggqhkjOPQQDAjBNMQswCQYDVQQGEwJFUzEMMAoG
+    A1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMR4wHAYDVQQDDBVSZWZlcmVuY2VU
+    ZXN0YmVkU3ViQ0EwHhcNMjExMTI0MTEwNzEzWhcNMjQxMTIzMTEwNzEzWjBAMQsw
+    CQYDVQQGEwJFUzEMMAoGA1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMREwDwYD
+    VQQDDAh0ZXN0YmVkMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMUc
+    m93i+OU/PYTfU9yfSDV8aQ/6G1DFMsoDLBzwpzc1JM/aNanSUYA5gf4yS6QS1Yjz
+    N9x94lOOYePoOdSoUrXq4vbQAYBMEzL7f0yvKuXMFcQOAANZmpl0nykWI5gA9U2g
+    Av8covr8affFE/hGzZOsNd8vWcmZvEv4WXkBMyawnyvcTHCtPQ+tvoS/IK2Gsh+x
+    ZhqEDRFMqEKBaU7wW7pjXka5DietU9lMU+mI2hk0866753B+Q4arDFKxdWxBADgB
+    LSs1GZU4IwyTcnPgxHt1YMpiA6/KDrrlO0Wk0AJpHXou9TDfNxZo9/ZMgH2zLzqq
+    LjwLMCztsYvOMYS02x0CAwEAAaOBiTCBhjAMBgNVHRMBAf8EAjAAMCAGA1UdJQEB
+    /wQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAOBgNVHQ8BAf8EBAMCA6gwIAYDVR0O
+    AQH/BBYEFEtKDoGZahm5OgQ3tnyGgxcZWm5oMCIGA1UdIwEB/wQYMBaAFAf8lRfE
+    lbnkrQlfBx7SIHUtiWaFMAoGCCqGSM49BAMCA2kAMGYCMQC/ccMjGhmNzaqM+7Ia
+    XjhvHgrpvYrZuUVyJ2bw1IjCFxi8RCejZOUW+HwVHl3lpH4CMQCWd5M99qLgYiqE
+    /9qJhlTbLTbomiXAwGaZVPlynZ1KgmAJIIeWn9OYybG/4ldTfUg=
+    -----END CERTIFICATE-----
+  NjY6MDc6RUQ6RTU6ODA6RTQ6Mjk6NkQ6MUU6REQ6Rjc6NDM6Q0E6MEU6RUI6Mzg6MzI6Qzg6M0E6NDM6a2V5aWQ6MDc6RkM6OTU6MTc6QzQ6OTU6Qjk6RTQ6QUQ6MDk6NUY6MDc6MUU6RDI6MjA6NzU6MkQ6ODk6NjY6ODU.cert: |
+    -----BEGIN CERTIFICATE-----
+    MIIC8TCCAnegAwIBAgIBATAKBggqhkjOPQQDAjBNMQswCQYDVQQGEwJFUzEMMAoG
+    A1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMR4wHAYDVQQDDBVSZWZlcmVuY2VU
+    ZXN0YmVkU3ViQ0EwHhcNMjExMTI0MTEwNzAwWhcNMjQxMTIzMTEwNzAwWjBAMQsw
+    CQYDVQQGEwJFUzEMMAoGA1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMREwDwYD
+    VQQDDAh0ZXN0YmVkMTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALAW
+    km70gGt1O7ZCvujnBo5cXpGmbA1DA12ybFb2TQKWVaCu1Vxj9FXm8DYmO9mRit9K
+    wH7Fp+QYCdKNX3nRUzK5BCQL2nNvsZecbndKNs7a4qY4xhM9VYy3TJAx7cJaOB9B
+    wV5+boLEza3Hv3Z+f2Ym4hK7vF07BJ5T34P9Juvh1+FpkBODccgBFdqhgBUjSa+M
+    ENEEmN1gWwpJMCETq7dL9OK6viblFMnuh2KjOXCo05G2p8WDINyoI8SEJ+UD25I5
+    /B7GEJpw4cUse3jVIpbmCj7yac/XXnCB5T68SiMtR4X7xS0bDj4K28DStiu+PvVD
+    7+2+m3sW1mDiyZstwkECAwEAAaOBiTCBhjAMBgNVHRMBAf8EAjAAMCAGA1UdJQEB
+    /wQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAOBgNVHQ8BAf8EBAMCA6gwIAYDVR0O
+    AQH/BBYEFGYH7eWA5CltHt33Q8oO6zgyyDpDMCIGA1UdIwEB/wQYMBaAFAf8lRfE
+    lbnkrQlfBx7SIHUtiWaFMAoGCCqGSM49BAMCA2gAMGUCMHcRc9kuTfd5+9mBid9m
+    7E5OEehBrJUSQaxxWz1/x2w4+Se3JikqLiGaufb0VCDc9AIxAK1VxiErgSvw3ybs
+    u8ZPeVx43QVodc3KG2wKwasjdYLbDX556CBukt79OyrkU12Bsg==
+    -----END CERTIFICATE-----
+
+  Qjc6NkQ6REQ6QjM6RkQ6NkU6NDE6NTI6QTg6ODk6OTU6QjA6MEQ6OEU6NEM6QkE6MEE6MUY6NzI6RkQ6a2V5aWQ6MDc6RkM6OTU6MTc6QzQ6OTU6Qjk6RTQ6QUQ6MDk6NUY6MDc6MUU6RDI6MjA6NzU6MkQ6ODk6NjY6ODU.cert: |
+    -----BEGIN CERTIFICATE-----
+    MIIC8jCCAnegAwIBAgIBAzAKBggqhkjOPQQDAjBNMQswCQYDVQQGEwJFUzEMMAoG
+    A1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMR4wHAYDVQQDDBVSZWZlcmVuY2VU
+    ZXN0YmVkU3ViQ0EwHhcNMjExMTI0MTEwNzIxWhcNMjQxMTIzMTEwNzIxWjBAMQsw
+    CQYDVQQGEwJFUzEMMAoGA1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMREwDwYD
+    VQQDDAh0ZXN0YmVkMzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKpU
+    AKP2kptTDnqFVKw2ArP1SNn4l1nuEMfyMgTdTOkVGVhQTnqGJljPDeuXtkr9Xcb9
+    lbVG8pfrOZTWDQYshqHTGphfLRN6NlX84EdthdKGkibRGSDebDxZvxoZtkeJ/Ov2
+    UEHFlAQNl+iS26nHSZs8JFkcluE5uIMIPXh6NKM76tvE/dFDIgyWHQW69K2gTXio
+    rnMInAemJuTV0EEI5UvJMXuu2SKYKHW0ZzkBuMdfuIcxvulfFIJhZGVyyK3y8rDa
+    /m7J5dQneKXofDV08/lDsQtS/nf3LYdVHxVRIUpVcjKZqMdGzsiFO/WsGevAfX1x
+    DBpD/6OZGceHFisoaEkCAwEAAaOBiTCBhjAMBgNVHRMBAf8EAjAAMCAGA1UdJQEB
+    /wQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAOBgNVHQ8BAf8EBAMCA6gwIAYDVR0O
+    AQH/BBYEFLdt3bP9bkFSqImVsA2OTLoKH3L9MCIGA1UdIwEB/wQYMBaAFAf8lRfE
+    lbnkrQlfBx7SIHUtiWaFMAoGCCqGSM49BAMCA2kAMGYCMQCRPtreAxmudaKS4jvm
+    C2DwxqClnNzCQEwMWMWD8/Kzjlx2g9Aw82b9+Z5ATjSIldECMQDpQZpE1WHYIeED
+    rNZ0RJSSKuF5KDM/2XR37K91umkGWEWuZ54Gs02s4LtdMcTmceE=
+    -----END CERTIFICATE-----
+  NTE6NjE6RUQ6M0I6NUU6REU6MTE6QzM6Rjg6MTI6RUU6Njk6NTY6NDE6MTU6MDA6RDk6Njk6RkY6MzY6a2V5aWQ6MDc6RkM6OTU6MTc6QzQ6OTU6Qjk6RTQ6QUQ6MDk6NUY6MDc6MUU6RDI6MjA6NzU6MkQ6ODk6NjY6ODU.cert: |
+    -----BEGIN CERTIFICATE-----
+    MIIC8TCCAnegAwIBAgIBBDAKBggqhkjOPQQDAjBNMQswCQYDVQQGEwJFUzEMMAoG
+    A1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMR4wHAYDVQQDDBVSZWZlcmVuY2VU
+    ZXN0YmVkU3ViQ0EwHhcNMjExMTI0MTEwNzMwWhcNMjQxMTIzMTEwNzMwWjBAMQsw
+    CQYDVQQGEwJFUzEMMAoGA1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMREwDwYD
+    VQQDDAh0ZXN0YmVkNDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANtD
+    RU4ybqHQeMj4U2niHpTlNcwcLWwa3lqvgejtUvFxy9cGbmqCZYL2ZbFDav6DqpdT
+    Ynj0/HTDnHa0j17H2RM+mE+UADGM6XzE4wESjd7z409ITDUN6WwUB9yZfDsgN+m8
+    kuL0BdMLNX/cGvdaOHJRGb+mGE1iaBQDvLa42nyBCdnzsizbzqc2H92Od0+Hy1sa
+    Ej772iyZnmsnOXYJAJvTLZFcAbaZmkR65fDNWvBiMSNbweSnfN0AmH0Zv9rJoNTp
+    KVIBxXvgRBLdaQwQtzKsK6JWsA86Ny51CNcnjwmUzCKuEsvCvPUq89sGtK9VGx3+
+    ebE/NfPyEWMwH/a/zYsCAwEAAaOBiTCBhjAMBgNVHRMBAf8EAjAAMCAGA1UdJQEB
+    /wQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAOBgNVHQ8BAf8EBAMCA6gwIAYDVR0O
+    AQH/BBYEFFFh7Tte3hHD+BLuaVZBFQDZaf82MCIGA1UdIwEB/wQYMBaAFAf8lRfE
+    lbnkrQlfBx7SIHUtiWaFMAoGCCqGSM49BAMCA2gAMGUCMQCUOPszEhz3eFTqlwF2
+    wsUwUn5qV5iNONqM1e6CeL3/rckyH4jZve4CYtpct23m5EgCMHPzrQczHeg0nHPe
+    KHnNXBFoTHUP0HJMFTbeSoCIFeORxEeVPbXWKwrXYbEewsQq7g==
+    -----END CERTIFICATE-----
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2022-06-02T10:29:08Z"
+  name: ids-files-daps-key-omejdn
+  #namespace: ids-2
+  resourceVersion: "177242"
+  uid: f16d894a-75c2-458b-996c-1fefd48fb589
+data:
+  omejdn.key: |
+    -----BEGIN PRIVATE KEY-----
+    MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDbQ0VOMm6h0HjI
+    +FNp4h6U5TXMHC1sGt5ar4Ho7VLxccvXBm5qgmWC9mWxQ2r+g6qXU2J49Px0w5x2
+    tI9ex9kTPphPlAAxjOl8xOMBEo3e8+NPSEw1DelsFAfcmXw7IDfpvJLi9AXTCzV/
+    3Br3WjhyURm/phhNYmgUA7y2uNp8gQnZ87Is286nNh/djndPh8tbGhI++9osmZ5r
+    Jzl2CQCb0y2RXAG2mZpEeuXwzVrwYjEjW8Hkp3zdAJh9Gb/ayaDU6SlSAcV74EQS
+    3WkMELcyrCuiVrAPOjcudQjXJ48JlMwirhLLwrz1KvPbBrSvVRsd/nmxPzXz8hFj
+    MB/2v82LAgMBAAECggEAOKUZa4lF4ZH9ElZtHkanhentSwzggzQxy5XZ5vYg3nV6
+    ptNnhSao2PuU7AWxx4z2bl/BaeRIsFW0v0oIXAEfSIR8Ttq6bhKsY2puBuHnOvkg
+    +WOBJJeyfRRzr38LhC7fowfvnqhSNOKJcL3JTavGN2pST5u2XY+Vuc35W+9HqrAk
+    yuhXyiXFSDNf8S0zU5nLfluJDGlAmJQ78gMhpyOPWJrRnFMVE8u08ntAjtf4JBcl
+    Kgfh8D6DVpVe55yj/1CX9tJpHxVZafrfMw7OyQAaxoycr6lO/vBXXQyy0MxBdTR7
+    KC+vE4QtNDqFsxLm/Qv73iy0twRLRmFpI2kmls6jMQKBgQD9rY9Epz3g8jhgQbCD
+    TqMjoLOW1NlaE2YdZYdz4PoiyYv6Oy759AKyiDcO1LyaL2c8q9/Kr3sxiW+9Ukon
+    Z9G9N4zH35HZeius8jNJr+IISiwMoNEgwHO/7RXyrpVYu2DZjsE8YcJ/XEz9v2bl
+    xeJYONcydM/qn3swH8ZCcPFsyQKBgQDdRRD/yYsgrXdvAoftP22wJdQwJaae2v/Q
+    s6BKfBOIAwXsY/hcUGewUSpoUpDWGkacz/OoVr+GoFnAMWzhtQT+ffsVQ5Z0rFE/
+    ehXTdalbVDnaoNfhGq5cFBXkSNoHeKVvLFquigGuZxxRcKLQ9DL8UbkNwNeWxP5d
+    OKyAAUJVswKBgQCjPtNZfL5HSdiZqOwsM6isPrgTMjoEy0MFW9bE7VxKkqSvjPJ4
+    C1zJAvtbYe9U0XiABKLpTe/bOvRbQt9RaHACcgL4hJjY+NOuYdY7byHn78NVBRBP
+    IUnbknhzSYH2Le7vUfxsHQUK7JznFgrjhmpYF4v0flNmSub9WxU8oG3ccQKBgEpD
+    oAz5rARvtCJCCzUJkNsKF0mBmYa/ohR99VKKilOgECDi/LyfD+4Rj9YrwAjcEM8Y
+    zIK3etjIgNcMv6qRgveXeOoOITVPkIVpiGHMn+bTQgeq7EnVFqg45ZAVE3hmeb/y
+    dw0VrLLIUKzUzRCspWAiXaXMD4++1lCbcOoVghoZAoGAI3vFgkxF9fc7/Z5Ho2gC
+    Tn7t69PaWhlfOGcBrek27wcb7yFTIeOZ9j6N3Iz86t3eo0YYbf4FDmkHdV8bTt5V
+    FeWIygjnKtM4oSoCQ+ZLrBlzj7p2MGUjbOAyyJa3wyv/rrYhYG5pmRKffyn+gW92
+    zV1wpWxE0ZzVYzrPLT1HIJY=
+    -----END PRIVATE KEY-----
+  

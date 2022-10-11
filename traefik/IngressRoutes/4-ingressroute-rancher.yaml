@@ -127,7 +127,7 @@ spec:
     - websecure
   routes:
   - kind: Rule
-    match: Host(`omejd-idsa.platform.flexigrobots-h2020.eu`)
+    match: Host(`213.227.145.187`)
     priority: 10                    # [4]
 
     services:                       # [8]
