@@ -1,6 +1,8 @@
 # IDS deployment on Kubernetes using an external connector for FlexiGroBots-H2020 wi 🚁🌽🌽🌽🚁
 
-The IDS-testbed repository uses docker-compose technology to deploy a data-space with two connectors, but whether your goal is to deploy a data-space using K8S technology or it is to deploy a data-space in a production environment in a cloud cluster like Rancher or another. In the below image, we can see the main aim, where we move from a local system to a cloud system.
+
+The original IDS-testbed repository deploys a little DataSpace with docker-compose technology, this type of technology is not the best to deploy in a production system. For this reason, in this repo we propose an IDS-testbed deploys with k8s technology and in cloud cluster like Rancher. 
+The below image shows the transition from a local system (docker-compose) to a cloud system (K8s). 
 <img src="pictures/architecture.png" alt="architecture"/>
 
 Before starting, a good way is to define what is data-space? and what is IDSA?
