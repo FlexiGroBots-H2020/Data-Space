@@ -102,9 +102,9 @@ When we work in a cluster is important to have a clean environment, for this rea
 
 ![figura](./pictures/pods_running_k9s.png)
 
-- Respect the ingress manifest, in this repository we have deployed two ways with two technologies (Nginx and Traefik). Nginx is easier to configure but when we work in a remote cluster in rancher is more difficult to configure and more unstable. For this reason, we propose another solution, Traefik. This proxy is more flexible and modern than Nginx, in addition, Traefik includes a dashboard that help us with the system deployment. 
+- Respect the ingress manifest, in this repository we have deployed two ways with two technologies (Nginx  [<img src="pictures/img-buildkite/nginx.png" width="20" height="20" alt="traefik"/>](https://www.nginx.com/) and Traefik[<img src="pictures/img-buildkite/Traefik.png" width="30" height="30" alt="traefik"/>](https://doc.traefik.io/traefik/)). Nginx is easier to configure when we work on a local machine but when we work in a remote cluster is more difficult to configure and more unstable. For this reason, we propose another solution, Traefik. This proxy is more flexible and modern than Nginx, in addition, Traefik includes a dashboard that helps us to supervise the DataSpace pods. 
 
-  - To run with nginx [<img src="pictures/img-buildkite/nginx.png" width="20" height="20" alt="traefik"/>](https://www.nginx.com/), it is necessary to install Nginx driver to be able to make the calls to the cluster from the outside. If the Ingress-Nginx repo is not updated, in this [link](https://kubernetes.github.io/ingress-nginx/deploy/) the official documentation can be found.
+  - To run with Nginx [<img src="pictures/img-buildkite/nginx.png" width="20" height="20" alt="traefik"/>](https://www.nginx.com/), it is necessary to install Nginx driver to be able to make the calls to the cluster from the outside. If the Ingress-Nginx repo is not updated, in this [link](https://kubernetes.github.io/ingress-nginx/deploy/) the official documentation can be found.
 
     `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml`
 
@@ -112,7 +112,7 @@ When we work in a cluster is important to have a clean environment, for this rea
       
     `kubectl apply -f ./Ingress/4-ingress-connection-nginx.yaml -n ids-2`
 
-  - On another hand, the official web defines traefik as  [<img src="pictures/img-buildkite/Traefik.png" width="30" height="30" alt="traefik"/>](https://doc.traefik.io/traefik/):
+  - On the other hand, the official web defines Traefik as  [<img src="pictures/img-buildkite/Traefik.png" width="30" height="30" alt="traefik"/>](https://doc.traefik.io/traefik/):
 
 
     *"Traefik is an open-source Edge Router that makes publishing your services a fun and easy experience. It receives requests on behalf of your system and finds out which components are responsible for handling them."*
@@ -140,7 +140,7 @@ When we work in a cluster is important to have a clean environment, for this rea
   The appearance of this Traefik dashboard is shown below.
   ![figura](./pictures/dashboardv2.png)
 
-  Likewise, we deployed an Ingress manifest with Nginx, with Traefik requiring a similar Ingress manifest. But also, It is necessary to create a TCP layer transport, being a Traefik specific component. 
+  Likewise, we deployed an Ingress manifest with Nginx, with Traefik requiring a similar Ingress manifest. But also, It is necessary to create a TCP layer transport, being a specific Traefik component. 
   The IngressRouetes folder contains all components to deploy either [local](./traefik/IngressRoutes/4-ingressroute-local.yaml) or in the [cloud](./traefik/IngressRoutes/4-ingressroute-rancher.yaml)
   
 
@@ -156,7 +156,7 @@ When we work in a cluster is important to have a clean environment, for this rea
 
 
 
-Finally, with a tool like [Postman](https://www.postman.com/) it is possible to test our IDS-testbed. Firstly, we can check the communication with the connector. After that, we try to register our connector to the data-space, and we will make sure that the connection is successful with the IDS. For this purpose,  [ids-certification-testing](TestbedPreconfiguration.postman_collection.json) file is used, in which a set of tests verifies the tool's proper operation on Kubernetes.
+Finally, with a tool like [Postman](https://www.postman.com/) it is possible to test our IDS-testbed. Firstly, we can check the communication with the connector. After that, we try to register our connector to the DataSpace, and we will make sure that the connection is successful with the IDS-DataSpace. The way to verify all these points we have  the[ids-certification-testing](TestbedPreconfiguration.postman_collection.json) file. This file is a set of instructions that allow evaluating the correct operation of the system. 
 
 
 
