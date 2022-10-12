@@ -1,7 +1,7 @@
 # IDS deployment on Kubernetes using an external connector for FlexiGroBots-H2020 wi 🚁🌽🌽🌽🚁
 
 
-The original IDS-testbed repository deploys a little DataSpace with docker-compose technology, this type of technology is not the best to deploy in a production system. For this reason, in this repo we propose an IDS-testbed deploys with k8s technology and in cloud cluster like Rancher. 
+The original IDS-testbed repository deploys a little DataSpace with docker-compose technology, this type of technology is not the best to deploy in a production system. For this reason, in this repository, we propose an alternative IDS-testbed deployed with k8s technology either in a cloud cluster like Rancher or a local cluster like Docker-Desktop or Minikube. 
 The below image shows the transition from a local system (docker-compose) to a cloud system (K8s). 
 <img src="pictures/architecture.png" alt="architecture"/>
 
@@ -11,11 +11,13 @@ Before starting, it is a good idea to define what is DataSpace? and what is IDSA
 
 - And IDSA, could be defined using the [official site](https://internationaldataspaces.org/) as: *"A secure, sovereign system of data sharing in which all participants can realize the full value of their data"*. 
 
-## Requirements to run in a local machine. 
+## Requirements to run in a local machine using K8S. 
 
-Firstly, we developed the system on a local machine, our development PC has installed *Kubectl* and *Docker-Desktop*, the software specifications are below in the next subsection. We used *Docker-Desktop* because by default there is installed a k8s cluster. 
 
-The system was running with a windows OS using WSL V2.0 with an Ubuntu 20.04 LTS.
+This subsection is explained how to deploy a DataSpace using K8S in a local machine. For this task, we have used a PC with *Kubectl* and *Docker-Desktop*, the software specifications are below in the next subsection. The K8S cluster is deployed using *Docker-Desktop*, this cluster is much like Minikube.
+
+The PC has Windows 10 as OS but we have used WSL V2.0 with Ubuntu 20.04 LTS to work with the clusters. 
+
 
 ### Software-requirements
 
@@ -35,17 +37,20 @@ The system was running with a windows OS using WSL V2.0 with an Ubuntu 20.04 LTS
   
 - OpenSSL `1.1.1f`
 
-Respect the hardware-requirements the PC used was a laptop with a medium performance. The technical characteristics are below.
+
 
 ### Hardware-requirements
-- 16 GB RAM memory
-- Intel(R) Core(TM) i5-10310U CPU @ 1.70GHz   2.21 GHz
 
-- 237 GB ROM memory
+The characteristics of the PC used are:
+
+- 16 GB RAM.
+- Intel(R) Core(TM) i5-10310U CPU @ 1.70GHz   2.21 GHz.
+
+- 237 GB ROM memory.
 
 ## Architecture
 
-The [repo](https://github.com/International-Data-Spaces-Association/IDS-testbed) proposes to deploy an architecture as shown below. This data-space is formed for two *internal connectors*, a *broker set* and *omejdn set*. 
+The original [repository](https://github.com/International-Data-Spaces-Association/IDS-testbed) proposes to deploy an architecture as shown below. This DataSpace is formed for two *internal connectors*, a *broker set* and *omejdn set*. 
 
 
 ![figura](./pictures/Testbed_1.0.png)
@@ -58,37 +63,37 @@ The function of each part is explained below:
   
   - The IDS Metadata [Broker](https://github.com/International-Data-Spaces-Association/metadata-broker-open-core) is one of the modules still under development and intends to help IDSA members implement custom broker solutions.
 
-We use the IDS-testbed repository, but it is possible to create the same data-space using each part from their particular repository. But, it is necessary to configure the networks and the certifications to run correctly.
+We use the IDS-testbed repository, but it is possible to create the same DataSpace using each part from their particular repository. But, it is necessary to configure the networks and the certifications to run correctly.
 
-  If broker image is not available in the local machine it is neccesary to build the dockerfile. 
+  <!-- If broker image is not available in the local machine it is neccesary to build the dockerfile. 
 
-  ` docker build MetadataBroker/build .`
+  ` docker build MetadataBroker/build .` -->
 
-## IDS deployment in K8S in a Local machine.
+## IDS deployment in K8S in a local machine.
 
-When we work in a cluster is important to have a clean environment, for this reason, we recommend creating a namespace for the data-space. 
+When we work in a cluster is important to have a clean environment, for this reason, we recommend creating a namespace for the DataSpace. 
 
 - The easiest way to create a namespace is using the next command. In this case, ids-2 is the name of the namespace. 
   
   `kubectl create namespace ids-2`
   
 
-- When we work on a local PC we can assign an URL to localhost IP. In the  `/etc/hosts` file it is possible to configure that characteristic. 
+- When we work on a local PC we can assign an URL to the localhost IP. In the  `/etc/hosts` file it is possible to configure that characteristic. 
   
   `127.0.0.1       connectora.localhost`
     
   `127.0.0.1       connectorb.localhost`
 
 
-- One of the hard points of IDSA is security, for this reason, it is necessary to create a set of certificates.
+- A strength of IDSA is security, for this reason, it is necessary to create a set of certificates.
   
   `openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt`
-
-- After the certificates have been created the next step is to use these certificates. The best way to use certificates in K8S is by secret. The fastest way to create a secret is using the below sell command.
+  
+- With these certificates, we will create a K8S secret. The fastest way to create a secret is using the below sell command.
 
   `kubectl create secret tls tls-secret --key tls.key --cert tls.crt -n ids-2`
 
-- The idsa_manifest_local folder is divided into several folders, each folder corresponding to each component. Also, there is a folder with the proxy and another with the ingress. Finally, to create a component in the cluster you can use the above command, being, ".MANIFEST_NAME" the YAML name that describes the component.
+- The [idsa_manifest_local](./idsa_manifest_local/) folder is divided into several folders, each folder corresponding to each IDSA component. Also, there is a folder with the [Traefik](./traefik/)proxy and another with the [Nginx](./Nginx/) ingress. Finally, to create a component in the cluster you can use the above command, being, ".MANIFEST_NAME" the YAML name that describes the component.
     
     `kubectl apply -f .MANIFEST_NAME.yaml -n ids-2`
 
