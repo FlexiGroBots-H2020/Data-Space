@@ -5,7 +5,7 @@ The original IDS-testbed repository deploys a little DataSpace with docker-compo
 The below image shows the transition from a local system (docker-compose) to a cloud system (K8s). 
 <img src="pictures/architecture.png" alt="architecture"/>
 
-Before starting, a good way is to define what is data-space? and what is IDSA?
+Before starting, it is a good idea to define what is DataSpace? and what is IDSA?
 
 - The [link](https://gaia-x.eu/what-is-gaia-x/core-elements/data-spaces/) is referred a data-space as *"A type of data relationship between trusted partners who adhere to the same high level standards and guidelines in relation to data storage and sharing within one or many Vertical Ecosystems"*.
 
