@@ -170,13 +170,13 @@ These tests can be customized by changing the [file](k8s\Config-tests\kube-linte
 
 ## IDS deployment in K8S in a cloud machine with an external connector
 
-The steps to deploy in a remote cluster are the same as in local. The only thing that needs to be changed is some configuration.
+The steps to deploy in a remote cluster are the same as in local cluster. The only thing that needs to be changed is some configuration.
 
 Traefik proxy is deployed the same as in the local example. The only difference is that for the dashboard, it is necessary to deploy the[4-ingress-dashboard-https-rancher.yaml](./traefik/Traefik-Dashboard/4-ingress-dashboard-https-rancher.yaml), to have a public domain. In this case, the domain is linked to the URL of the European FlexiGroBots project. In addition, it is also necessary to deploy the Ingress resource corresponding to the cluster,[4-ingressroute-rancher.yaml](./traefik/IngressRoutes/4-ingressroute-rancher.yaml).
 
-Despues de esto hay que desplegar los manifiestos que se encuentran en la carpeta [idsa_manifests_rancher](./idsa_manifest_local/). Dentro de esta carpeta se encuentran los modulos que forman el DataSpace configurados para trabajar de manera remota. 
+After that, it has to be deployed the manifests that are in the folder [idsa_manifests_rancher](./idsa_manifests_rancher/). This folder contains the modules that compose the DataSpace configured to work remotely. 
 
- It is necessary to configure two parts in this stage. The first one is to make public the Omejdn and the Broker-Core-Proxy of our Data-Space. 
+ It is necessary to configure two parts in this stage. The first one is to make public the Omejdn and the Broker-Core-Proxy of our Data-Space. And secondly, it is necessary to configure the external connector to link with the DataSpace. 
 
 To make public the Omejdn and Broker-core-proxy it is necessary to create an ingress for each component. For the first ingress we use an URL (omejd-idsa.platform.flexigrobots-h2020.eu) to make public the pod, in this case, this ingress has to open the 80 port and it has to attack Omejdn service. Respect the Broker-proxy is the same, it is necessary to create an ingress manifest with the 443 port open. Also, we have added a public URL (broker-reverseproxy.platform.flexigrobots-h2020.eu)
 
