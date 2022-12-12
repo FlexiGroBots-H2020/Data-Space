@@ -127,7 +127,7 @@ spec:
     - websecure
   routes:
   - kind: Rule
-    match: Host(`213.227.145.187`)
+    match: Host(`omejd-idsa.platform.flexigrobots-h2020.eu`)
     priority: 10                    # [4]
 
     services:                       # [8]
@@ -135,11 +135,11 @@ spec:
       name: omejdn
       namespace: ids-2
       serversTransport: omejdn-idsa-transport
-      port: 80
+      port: 443
       passHostHeader: true
       responseForwarding:
         flushInterval: 1ms
-      scheme: http
+      scheme: https
   tls:
     certResolver: default
     domains:

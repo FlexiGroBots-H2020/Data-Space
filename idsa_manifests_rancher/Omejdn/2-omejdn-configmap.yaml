@@ -9,15 +9,15 @@ metadata:
 data:
   default.conf.template: |
     server {
-      listen              80 default_server;
-      listen              [::]:80 default_server ;
+      listen              443 ssl default_server;
+      listen              [::]:443 ssl default_server ;
       server_name         ${OMEJDN_DOMAIN};
 
-      # ssl_certificate     /etc/nginx/daps.cert;
-      # ssl_certificate_key /etc/nginx/daps.key;
+      ssl_certificate     /etc/nginx/daps.cert;
+      ssl_certificate_key /etc/nginx/daps.key;
       
       proxy_set_header   Host $host;
-      proxy_set_header   X-Forwarded-Proto http;
+      proxy_set_header   X-Forwarded-Proto https;
 
       # Proxy to Omejdn
       location  ${OMEJDN_PATH} {
@@ -176,8 +176,8 @@ data:
           editable_attributes: []
     user_backend_default: yaml
     environment: development
-    issuer: http://omejd-idsa.platform.flexigrobots-h2020.eu/auth
-    front_url: http://omejd-idsa.platform.flexigrobots-h2020.eu/auth
+    issuer: https://omejd-idsa.platform.flexigrobots-h2020.eu/auth
+    front_url: https://omejd-idsa.platform.flexigrobots-h2020.eu/auth
     bind_to: 0.0.0.0:4567
     openid: true
     default_audience: idsc:IDS_CONNECTORS_ALL
@@ -279,6 +279,46 @@ data:
         value: https://w3id.org/idsa/contexts/context.jsonld
       - key: transportCertsSha256
         value: b758ae4c200c08925a20def86cf49355eabe0959305df0fb327bfe15c34e3029
+    
+    - client_id: DB:A5:EC:D0:A7:C3:EC:1F:A8:CC:15:CC:DC:03:B5:C1:09:CE:0C:91:keyid:07:FC:95:17:C4:95:B9:E4:AD:09:5F:07:1E:D2:20:75:2D:89:66:85
+      client_name: testbed6
+      grant_types: client_credentials
+      token_endpoint_auth_method: private_key_jwt
+      scope: idsc:IDS_CONNECTOR_ATTRIBUTES_ALL
+      attributes:
+      - key: idsc
+        value: IDS_CONNECTOR_ATTRIBUTES_ALL
+      - key: securityProfile
+        value: idsc:BASE_SECURITY_PROFILE
+      - key: referringConnector
+        value: http://testbed6.demo
+      - key: "@type"
+        value: ids:DatPayload
+      - key: "@context"
+        value: https://w3id.org/idsa/contexts/context.jsonld
+      - key: transportCertsSha256
+        value: 8ba82aa6962ff7e08297f0ff9bdc06b0656787b50ec9ac317b948cf03c07fb6c
+
+    - client_id: 22:E7:71:76:0B:8F:2A:3C:DA:73:B1:07:03:54:D7:78:CF:AA:1B:9B:keyid:07:FC:95:17:C4:95:B9:E4:AD:09:5F:07:1E:D2:20:75:2D:89:66:85
+      client_name: testbed7
+      grant_types: client_credentials
+      token_endpoint_auth_method: private_key_jwt
+      scope: idsc:IDS_CONNECTOR_ATTRIBUTES_ALL
+      attributes:
+      - key: idsc
+        value: IDS_CONNECTOR_ATTRIBUTES_ALL
+      - key: securityProfile
+        value: idsc:BASE_SECURITY_PROFILE
+      - key: referringConnector
+        value: http://testbed7.demo
+      - key: "@type"
+        value: ids:DatPayload
+      - key: "@context"
+        value: https://w3id.org/idsa/contexts/context.jsonld
+      - key: transportCertsSha256
+        value: 9b59f93d83f12f132a7982df04b97be07c931117fc13f250fb4d00f794bb22f9
+
+
 
 
   scope_description.yml: |
@@ -423,7 +463,64 @@ data:
     wsUwUn5qV5iNONqM1e6CeL3/rckyH4jZve4CYtpct23m5EgCMHPzrQczHeg0nHPe
     KHnNXBFoTHUP0HJMFTbeSoCIFeORxEeVPbXWKwrXYbEewsQq7g==
     -----END CERTIFICATE-----
+  MjI6RTc6NzE6NzY6MEI6OEY6MkE6M0M6REE6NzM6QjE6MDc6MDM6NTQ6RDc6Nzg6Q0Y6QUE6MUI6OUI6a2V5aWQ6MDc6RkM6OTU6MTc6QzQ6OTU6Qjk6RTQ6QUQ6MDk6NUY6MDc6MUU6RDI6MjA6NzU6MkQ6ODk6NjY6ODU.cert: |
+    -----BEGIN CERTIFICATE-----
+    MIIC8TCCAnegAwIBAgIBBzAKBggqhkjOPQQDAjBNMQswCQYDVQQGEwJFUzEMMAoG
+    A1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMR4wHAYDVQQDDBVSZWZlcmVuY2VU
+    ZXN0YmVkU3ViQ0EwHhcNMjExMTI0MTEwODA1WhcNMjQxMTIzMTEwODA1WjBAMQsw
+    CQYDVQQGEwJFUzEMMAoGA1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMREwDwYD
+    VQQDDAh0ZXN0YmVkNzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAOmv
+    YqUsOSCPtqL3Sny75+/wsf8B5zUFOHM2NRArA1P4ZMGni6PpcKX19CsrgRLjk6Pi
+    cpe05HrxV1Jm0avG+4PmCQErywQsT2dCaNsRiLwyLl8FWspFXTe6d3BAMmEV3Pcq
+    h9c+L7hUjwjsTtlhayx/Ed0bCgSng01zAKqfmK1CVkqa4yjtSm2jR582LpjxLSZU
+    CZ/N12P9SO9GfaF3KOh2CS1TMsaRjREidHimytxOH1OzQFio1HBDnnlhngiTKq4r
+    6W8klCCcW5FsPcdShDBZBtFDrVLUnB+u2ekOnQfZLiygktC6rzLYjdWG+BT8+6kL
+    OIFw5KMzf6QKKgCKAx8CAwEAAaOBiTCBhjAMBgNVHRMBAf8EAjAAMCAGA1UdJQEB
+    /wQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAOBgNVHQ8BAf8EBAMCA6gwIAYDVR0O
+    AQH/BBYEFCLncXYLjyo82nOxBwNU13jPqhubMCIGA1UdIwEB/wQYMBaAFAf8lRfE
+    lbnkrQlfBx7SIHUtiWaFMAoGCCqGSM49BAMCA2gAMGUCMDyAwoH0hrW6d4HYJQjP
+    zSQrwBlDYXzOs9jwrUJe/RqMXFA77i9hxSh3P9ORZ3YEjwIxAJIxYzT9QSobCP9c
+    jCB3zijk7LfbFbFXv8hZrYXu4/5Y+F8LYQR3mKGDRyXmnhI1uw==
+    -----END CERTIFICATE-----
 
+  RkM6NTc6ODk6QTI6RDU6QzM6RTM6NjQ6QUM6MkE6NEY6RDY6RjE6MkE6OTE6MEQ6ODc6Qzg6NUU6MjM6a2V5aWQ6MDc6RkM6OTU6MTc6QzQ6OTU6Qjk6RTQ6QUQ6MDk6NUY6MDc6MUU6RDI6MjA6NzU6MkQ6ODk6NjY6ODU.cert: |
+    -----BEGIN CERTIFICATE-----
+    MIIC8jCCAnegAwIBAgIBBTAKBggqhkjOPQQDAjBNMQswCQYDVQQGEwJFUzEMMAoG
+    A1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMR4wHAYDVQQDDBVSZWZlcmVuY2VU
+    ZXN0YmVkU3ViQ0EwHhcNMjExMTI0MTEwNzQzWhcNMjQxMTIzMTEwNzQzWjBAMQsw
+    CQYDVQQGEwJFUzEMMAoGA1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMREwDwYD
+    VQQDDAh0ZXN0YmVkNTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKim
+    qQTha0t/JRbaJiVH3H6ARyiFPdLj5a81pBoLPBoMspMmr0IidBbbsvIcZa+71QNY
+    QiO4u5MOCgU63vSHqgcS+HMN+a0SpXryQSEYxlSZqWhxUljP0D7fcqA0M6wBnx3v
+    F5uMXAe5xPZRfm9mAzjYDBLXecB8ImgfV3KzYfRNtdpuH0A6hJHgbYGSOu4X8NCN
+    g2Zh4TZR9CKYijJv/MC4je5IMceWkN3/pKvH1Cm/uBJi8EfNBQkg8fDgrVqyzVdx
+    pKs5OYh7O3QMmKHCH9ViCy3QK0QWAIHvAWX4nJtCKTxOffoFwCaz+QMqQYeGjrH2
+    hhoXy0KJqWJPL+NvVtUCAwEAAaOBiTCBhjAMBgNVHRMBAf8EAjAAMCAGA1UdJQEB
+    /wQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAOBgNVHQ8BAf8EBAMCA6gwIAYDVR0O
+    AQH/BBYEFPxXiaLVw+NkrCpP1vEqkQ2HyF4jMCIGA1UdIwEB/wQYMBaAFAf8lRfE
+    lbnkrQlfBx7SIHUtiWaFMAoGCCqGSM49BAMCA2kAMGYCMQDIEIz/Xz74D6yIsAPl
+    xOp0GU2K3VRzFDqLdEuNiavxx+ThoFrNPi1l8/qSW+LQDF8CMQC7B4GcVMlvkcvB
+    EGqHLgO9MbELOFAifwVThLwib05fCphua3cLkgHPTWx6E+NXU9E=
+    -----END CERTIFICATE-----
+  REI6QTU6RUM6RDA6QTc6QzM6RUM6MUY6QTg6Q0M6MTU6Q0M6REM6MDM6QjU6QzE6MDk6Q0U6MEM6OTE6a2V5aWQ6MDc6RkM6OTU6MTc6QzQ6OTU6Qjk6RTQ6QUQ6MDk6NUY6MDc6MUU6RDI6MjA6NzU6MkQ6ODk6NjY6ODU.cert: |
+    -----BEGIN CERTIFICATE-----
+    MIIC8jCCAnegAwIBAgIBBTAKBggqhkjOPQQDAjBNMQswCQYDVQQGEwJFUzEMMAoG
+    A1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMR4wHAYDVQQDDBVSZWZlcmVuY2VU
+    ZXN0YmVkU3ViQ0EwHhcNMjExMTI0MTEwNzQzWhcNMjQxMTIzMTEwNzQzWjBAMQsw
+    CQYDVQQGEwJFUzEMMAoGA1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMREwDwYD
+    VQQDDAh0ZXN0YmVkNTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKim
+    qQTha0t/JRbaJiVH3H6ARyiFPdLj5a81pBoLPBoMspMmr0IidBbbsvIcZa+71QNY
+    QiO4u5MOCgU63vSHqgcS+HMN+a0SpXryQSEYxlSZqWhxUljP0D7fcqA0M6wBnx3v
+    F5uMXAe5xPZRfm9mAzjYDBLXecB8ImgfV3KzYfRNtdpuH0A6hJHgbYGSOu4X8NCN
+    g2Zh4TZR9CKYijJv/MC4je5IMceWkN3/pKvH1Cm/uBJi8EfNBQkg8fDgrVqyzVdx
+    pKs5OYh7O3QMmKHCH9ViCy3QK0QWAIHvAWX4nJtCKTxOffoFwCaz+QMqQYeGjrH2
+    hhoXy0KJqWJPL+NvVtUCAwEAAaOBiTCBhjAMBgNVHRMBAf8EAjAAMCAGA1UdJQEB
+    /wQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAOBgNVHQ8BAf8EBAMCA6gwIAYDVR0O
+    AQH/BBYEFPxXiaLVw+NkrCpP1vEqkQ2HyF4jMCIGA1UdIwEB/wQYMBaAFAf8lRfE
+    lbnkrQlfBx7SIHUtiWaFMAoGCCqGSM49BAMCA2kAMGYCMQDIEIz/Xz74D6yIsAPl
+    xOp0GU2K3VRzFDqLdEuNiavxx+ThoFrNPi1l8/qSW+LQDF8CMQC7B4GcVMlvkcvB
+    EGqHLgO9MbELOFAifwVThLwib05fCphua3cLkgHPTWx6E+NXU9E=
+    -----END CERTIFICATE-----
 ---
 
 apiVersion: v1

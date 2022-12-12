@@ -279,6 +279,46 @@ data:
         value: https://w3id.org/idsa/contexts/context.jsonld
       - key: transportCertsSha256
         value: b758ae4c200c08925a20def86cf49355eabe0959305df0fb327bfe15c34e3029
+    
+    - client_id: DB:A5:EC:D0:A7:C3:EC:1F:A8:CC:15:CC:DC:03:B5:C1:09:CE:0C:91:keyid:07:FC:95:17:C4:95:B9:E4:AD:09:5F:07:1E:D2:20:75:2D:89:66:85
+      client_name: testbed6
+      grant_types: client_credentials
+      token_endpoint_auth_method: private_key_jwt
+      scope: idsc:IDS_CONNECTOR_ATTRIBUTES_ALL
+      attributes:
+      - key: idsc
+        value: IDS_CONNECTOR_ATTRIBUTES_ALL
+      - key: securityProfile
+        value: idsc:BASE_SECURITY_PROFILE
+      - key: referringConnector
+        value: http://testbed6.demo
+      - key: "@type"
+        value: ids:DatPayload
+      - key: "@context"
+        value: https://w3id.org/idsa/contexts/context.jsonld
+      - key: transportCertsSha256
+        value: 8ba82aa6962ff7e08297f0ff9bdc06b0656787b50ec9ac317b948cf03c07fb6c
+
+    - client_id: 22:E7:71:76:0B:8F:2A:3C:DA:73:B1:07:03:54:D7:78:CF:AA:1B:9B:keyid:07:FC:95:17:C4:95:B9:E4:AD:09:5F:07:1E:D2:20:75:2D:89:66:85
+      client_name: testbed7
+      grant_types: client_credentials
+      token_endpoint_auth_method: private_key_jwt
+      scope: idsc:IDS_CONNECTOR_ATTRIBUTES_ALL
+      attributes:
+      - key: idsc
+        value: IDS_CONNECTOR_ATTRIBUTES_ALL
+      - key: securityProfile
+        value: idsc:BASE_SECURITY_PROFILE
+      - key: referringConnector
+        value: http://testbed7.demo
+      - key: "@type"
+        value: ids:DatPayload
+      - key: "@context"
+        value: https://w3id.org/idsa/contexts/context.jsonld
+      - key: transportCertsSha256
+        value: 9b59f93d83f12f132a7982df04b97be07c931117fc13f250fb4d00f794bb22f9
+
+
 
 
   scope_description.yml: |

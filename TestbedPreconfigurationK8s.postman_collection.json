@@ -1492,6 +1492,10 @@
 			"value": "https://connectorb.platform.flexigrobots-h2020.eu"
 		},
 		{
+			"key": "CONNECTORC_URL",
+			"value": "https://localhost:8082"
+		},
+		{
 			"key": "offers",
 			"value": ""
 		},
@@ -1546,7 +1550,7 @@
 		},
 		{
 			"key": "BROKER",
-			"value": "https://broker-reverseproxy/infrastructure"
+			"value": "https://broker-reverseproxy.platform.flexigrobots-h2020.eu/infrastructure"
 		},
 		{
 			"key": "Broker_catalog_list",

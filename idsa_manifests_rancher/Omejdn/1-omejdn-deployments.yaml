@@ -33,9 +33,9 @@ spec:
           - name: OMEJDN_ENVIRONMENT
             value: development
           - name: OMEJDN_FRONT_URL
-            value: http://omejdn/auth
+            value: https://omejd-idsa.platform.flexigrobots-h2020.eu/auth
           - name: OMEJDN_ISSUER
-            value: http://omejd-idsa.platform.flexigrobots-h2020.eu/auth
+            value: https://omejd-idsa.platform.flexigrobots-h2020.eu/auth
           - name: OMEJDN_OPENID
             value: "true"
           image: ghcr.io/fraunhofer-aisec/omejdn-server:1.6.0
@@ -167,7 +167,7 @@ spec:
       containers:
         - env:
           - name: OMEJDN_DOMAIN
-            value: http://omejd-idsa.platform.flexigrobots-h2020.eu
+            value: https://omejd-idsa.platform.flexigrobots-h2020.eu
           - name: OMEJDN_PATH
             value: /auth
           - name: UI_PATH
@@ -176,7 +176,7 @@ spec:
 
           name: omejdn
           ports:
-          - containerPort: 80
+          - containerPort: 443
           
           resources:
             requests:
@@ -231,11 +231,11 @@ spec:
       containers:
       - env:
           - name: API_URL
-            value: http://omejdn/auth/api/v1
+            value: https://omejdn/auth/api/v1
           - name: CLIENT_ID
             value: adminUI
           - name: OIDC_ISSUER
-            value: http://omejd-idsa.platform.flexigrobots-h2020.eu/auth
+            value: https://omejd-idsa.platform.flexigrobots-h2020.eu/auth
         image: ghcr.io/fraunhofer-aisec/omejdn-ui:dev
 
         name: omejdn-ui

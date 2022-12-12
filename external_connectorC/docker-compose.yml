@@ -12,7 +12,7 @@ services:
       - ./conf/testbed4.p12:/conf/testbed4.p12
       - ./conf/connectorC.p12:/config/connectorC.p12
       - ./conf/truststore.p12:/config/truststore.p12
-      - ./conf/jwks.json:/config/jwks.json
+      #- ./conf/jwks.json:/config/jwks.json
 
     environment:
       - CONFIGURATION_PATH=/config/config.json

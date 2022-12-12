@@ -13,7 +13,6 @@ spec:
   template:
     metadata:
       labels:
-        #io.kompose.network/local: "true"
         app: broker-core
     spec:
 
@@ -24,7 +23,7 @@ spec:
         - name: COMPONENT_URI
           value: https://localhost/
         - name: DAPS_URL
-          value: http://omejdn/auth/token #no tocar
+          value: https://omejdn/auth/token #no tocar
         - name: DAPS_VALIDATE_INCOMING
           value: "false"
         - name: ELASTICSEARCH_HOSTNAME

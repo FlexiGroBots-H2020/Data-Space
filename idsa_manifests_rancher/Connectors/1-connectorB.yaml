@@ -24,11 +24,11 @@ spec:
         - name: DAPS_INCOMING_DAT_DEFAULT_WELLKNOWN
           value: /jwks.json
         - name: DAPS_KEY_URL
-          value: http://omejdn/auth/jwks.json
+          value: https://omejdn/auth/jwks.json
         - name: DAPS_TOKEN_URL
-          value: http://omejdn/auth/token
+          value: https://omejdn/auth/token
         - name: DAPS_URL
-          value: http://omejdn
+          value: https://omejdn
         - name: SERVER_PORT
           value: "8081"
         - name: SERVER_SSL_KEY-STORE

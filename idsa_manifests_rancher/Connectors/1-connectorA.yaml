@@ -23,17 +23,17 @@ spec:
         - name: DAPS_INCOMING_DAT_DEFAULT_WELLKNOWN
           value: /jwks.json
         - name: DAPS_KEY_URL
-          value: http://omejd-idsa.platform.flexigrobots-h2020.eu/auth/jwks.json
+          value: https://omejd-idsa.platform.flexigrobots-h2020.eu/auth/jwks.json
         - name: DAPS_TOKEN_URL
-          value: http://omejd-idsa.platform.flexigrobots-h2020.eu/auth/token #no tocar
+          value: https://omejd-idsa.platform.flexigrobots-h2020.eu/auth/token #no tocar
         - name: SERVER_SSL_KEY-STORE
           value: file:///config/connectorA.p12
         - name: DAPS_URL
-          value: http://omejd-idsa.platform.flexigrobots-h2020.eu
+          value: https://omejd-idsa.platform.flexigrobots-h2020.eu
         - name: SERVER_PORT
           value: "8080"
         - name: DAPS_WHITELISTED_URL
-          value: http://omejd-idsa.platform.flexigrobots-h2020.eu/auth #http://omejdn/auth
+          value: https://omejd-idsa.platform.flexigrobots-h2020.eu/auth #http://omejdn/auth
 
 
         name: connectora
