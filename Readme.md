@@ -97,7 +97,7 @@ In order to work in a cluster using good practices it is essential to have a cle
 
 ![figura](./pictures/pods_running_k9s.png)
 
-- Respect the ingress manifest, in this repository it has beeb deployed two ways with two technologies (Nginx  [<img src="pictures/img-buildkite/nginx.png" width="20" height="20" alt="traefik"/>](https://www.nginx.com/) and Traefik[<img src="pictures/img-buildkite/Traefik.png" width="30" height="30" alt="traefik"/>](https://doc.traefik.io/traefik/)). Nginx is easier to configure when it is worked on a local machine but in a remote cluster is more difficult to configure and more unstable. For this reason, it is proposed another solution, Traefik. This proxy is more flexible and modern than Nginx, in addition, Traefik includes a dashboard that helps us to supervise the DataSpace pods. 
+- Regarding the ingress manifest, in this repository it has beeb deployed two ways with two technologies (Nginx  [<img src="pictures/img-buildkite/nginx.png" width="20" height="20" alt="traefik"/>](https://www.nginx.com/) and Traefik[<img src="pictures/img-buildkite/Traefik.png" width="30" height="30" alt="traefik"/>](https://doc.traefik.io/traefik/)). Nginx is easier to configure when it is worked on a local machine but in a remote cluster is more difficult to configure and more unstable. For this reason, it is proposed another solution, Traefik. This proxy is more flexible and modern than Nginx, in addition, Traefik includes a dashboard that helps us to supervise the DataSpace pods. 
 
   - To run with Nginx [<img src="pictures/img-buildkite/nginx.png" width="20" height="20" alt="traefik"/>](https://www.nginx.com/), it is necessary to install Nginx driver to be able to make the calls to the cluster from the outside. If the Ingress-Nginx repo is not updated, in this [link](https://kubernetes.github.io/ingress-nginx/deploy/) the official documentation can be found.
 
@@ -161,7 +161,7 @@ After that, it has to be deployed the manifests that are in the folder [idsa_man
 
  It is necessary to configure two parts in this stage. The first one is to make public the Omejdn and the Broker-Core-Proxy of our data space. And secondly, it is necessary to configure the external connector to link with the DataSpace. 
 
-In order to make public the Omejdn and Broker-core-proxy it is necessary to create an ingress for each component. For the first ingress we use an URL (omejd-idsa.platform.flexigrobots-h2020.eu) to make public the pod, in this case, this ingress has to open the 80 port and it has to attack Omejdn service. Respect the Broker-proxy is the same, it is necessary to create an ingress manifest with the 443 port open. Also, it has been added a public URL (broker-reverseproxy.platform.flexigrobots-h2020.eu)
+In order to make public the Omejdn and Broker-core-proxy it is necessary to create an ingress for each component. For the first ingress we use an URL (omejd-idsa.platform.flexigrobots-h2020.eu) to make public the pod, in this case, this ingress has to open the 80 port and it has to attack Omejdn service. Regarding the Broker-proxy is the same, it is necessary to create an ingress manifest with the 443 port open. Also, it has been added a public URL (broker-reverseproxy.platform.flexigrobots-h2020.eu)
 
 After configuring the way to access Omejdn and broker. There are some parameters that it is necessary to configure them. In particular:
 - DAPS_VALIDATE_INCOMING: in the Broker-Core, this value changes from True to False.
