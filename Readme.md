@@ -111,7 +111,7 @@ In order to work in a cluster using good practices it is essential to have a cle
   The appearance of this Traefik dashboard is shown below.
   ![figura](./pictures/dashboardv2.png)
 
-  Traefik uses ingress manifests similar to Nginx. But also, It is necessary to create a TCP layer transport, being a specific Traefik component. 
+  Traefik uses a kind of ingress manifest similar to Nginx. In addition, it is necessary to create a TCP layer transport, being a specific Traefik component. 
   The IngressRouetes folder contains all components to deploy either [local](./traefik/IngressRoutes/4-ingressroute-local.yaml) or in the [cloud](./traefik/IngressRoutes/4-ingressroute-rancher.yaml)
   
 
@@ -125,19 +125,20 @@ In order to work in a cluster using good practices it is essential to have a cle
 
     `kubectl delete -f ./traefik/Traefik-Dashboard/`
 
-Finally, with a tool like [Postman](https://www.postman.com/) it is possible to test our IDS-testbed.  The way to verify the correct deployment is using [ids-certification-testing](TestbedPreconfiguration.postman_collection.json) file. This file is a set of instructions that allow evaluating the correct operation of the system. 
+Finally, with an application like [Postman](https://www.postman.com/) it is possible to test the IDS-testbed deployed in K8S.  The way to evaluate that the data space is running correctly is using the test set [ids-certification-testing](TestbedPreconfiguration.postman_collection.json). This file has a set of requests to evaluate each system's functionality. 
+
 
 ## IDS deployment in K8S in a cloud machine with an external connector
 
-The steps to deploy in a remote cluster are the same as in local cluster. The only thing that needs to be changed is some configuration.
+The way to deploy a data space in a remote cluster is similar to a local cluster. In general, all steps are the same only change the network setup. 
 
-Traefik proxy is deployed the same as in the local example. The only difference is that for the dashboard, it is necessary to deploy the [4-ingress-dashboard-https-rancher.yaml](./traefik/Traefik-Dashboard/4-ingress-dashboard-https-rancher.yaml), to have a public domain. In this case, the domain is linked to the URL of the European FlexiGroBots project. In addition, it is also necessary to deploy the Ingress resource corresponding to the cluster,[4-ingressroute-rancher.yaml](./traefik/IngressRoutes/4-ingressroute-rancher.yaml).
+The Traefik proxy-reverse's configuration is the same locally as remotly. To work in a remote environment it is required to expose a public domain. With [ids-certification-testing](TestbedPreconfiguration.postman_collection.json) manifest exposes the domain for the Traefik Dashboard, and the [4-ingressroute-rancher.yaml](./traefik/IngressRoutes/4-ingressroute-rancher.yaml) manifest is required to expose a public domain for the DataSpace connector. 
 
-After that, it has to be deployed the manifests that are in the folder [idsa_manifests_rancher](./idsa_manifests_rancher/). This folder contains the modules that compose the DataSpace configured to work remotely. 
+Once time Traefik is running successfully the next step is to run the data space manifests, these files are in the folder [idsa_manifests_rancher](./idsa_manifests_rancher/)
 
- It is necessary to configure two parts in this stage. The first one is to make public the Omejdn and the Broker-Core-Proxy of our data space. And secondly, it is necessary to configure the external connector to link with the DataSpace. 
+To make the system work properly it is important to expose in a public domain the Omejdn and the Meta Data Broker. In addition, it is necessary to configure the data space connectors to link with the MDB.
 
-In order to make public the Omejdn and Broker-core-proxy it is necessary to create an ingress for each component. For the first ingress we use an URL (omejd-idsa.platform.flexigrobots-h2020.eu) to make public the pod, in this case, this ingress has to open the 80 port and it has to attack Omejdn service. Regarding the Broker-proxy is the same, it is necessary to create an ingress manifest with the 443 port open. Also, it has been added a public URL (broker-reverseproxy.platform.flexigrobots-h2020.eu)
+In order to expose the Omejdn and  Meta Data Broker it is essential to create an ingress for each component. For the first ingress it has been used the URL (XXXXX.platform.XXXXX.eu) to make public the pod, in this case, this ingress has to open the 443 port and it has to attack Omejdn service. Regarding the Broker-proxy is the same, it is necessary to create an ingress manifest with the 443 port open. Also, it has been added a public URL (broker-reverseproxy.platform.flexigrobots-h2020.eu)
 
 After configuring the way to access Omejdn and broker. There are some parameters that it is necessary to configure them. In particular:
 - DAPS_VALIDATE_INCOMING: in the Broker-Core, this value changes from True to False.
