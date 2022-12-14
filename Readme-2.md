@@ -1,12 +1,14 @@
-## Introduction
+# IDS deployment scenarios 
+
+## Introduction - How to deploy an IDS-Testbed using Kubernetes [<img src="pictures/img-buildkite/kubernetes.png" width="20" height="20" alt="traefik"/>](https://kubernetes.io/)
 This is a deployment scenario provided by [Atos](https://atos.net/es/spain) You can find the content on its [original repository](https://github.com/FlexiGroBots-H2020/Data-Space/tree/External-connector)
 
-The European data strategy focusses strongly on the ideas of data sharing and data spaces. This blog explains how to deploy and use a data space through Kubernetes technology [International Data Spaces Association](https://internationaldataspaces.org/). You will see specifically how data between a "provider" and a "user" is shared based on the installation and configuration defined in the [IDS testbed](https://github.com/International-Data-Spaces-Association/IDS-testbed/blob/master/InstallationGuide.md), but the data space will be running in a K8S cluster instead of a Docker Compose. For a detailed explanation of the individual components of the infrastructure, please refer to the official [Reference Architecture Model](https://internationaldataspaces.org/wp-content/uploads/IDS-Reference-Architecture-Model-3.0-2019.pdf). 
+The European data strategy focuses strongly on the ideas of data sharing and data spaces. This blog explains how to deploy and use a data space through Kubernetes technology [International Data Spaces Association](https://internationaldataspaces.org/). You will see specifically how data between a "provider" and a "user" is shared based on the installation and configuration defined in the [IDS testbed](https://github.com/International-Data-Spaces-Association/IDS-testbed/blob/master/InstallationGuide.md), but the data space will be running in a K8S cluster instead of a Docker Compose. For a detailed explanation of the individual components of the infrastructure, please refer to the official [Reference Architecture Model](https://internationaldataspaces.org/wp-content/uploads/IDS-Reference-Architecture-Model-3.0-2019.pdf). 
 
 # Deployment
 ## Steps to deploy a data space using K8s
-One of the most typical topics in the development of a product is the deployment process. Usually in development phases is usual to use tools such as docker, docker-compose, env, etc, but these kinds of tools are not oriented to production environments. Therefore, it has been developed a set of manifests to deploy an IDS-Testbed in a Kubernetes cluster. This allows to re-create a real environment and it is easier to migrate from local to cloud.
-To achieve this change of architecture is essential to design each manifest using the official IDSA components. In addition, it is necessary to use a reverse-proxy to access to the cluster, in this case two reverse-proxies have been tested, Nginx and Traefik. For reasons of scalability, cloud-management and visibility, Traefik offers better performance than Nginx. Even so, both methods are in the repository [FlexiGroBot].
+One of the most typical topics in the development of a product is the deployment process. Usually in development-phases is usual to use tools such as docker, docker-compose, env, etc, but these kinds of tools are not oriented to production environments. Therefore, it has been developed a set of manifests to deploy an IDS-Testbed in a Kubernetes cluster. This allows re-create a real environment and it is easier to migrate from local to cloud.
+To achieve this change of architecture is essential to design each manifest using the official IDSA components. In addition, it is necessary to use a reverse proxy to access the cluster, in this case, two reverse proxies have been tested, Nginx and Traefik. For reasons of scalability, cloud-management and visibility, Traefik offers better performance than Nginx. Even so, both methods are in the repository [FlexiGroBot].
 
 ### Minimum requirements
 
@@ -46,16 +48,16 @@ Firstly, it is necessary to download the repository with the manifests.
 
 ```git clone https://github.com/International-Data-Spaces-Association/IDS-testbed/```
 
-It is important to have some sort of cluster either local or cloud. To test the system it is recommended running the system in the local environment. And, when the specification of the local system has been stablished the next step would be to migrate the architecture to the cloud. In addition, the Nginx setup only allowing to run in a local cluster
+It is important to have some sort of cluster either local or cloud. To test the system it is recommended to run the system in the local environment. And, when the specification of the local system has been established the next step would be to migrate the architecture to the cloud. In addition, the Nginx setup only validated to run in a local cluster
 
-After that, the reverse-proxy has to be the first component to be deployed. There are two folders one with nginx and another with Trafik. The commands to deploy the Nginx are the following:
+After that, the reverse proxy has to be the first component to be deployed. There are two folders one with Nginx and another with Trafik. The commands to deploy the Nginx are the following:
 
 
 ```kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml```
 
 `kubectl apply -f ./Nginx/4-ingress-connection-nginx.yaml `
 
-Regarding Traefik is available in local and cloud, thus, in order to deploy a Traefik in a local machine the 4-ingresroute-local has to be deployed instead of deploying in a cluster the file 4-ingressroute-rancher has to be deployed. The commands to run this reverse-proxy are the following, it is important to run the commands in order:
+Regarding Traefik is available both local and cloud, thus, in order to deploy a Traefik in a local machine the 4-ingresroute-local has to be deployed instead of deploying in a cluster the file 4-ingressroute-rancher has to be deployed. The commands to run this reverse proxy are the following, it is important to run the commands in order:
 
 `kubectl apply -f ./traefik/9-rbac.yaml `
 
@@ -72,12 +74,12 @@ Regarding Traefik is available in local and cloud, thus, in order to deploy a Tr
 `kubectl apply -f ./traefik/4-ingressroute-rancher.yaml`
 
 
-After raising the resverse-proxy the next step is to launch the data space. In order to work in a cluster using good practices it is essential to have a clean environment, for this reason, it is important to create a namespace for the DataSpace. 
+After raising the reverse-proxy the next step is to launch the data space. In order to work in a cluster using good practices it is essential to have a clean environment, for this reason, it is important to create a namespace for the DataSpace. 
 The easiest way to create a namespace is using the next command. In this case, ids-2 is the name of the namespace. 
   
   `kubectl create namespace ids-2`
 
-Finally, it has been created two folders with similar content. The difference is in the deployment environment, so, the idsa_manifest_local is oriented to local cluster and the idsa_manifests_rancher is oriented to cloud cluster (in this case in a Rancher cluster). But, the way to install both folders is the same.
+Finally, it has been created two folders with similar content. The difference is in the deployment environment, so, the idsa_manifest_local is oriented for a local cluster and the idsa_manifests_rancher is oriented for a cloud cluster (in this case in a Rancher cluster). But, the way to install both folders is the same.
 
 `kubectl apply -f ./idsa_manifest_local/Broker/0-broker-core-services.yaml -n ids-2`
 
@@ -150,6 +152,13 @@ The XX repository has a little library in .ipynb that facilitates the use of the
 
 Piece of code here
 
+
+This system has been used in an European real project to join the data exchange among pilots. The name of this project id FlexigroBots and its goal is the creation of data value chains in the agriculture environment that maximize synergies, collaboration, and opening of new business opportunities based on data while ensuring sovereignty and security is one of the main goals of the H2020 FlexiGroBots project. To achieve all that, an IDSA-compliant DataSpace has been implemented to be deployed and operated in cloud-native infrastructures managed by Kubernetes.
+
+In addition to being one of the requirements of the project, it is essential for FlexiGroBots that data is shared among the different stakeholders of the agri-food domain (e.g., IoT platforms providers, farm management systems vendors, robotics systems manufacturers) to break the silos that currently exist and to enable more powerful services to be developed. From the existing IDSA open-source testbed that relies on Docker containers and Docker-compose for the deployment and orchestration, an @Atos team has developed all necessary manifests to achieve the aforementioned deployment to realise an IDS-Testbed using a Kubernetes cluster. It is being used in collaboration with the rest of the partners of FlexiGroBots to enable information to be exchanged in three different agricultural pilots.
+
+
+
 ---
 
 
@@ -160,6 +169,6 @@ To learn more about this topic, please consult the [IDSA Reference Architecture 
 ### CREDITS
 This article was written by [Antonio Carlos Cob Parro](https://www.linkedin.com/in/carlos-cob-parro/) under the supervision of [Daniel Calvo Moreno](https://www.linkedin.com/in/calvoad/).
 
-A. Carlos Cob is an open source developer with a passion for administering Linux systems and Kubernetes clusters. Between March and May he partnered with TOP-IX to explore value-added GAIA-X Federation Services for Data Spaces.
+A. Carlos Cob is "fill the blank".
 
 Daniel Calvo is Telecommunications engineer with more than 10 years of experience working on research and innovation projects in the area of embedded systems, edge computing, Internet of Things (IoT) and Artificial Intelligence.
