@@ -1,8 +1,0 @@
-# Necessary IDS Claims to issue a DAT
-idsc:IDS_CONNECTOR_ATTRIBUTES_ALL:
-  - securityProfile
-  - referringConnector
-  - "@type"
-  - "@context"
-  - transportCertsSha256
-

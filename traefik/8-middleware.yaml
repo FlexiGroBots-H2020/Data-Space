@@ -1,0 +1,61 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: traefik-secure-headers
+  namespace: kube-system
+spec:
+  headers:
+    # CSP Headers
+    accessControlAllowMethods:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+    accessControlAllowOriginList:
+    #  - https://*.palaemon-shore.ari-aidata.eu   #${PUBLIC_NODE_DOMAIN}
+    accessControlMaxAge: 100
+    contentSecurityPolicy: |
+      default-src 'none'; form-action 'none'; frame-ancestors 'none'; base-uri 'none'
+    # Vary: Origin
+    addVaryHeader: true
+    # X-XSS-Protection: 1; mode=block
+    browserXssFilter: true
+    # X-Content-Type-Options: nosniff
+    contentTypeNosniff: true
+    # HSTS Headers
+    # Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+    forceSTSHeader: true
+    stsIncludeSubdomains: true
+    stsPreload: true
+    stsSeconds: 63072000
+    # X-Frame-Options: DENY
+    frameDeny: true
+    # Referrer-Policy: same-origin
+    referrerPolicy: 'same-origin'
+    sslRedirect: true
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: traefik-oauth
+  namespace: kube-system
+spec:
+  forwardAuth:
+    address: "http://oauth.keycloak.svc.cluster.local:4181"
+    trustForwardHeader: true
+    authResponseHeaders:
+      - X-Forward-User
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: traefik-chain-oauth
+  namespace: kube-system
+spec:
+  chain:
+    middlewares:
+    - name: traefik-secure-headers
+    - name: traefik-oauth
+---

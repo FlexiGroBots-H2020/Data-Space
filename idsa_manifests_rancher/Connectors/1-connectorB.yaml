@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: connectorb
+  name: connectorb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: connectorb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        #io.kompose.network/local: "true"
+        app: connectorb
+    spec:
+      containers:
+      - env:
+        - name: CONFIGURATION_PATH
+          value: /config/config.json
+        - name: DAPS_INCOMING_DAT_DEFAULT_WELLKNOWN
+          value: /jwks.json
+        - name: DAPS_KEY_URL
+          value: https://omejdn/auth/jwks.json
+        - name: DAPS_TOKEN_URL
+          value: https://omejdn/auth/token
+        - name: DAPS_URL
+          value: https://omejdn
+        - name: SERVER_PORT
+          value: "8081"
+        - name: SERVER_SSL_KEY-STORE
+          value: file:///config/connectorB.p12
+        
+        name: connectorb
+        image: ghcr.io/international-data-spaces-association/dataspace-connector:7.1.0
+        
+        ports:
+        - containerPort: 8081
+          name: connectorb
+
+        resources:
+          requests:
+            memory: "1024Mi"
+            cpu: "500m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        
+        volumeMounts:
+        - mountPath: /config/config.json
+          name: mydir-config
+          subPath: config.json
+
+        - name: mydir-secret-config
+          mountPath: /config/connectorB.p12
+          subPath: connectorB.p12
+        
+        - name: mydir-secret-config
+          mountPath: /config/truststore.p12
+          subPath: truststore.p12
+        
+        - name: mydir-secret-config
+          mountPath: /conf/testbed2.p12
+          subPath: testbed2.p12            
+      
+      restartPolicy: Always
+
+      volumes:
+      - name: mydir-secret-config
+        secret:
+          secretName: connectorb-secret
+          items:
+            - key: connectorb
+              path: connectorB.p12
+            - key: truststore
+              path: truststore.p12
+            - key: testbed2
+              path: testbed2.p12                         
+
+
+      - name: mydir-config 
+        configMap:
+          name: ids-files-config-conectorb
+

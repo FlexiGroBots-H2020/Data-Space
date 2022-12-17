@@ -1,0 +1,155 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  labels:
+    app: broker-core
+  name: broker-core
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: broker-core
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: broker-core
+    spec:
+
+      containers:
+      - env:
+        - name: COMPONENT_CATALOGURI
+          value: https://localhost/connectors/
+        - name: COMPONENT_URI
+          value: https://localhost/
+        - name: DAPS_URL
+          value: https://omejdn/auth/token #no tocar
+        - name: DAPS_VALIDATE_INCOMING
+          value: "false"
+        - name: ELASTICSEARCH_HOSTNAME
+          value: broker-elasticsearch
+        - name: SHACL_VALIDATION
+          value: "true"
+        - name: SPARQL_ENDPOINT
+          value: http://broker-fuseki:3030/connectorData
+
+        image: ghcr.io/flexigrobots-h2020/broker-core:latest
+
+        name: broker-core
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - mountPath: /etc/cert
+          name: isstbroker
+        resources:
+          requests:
+            memory: "1024Mi"
+            cpu: "500m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+      
+      volumes:
+      - name: isstbroker 
+        configMap:
+          name: ids-files-isstbroker-keystore     
+
+      restartPolicy: Always
+status: {}
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ 
+  labels:
+    app: broker-fuseki
+  name: broker-fuseki
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: broker-fuseki
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+
+      labels:
+        app: broker-fuseki
+        #io.kompose.service: broker-fuseki
+    spec:
+      containers:
+      - image: registry.gitlab.cc-asp.fraunhofer.de/eis-ids/broker-open/fuseki
+        name: broker-fuseki
+        ports:
+        - containerPort: 3030
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "100m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+
+        volumeMounts:
+        - mountPath: /fuseki
+          name: broker-fuseki
+      restartPolicy: Always
+      volumes:
+      - hostPath:
+          path: broker-fuseki
+        name: broker-fuseki
+status: {}
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  labels:
+    app: broker-reverseproxy
+  name: broker-reverseproxy
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: broker-reverseproxy
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        #io.kompose.network/local: "true"
+        app: broker-reverseproxy
+    spec: 
+
+      containers:
+      - image: registry.gitlab.cc-asp.fraunhofer.de/eis-ids/broker-open/reverseproxy
+
+        name: broker-reverseproxy
+
+        ports:
+        - containerPort: 443
+        - containerPort: 81
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /etc/cert
+          name: mydir
+      
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "100m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"     
+
+      volumes:
+      - name: mydir 
+        configMap:
+          name: ids-files-server-cert 
+        

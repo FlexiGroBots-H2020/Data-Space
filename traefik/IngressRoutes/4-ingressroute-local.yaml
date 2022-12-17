@@ -1,0 +1,77 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: connectora
+  namespace: ids-2
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - kind: Rule
+    match: Host(`connectora-localhost`)
+    priority: 10                    # [4]
+
+    services:                       # [8]
+    - kind: Service
+      name: connectora
+      namespace: ids-2
+      serversTransport: connectora-transport
+      port: 8080
+      passHostHeader: true
+      responseForwarding:
+        flushInterval: 1ms
+      scheme: https
+  tls:
+    certResolver: default
+    domains:
+    - main: connectora.platform.flexigrobots-h2020.eu
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: ServersTransport
+metadata:
+  name: connectora-transport
+  namespace: ids-2
+
+spec:
+    insecureSkipVerify: true
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: connectorb
+  namespace: ids-2
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - kind: Rule
+    match: Host(`connectorb-localhost`)
+    priority: 10                    # [4]
+
+    services:                       # [8]
+    - kind: Service
+      name: connectorb
+      namespace: ids-2
+      serversTransport: connectorb-transport
+      port: 8081
+      passHostHeader: true
+      responseForwarding:
+        flushInterval: 1ms
+      scheme: https
+  tls:
+    certResolver: default
+    domains:
+    - main: connectorb.platform.flexigrobots-h2020.eu
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: ServersTransport
+metadata:
+  name: connectorb-transport
+  namespace: ids-2
+
+spec:
+    insecureSkipVerify: true

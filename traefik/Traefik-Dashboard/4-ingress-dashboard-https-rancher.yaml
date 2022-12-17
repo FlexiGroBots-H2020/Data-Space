@@ -1,0 +1,36 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-dashboard-tls
+  namespace: kube-system
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`traefik.platform.flexigrobots-h2020.eu`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+    kind: Rule
+    services:
+    - name: api@internal
+      kind: TraefikService
+  tls:
+    certResolver: default
+
+# ---
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: test-tls
+#   namespace: ids-2
+# spec:
+#   entryPoints:
+#     - websecure
+#   routes:
+#   - match: Host(`hostnames.platform.flexigrobots-h2020.eu`) 
+#     kind: Rule
+#     services:
+#     - name: hostnames
+#       namespace: ids-2
+#       port: 8082
+#   tls:
+#     certResolver: default
