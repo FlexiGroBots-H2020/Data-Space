@@ -3,7 +3,7 @@ services:
     image: ghcr.io/international-data-spaces-association/dataspace-connector:latest
     container_name: connectorc
     ports:
-      - 8082:8082
+      - 8083:8083
     networks:
       - local
 
@@ -16,13 +16,13 @@ services:
 
     environment:
       - CONFIGURATION_PATH=/config/config.json
-      - SERVER_PORT=8082
-      - DAPS_URL='http://omejd-idsa.platform.flexigrobots-h2020.eu'
-      - DAPS_TOKEN_URL=http://omejd-idsa.platform.flexigrobots-h2020.eu/auth/token
-      - DAPS_KEY_URL=http://omejd-idsa.platform.flexigrobots-h2020.eu/auth/jwks.json
+      - SERVER_PORT=8083
+      - DAPS_URL='https://omejd-idsa.platform.flexigrobots-h2020.eu'
+      - DAPS_TOKEN_URL=https://omejd-idsa.platform.flexigrobots-h2020.eu/auth/token
+      - DAPS_KEY_URL=https://omejd-idsa.platform.flexigrobots-h2020.eu/auth/jwks.json
       #- DAPS_WHITELISTED_URL=http://omejd-idsa.platform.flexigrobots-h2020.eu
 
-      - DAPS_WHITELISTED_URL=http://omejd-idsa.platform.flexigrobots-h2020.eu/auth,http://omejdn/auth
+      - DAPS_WHITELISTED_URL=https://omejd-idsa.platform.flexigrobots-h2020.eu/auth,http://omejdn/auth
       - DAPS_INCOMING_DAT_DEFAULT_WELLKNOWN=/jwks.json
       
       #- OMEJDN_DOMAIN=http://omejd-idsa.platform.flexigrobots-h2020.eu/auth/

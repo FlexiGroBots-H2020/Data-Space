@@ -149,7 +149,6 @@ data:
     -----END PRIVATE KEY-----
 
 ---
-
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -243,24 +242,6 @@ data:
         value: https://w3id.org/idsa/contexts/context.jsonld
       - key: transportCertsSha256
         value: 0d9eb3600540532c69c7345e7ab04e0f420434b693e26e415783875a93e9fc4b
-    - client_id: 51:61:ED:3B:5E:DE:11:C3:F8:12:EE:69:56:41:15:00:D9:69:FF:36:keyid:07:FC:95:17:C4:95:B9:E4:AD:09:5F:07:1E:D2:20:75:2D:89:66:85
-      client_name: testbed4
-      grant_types: client_credentials
-      token_endpoint_auth_method: private_key_jwt
-      scope: idsc:IDS_CONNECTOR_ATTRIBUTES_ALL
-      attributes:
-      - key: idsc
-        value: IDS_CONNECTOR_ATTRIBUTES_ALL
-      - key: securityProfile
-        value: idsc:BASE_SECURITY_PROFILE
-      - key: referringConnector
-        value: http://testbed4.demo
-      - key: "@type"
-        value: ids:DatPayload
-      - key: "@context"
-        value: https://w3id.org/idsa/contexts/context.jsonld
-      - key: transportCertsSha256
-        value: 8e34c75ad86f60cb9205bb9e9309ff2ae9e2472b70c868db0693f39678331307
     - client_id: FC:57:89:A2:D5:C3:E3:64:AC:2A:4F:D6:F1:2A:91:0D:87:C8:5E:23:keyid:07:FC:95:17:C4:95:B9:E4:AD:09:5F:07:1E:D2:20:75:2D:89:66:85
       client_name: testbed5
       grant_types: client_credentials
@@ -279,7 +260,6 @@ data:
         value: https://w3id.org/idsa/contexts/context.jsonld
       - key: transportCertsSha256
         value: b758ae4c200c08925a20def86cf49355eabe0959305df0fb327bfe15c34e3029
-    
     - client_id: DB:A5:EC:D0:A7:C3:EC:1F:A8:CC:15:CC:DC:03:B5:C1:09:CE:0C:91:keyid:07:FC:95:17:C4:95:B9:E4:AD:09:5F:07:1E:D2:20:75:2D:89:66:85
       client_name: testbed6
       grant_types: client_credentials
@@ -298,7 +278,6 @@ data:
         value: https://w3id.org/idsa/contexts/context.jsonld
       - key: transportCertsSha256
         value: 8ba82aa6962ff7e08297f0ff9bdc06b0656787b50ec9ac317b948cf03c07fb6c
-
     - client_id: 22:E7:71:76:0B:8F:2A:3C:DA:73:B1:07:03:54:D7:78:CF:AA:1B:9B:keyid:07:FC:95:17:C4:95:B9:E4:AD:09:5F:07:1E:D2:20:75:2D:89:66:85
       client_name: testbed7
       grant_types: client_credentials
@@ -317,8 +296,78 @@ data:
         value: https://w3id.org/idsa/contexts/context.jsonld
       - key: transportCertsSha256
         value: 9b59f93d83f12f132a7982df04b97be07c931117fc13f250fb4d00f794bb22f9
-
-
+    - client_id: 3C:C8:3E:92:7A:4E:C6:50:0B:6D:99:A3:2A:A1:28:40:AD:BA:31:F5:keyid:07:FC:95:17:C4:95:B9:E4:AD:09:5F:07:1E:D2:20:75:2D:89:66:85
+      client_name: testbed8
+      grant_types: client_credentials
+      token_endpoint_auth_method: private_key_jwt
+      scope: idsc:IDS_CONNECTOR_ATTRIBUTES_ALL
+      attributes:
+      - key: idsc
+        value: IDS_CONNECTOR_ATTRIBUTES_ALL
+      - key: securityProfile
+        value: idsc:BASE_SECURITY_PROFILE
+      - key: referringConnector
+        value: http://testbed8.demo
+      - key: "@type"
+        value: ids:DatPayload
+      - key: "@context"
+        value: https://w3id.org/idsa/contexts/context.jsonld
+      - key: transportCertsSha256
+        value: 31c13e75086f4f91923655575d03183d9a56f956f9af0e698f43b6c6b4113e2c
+    - client_id: 7F:D5:2C:04:19:02:D6:E5:A0:65:E0:E4:52:D0:45:2B:44:AC:21:D7:keyid:07:FC:95:17:C4:95:B9:E4:AD:09:5F:07:1E:D2:20:75:2D:89:66:85
+      client_name: testbed9
+      grant_types: client_credentials
+      token_endpoint_auth_method: private_key_jwt
+      scope: idsc:IDS_CONNECTOR_ATTRIBUTES_ALL
+      attributes:
+      - key: idsc
+        value: IDS_CONNECTOR_ATTRIBUTES_ALL
+      - key: securityProfile
+        value: idsc:BASE_SECURITY_PROFILE
+      - key: referringConnector
+        value: http://testbed9.demo
+      - key: "@type"
+        value: ids:DatPayload
+      - key: "@context"
+        value: https://w3id.org/idsa/contexts/context.jsonld
+      - key: transportCertsSha256
+        value: ec70862f91f47ae93612cf446ba7d00a1498290740495eff323f4092c07a0a96
+    - client_id: 4A:F6:BC:D9:A8:36:08:34:CD:4A:30:91:0B:67:05:5D:8E:4B:4F:6C:keyid:07:FC:95:17:C4:95:B9:E4:AD:09:5F:07:1E:D2:20:75:2D:89:66:85
+      client_name: testbed10
+      grant_types: client_credentials
+      token_endpoint_auth_method: private_key_jwt
+      scope: idsc:IDS_CONNECTOR_ATTRIBUTES_ALL
+      attributes:
+      - key: idsc
+        value: IDS_CONNECTOR_ATTRIBUTES_ALL
+      - key: securityProfile
+        value: idsc:BASE_SECURITY_PROFILE
+      - key: referringConnector
+        value: http://testbed10.demo
+      - key: "@type"
+        value: ids:DatPayload
+      - key: "@context"
+        value: https://w3id.org/idsa/contexts/context.jsonld
+      - key: transportCertsSha256
+        value: ffce7eeba76e1e0c0602a923465fce3eee90748a97758343b179063f7474a9e7
+    - client_id: 51:61:ED:3B:5E:DE:11:C3:F8:12:EE:69:56:41:15:00:D9:69:FF:36:keyid:07:FC:95:17:C4:95:B9:E4:AD:09:5F:07:1E:D2:20:75:2D:89:66:85
+      client_name: testbed4
+      grant_types: client_credentials
+      token_endpoint_auth_method: private_key_jwt
+      scope: idsc:IDS_CONNECTOR_ATTRIBUTES_ALL
+      attributes:
+      - key: idsc
+        value: IDS_CONNECTOR_ATTRIBUTES_ALL
+      - key: securityProfile
+        value: idsc:BASE_SECURITY_PROFILE
+      - key: referringConnector
+        value: http://testbed4.demo
+      - key: "@type"
+        value: ids:DatPayload
+      - key: "@context"
+        value: https://w3id.org/idsa/contexts/context.jsonld
+      - key: transportCertsSha256
+        value: 8e34c75ad86f60cb9205bb9e9309ff2ae9e2472b70c868db0693f39678331307
 
 
   scope_description.yml: |
@@ -374,7 +423,6 @@ data:
     #  userinfo_endpoint: 'https://userinfo'
     # response_type: 'code'
 
-
 ---
 
 apiVersion: v1
@@ -382,7 +430,6 @@ kind: ConfigMap
 metadata:
   creationTimestamp: "2022-06-02T10:29:08Z"
   name: ids-files-daps-config-key-client
-  #namespace: ids-2
   resourceVersion: "177242"
   uid: a16d894a-75c2-458b-996c-1fefd48fb588
 data:
@@ -405,6 +452,7 @@ data:
     XjhvHgrpvYrZuUVyJ2bw1IjCFxi8RCejZOUW+HwVHl3lpH4CMQCWd5M99qLgYiqE
     /9qJhlTbLTbomiXAwGaZVPlynZ1KgmAJIIeWn9OYybG/4ldTfUg=
     -----END CERTIFICATE-----
+
   NjY6MDc6RUQ6RTU6ODA6RTQ6Mjk6NkQ6MUU6REQ6Rjc6NDM6Q0E6MEU6RUI6Mzg6MzI6Qzg6M0E6NDM6a2V5aWQ6MDc6RkM6OTU6MTc6QzQ6OTU6Qjk6RTQ6QUQ6MDk6NUY6MDc6MUU6RDI6MjA6NzU6MkQ6ODk6NjY6ODU.cert: |
     -----BEGIN CERTIFICATE-----
     MIIC8TCCAnegAwIBAgIBATAKBggqhkjOPQQDAjBNMQswCQYDVQQGEwJFUzEMMAoG
@@ -444,6 +492,7 @@ data:
     C2DwxqClnNzCQEwMWMWD8/Kzjlx2g9Aw82b9+Z5ATjSIldECMQDpQZpE1WHYIeED
     rNZ0RJSSKuF5KDM/2XR37K91umkGWEWuZ54Gs02s4LtdMcTmceE=
     -----END CERTIFICATE-----
+
   NTE6NjE6RUQ6M0I6NUU6REU6MTE6QzM6Rjg6MTI6RUU6Njk6NTY6NDE6MTU6MDA6RDk6Njk6RkY6MzY6a2V5aWQ6MDc6RkM6OTU6MTc6QzQ6OTU6Qjk6RTQ6QUQ6MDk6NUY6MDc6MUU6RDI6MjA6NzU6MkQ6ODk6NjY6ODU.cert: |
     -----BEGIN CERTIFICATE-----
     MIIC8TCCAnegAwIBAgIBBDAKBggqhkjOPQQDAjBNMQswCQYDVQQGEwJFUzEMMAoG
@@ -463,6 +512,7 @@ data:
     wsUwUn5qV5iNONqM1e6CeL3/rckyH4jZve4CYtpct23m5EgCMHPzrQczHeg0nHPe
     KHnNXBFoTHUP0HJMFTbeSoCIFeORxEeVPbXWKwrXYbEewsQq7g==
     -----END CERTIFICATE-----
+
   MjI6RTc6NzE6NzY6MEI6OEY6MkE6M0M6REE6NzM6QjE6MDc6MDM6NTQ6RDc6Nzg6Q0Y6QUE6MUI6OUI6a2V5aWQ6MDc6RkM6OTU6MTc6QzQ6OTU6Qjk6RTQ6QUQ6MDk6NUY6MDc6MUU6RDI6MjA6NzU6MkQ6ODk6NjY6ODU.cert: |
     -----BEGIN CERTIFICATE-----
     MIIC8TCCAnegAwIBAgIBBzAKBggqhkjOPQQDAjBNMQswCQYDVQQGEwJFUzEMMAoG
@@ -502,25 +552,87 @@ data:
     xOp0GU2K3VRzFDqLdEuNiavxx+ThoFrNPi1l8/qSW+LQDF8CMQC7B4GcVMlvkcvB
     EGqHLgO9MbELOFAifwVThLwib05fCphua3cLkgHPTWx6E+NXU9E=
     -----END CERTIFICATE-----
+
   REI6QTU6RUM6RDA6QTc6QzM6RUM6MUY6QTg6Q0M6MTU6Q0M6REM6MDM6QjU6QzE6MDk6Q0U6MEM6OTE6a2V5aWQ6MDc6RkM6OTU6MTc6QzQ6OTU6Qjk6RTQ6QUQ6MDk6NUY6MDc6MUU6RDI6MjA6NzU6MkQ6ODk6NjY6ODU.cert: |
     -----BEGIN CERTIFICATE-----
-    MIIC8jCCAnegAwIBAgIBBTAKBggqhkjOPQQDAjBNMQswCQYDVQQGEwJFUzEMMAoG
+    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
-    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
+    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
-    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
+    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
-    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
+    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
     -----END CERTIFICATE-----
+
+  M0M6Qzg6M0U6OTI6N0E6NEU6QzY6NTA6MEI6NkQ6OTk6QTM6MkE6QTE6Mjg6NDA6QUQ6QkE6MzE6RjU6a2V5aWQ6MDc6RkM6OTU6MTc6QzQ6OTU6Qjk6RTQ6QUQ6MDk6NUY6MDc6MUU6RDI6MjA6NzU6MkQ6ODk6NjY6ODU.cert: |
+    -----BEGIN CERTIFICATE-----
+    MIIC8TCCAnegAwIBAgIBCDAKBggqhkjOPQQDAjBNMQswCQYDVQQGEwJFUzEMMAoG
+    A1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMR4wHAYDVQQDDBVSZWZlcmVuY2VU
+    ZXN0YmVkU3ViQ0EwHhcNMjExMTI0MTEwODE1WhcNMjQxMTIzMTEwODE1WjBAMQsw
+    CQYDVQQGEwJFUzEMMAoGA1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMREwDwYD
+    VQQDDAh0ZXN0YmVkODCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAL9Y
+    F27GsIyaSUWxuEk5XXl4J9y4Z5Wxohe+4n7ItZ4PASxjEzohXmAciK9eXJSLr128
+    ta20xT2pqEvVvbEzjWf/W348WDntIAdTjzSG9AlTB5FvhVS30Fl0s7MgwdDrzg6A
+    k8rEz0UgmKq6efb1KnZF6M3tIWPz9MDvTPEhjor8XfWZNVJ3E+b6En5UfmmauRkQ
+    Uy4+885qxjgI9iEkt/CqXb94q51s/0ccoh0iA7yCC/xajcO9U+hp7ttso/A4FHn1
+    bJUacujbDYC2qwdo7gphOUwZYKgkQ3YOPZWSXjkJuB1Gh7UuZogRh174+PpG4yyI
+    c/XTGCVls2nMOIgQeN8CAwEAAaOBiTCBhjAMBgNVHRMBAf8EAjAAMCAGA1UdJQEB
+    /wQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAOBgNVHQ8BAf8EBAMCA6gwIAYDVR0O
+    AQH/BBYEFDzIPpJ6TsZQC22ZoyqhKECtujH1MCIGA1UdIwEB/wQYMBaAFAf8lRfE
+    lbnkrQlfBx7SIHUtiWaFMAoGCCqGSM49BAMCA2gAMGUCMQCUQl0v9Sub6nn6WBml
+    GYvcHtmI1TYzQmuPSXis7aPQQ4Y5ltrsOaJH90gNpbjnPc8CMExjL3MveAwpJ9pY
+    135mHzpNTwA+ue3VcuChtEzUiFLTgRziV+jPgi+L6pSEarTnow==
+    -----END CERTIFICATE-----
+
+  N0Y6RDU6MkM6MDQ6MTk6MDI6RDY6RTU6QTA6NjU6RTA6RTQ6NTI6RDA6NDU6MkI6NDQ6QUM6MjE6RDc6a2V5aWQ6MDc6RkM6OTU6MTc6QzQ6OTU6Qjk6RTQ6QUQ6MDk6NUY6MDc6MUU6RDI6MjA6NzU6MkQ6ODk6NjY6ODU.cert: |
+    -----BEGIN CERTIFICATE-----
+    MIIC8jCCAnegAwIBAgIBCTAKBggqhkjOPQQDAjBNMQswCQYDVQQGEwJFUzEMMAoG
+    A1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMR4wHAYDVQQDDBVSZWZlcmVuY2VU
+    ZXN0YmVkU3ViQ0EwHhcNMjExMTI0MTEwODI0WhcNMjQxMTIzMTEwODI0WjBAMQsw
+    CQYDVQQGEwJFUzEMMAoGA1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMREwDwYD
+    VQQDDAh0ZXN0YmVkOTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAM25
+    8ynk99L3B1BqDu2y4aAmqBuUL/QElohW6PNwV7n3iULzu42W8owqpMKGz8nLgi+1
+    Ybp/bcCSOCzJpt5oD19ttIOdc5cn6YwzMdPQxZXyVA69cDtXiTTdf+oN9EUXRtaN
+    N9G+gF543GWqqzubCpiwWz1kt2C2E/aoQdaAEQ71M2VFaXakedSg60cwaDCvEaY7
+    30RLVlYmd0wu3ht9/6DJ29zksNDYqpAv4Sq2xwkL5tpY9Rlg9FeL+eVVw/qQgjaV
+    Q/JAa9W2b9JCPr2CRslFy6C5NYuJ9LUDKIOw/NXKjpJygg/ubRR88u+7XsUTSmoJ
+    iolMt2/4f8OFYPOGXOsCAwEAAaOBiTCBhjAMBgNVHRMBAf8EAjAAMCAGA1UdJQEB
+    /wQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAOBgNVHQ8BAf8EBAMCA6gwIAYDVR0O
+    AQH/BBYEFH/VLAQZAtbloGXg5FLQRStErCHXMCIGA1UdIwEB/wQYMBaAFAf8lRfE
+    lbnkrQlfBx7SIHUtiWaFMAoGCCqGSM49BAMCA2kAMGYCMQCWUOLeFwtHEq1jfNu+
+    7XOwecWUe57hB7dNkYHTTh+VGiHJJxKzSnYWVt8+huXIfv4CMQDepYogdnEnKMva
+    Jhn9lSPlQB20J5V3D2KRSDN23uGSUQtJgfm6Qy6yHbIKgMQFFvI=
+    -----END CERTIFICATE-----
+
+  NEE6RjY6QkM6RDk6QTg6MzY6MDg6MzQ6Q0Q6NEE6MzA6OTE6MEI6Njc6MDU6NUQ6OEU6NEI6NEY6NkM6a2V5aWQ6MDc6RkM6OTU6MTc6QzQ6OTU6Qjk6RTQ6QUQ6MDk6NUY6MDc6MUU6RDI6MjA6NzU6MkQ6ODk6NjY6ODU.cert: |
+    -----BEGIN CERTIFICATE-----
+    MIIC8TCCAnigAwIBAgIBCjAKBggqhkjOPQQDAjBNMQswCQYDVQQGEwJFUzEMMAoG
+    A1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMR4wHAYDVQQDDBVSZWZlcmVuY2VU
+    ZXN0YmVkU3ViQ0EwHhcNMjExMTI0MTEwODMzWhcNMjQxMTIzMTEwODMzWjBBMQsw
+    CQYDVQQGEwJFUzEMMAoGA1UECgwDU1FTMRAwDgYDVQQLDAdUZXN0TGFiMRIwEAYD
+    VQQDDAl0ZXN0YmVkMTAwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDQ
+    hNdkA3DFKK6PtiFGC1Xuuhl6mjom268auJbn4WfsnuGBoCKldp4+zZaPU3iBeRtX
+    fczZypBBRWrP47aqsC86Tjj7QsrwZxLOhJr8zQSLno9hOsMSkPy9GeylfN1ZegTM
+    vvCfDYjqdNQMavs7HfwSnnTrLPwvzi5e/6RMNKkUZmwVFmnXNjswtFBunHErOUW4
+    lgwYVaIMVI/3ucx8VoHjSypUGbQeZqturQ4dqxL+LmXU44wZa2ne+/D/nTlkEmmD
+    P8ZXzbppuPJvbKIBCj7AjcLWc1trJyPVfA1B/D4Iv7aSS6NU3jnORxJ9B1IQtL1z
+    Bjg+/anFwqKqCvgId0qdAgMBAAGjgYkwgYYwDAYDVR0TAQH/BAIwADAgBgNVHSUB
+    Af8EFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDgYDVR0PAQH/BAQDAgOoMCAGA1Ud
+    DgEB/wQWBBRK9rzZqDYINM1KMJELZwVdjktPbDAiBgNVHSMBAf8EGDAWgBQH/JUX
+    xJW55K0JXwce0iB1LYlmhTAKBggqhkjOPQQDAgNnADBkAjBRkNdrr5TOKzJaxEkM
+    NcixyQ+B9PBOcYF/8YWHuPg6BcAlQWcbwJ0aB5AwpkYMye8CMHt6RXeI1EmZ61gp
+    Yn2DjDUguBBlPlZNko744O2+5rynmlUrb3dLc+Cocchxl6kC7g==
+    -----END CERTIFICATE-----
+
 ---
 
 apiVersion: v1
