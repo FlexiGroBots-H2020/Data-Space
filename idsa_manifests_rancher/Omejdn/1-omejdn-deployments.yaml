@@ -68,10 +68,10 @@ spec:
           resources:
             requests:
               memory: "1024Mi"
-              cpu: "500m"
+              cpu: "200m"
             limits:
               memory: "4Gi"
-              cpu: "2000m"
+              cpu: "1000m"
 
       initContainers:
       - name: copy
@@ -85,10 +85,10 @@ spec:
         resources:
           requests:
             memory: "1024Mi"
-            cpu: "500m"
+            cpu: "200m"
           limits:
             memory: "4Gi"
-            cpu: "2000m" 
+            cpu: "1000m" 
 
       - name: copy-rename-keys
         image: ghcr.io/fraunhofer-aisec/omejdn-server:1.6.0
@@ -103,10 +103,10 @@ spec:
         resources:
           requests:
             memory: "1024Mi"
-            cpu: "500m"
+            cpu: "200m"
           limits:
             memory: "4Gi"
-            cpu: "2000m"          
+            cpu: "1000m"          
 
       restartPolicy: Always
       volumes:
@@ -184,7 +184,7 @@ spec:
               cpu: "100m"
             limits:
               memory: "4Gi"
-              cpu: "2000m"
+              cpu: "1000m"
           
           volumeMounts:
           - mountPath: ./etc/nginx/templates/default.conf.template
@@ -249,7 +249,7 @@ spec:
             cpu: "100m"
           limits:
             memory: "4Gi"
-            cpu: "2000m"
+            cpu: "1000m"
 
       restartPolicy: Always
 status: {}
